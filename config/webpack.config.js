@@ -1,4 +1,5 @@
 const path = require('path');
+const util = require('util');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 
@@ -26,6 +27,7 @@ const commonConfig = merge([
     ],
   },
   parts.lintJavaScript({ include: PATHS.app }),
+  parts.loadCSS({ include: PATHS.app }),
 ]);
 
 const productionConfig = merge([
@@ -40,9 +42,13 @@ const developmentConfig = merge([
 ]);
 
 module.exports = (env) => {
+  let config = null;
   if (env === 'production') {
-    return merge(commonConfig, productionConfig);
+    config = merge(commonConfig, productionConfig);
   }
-
-  return merge(commonConfig, developmentConfig);
+  else {
+    config = merge(commonConfig, developmentConfig)
+  }
+  console.log(util.inspect(config, { depth: 5 }))
+  return config
 };
