@@ -5,13 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "start": "nodemon --watch ./config/webpack.config.js --exec \"webpack-dev-server --config ./config/webpack.config.js --env development\"",
+    "build": "webpack --env production"
   },
   "keywords": [],
   "author": "Taylor Xue <287776261@qq.com>",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
     "html-webpack-plugin": "^2.28.0",
-    "webpack": "^2.4.1"
+    "nodemon": "^1.11.0",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-merge": "^4.1.0"
   }
 }
