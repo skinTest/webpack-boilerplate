@@ -26,11 +26,11 @@ const commonConfig = merge([
       filename: '[name].js',
       publicPath: '/',
     },
-    // resolve: {
-    //   alias: {
-    //     vue: 'vue/dist/vue.js',
-    //   },
-    // },
+    resolve: {
+      alias: {
+        vue: 'vue/dist/vue.js',
+      },
+    },
   },
   parts.lintJavaScript({ include: PATHS.app }),
   parts.loadJavaScript({ include: PATHS.app }),
