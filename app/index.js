@@ -1,6 +1,22 @@
-// import 'style-loader!css-loader!./main.css';
-import './main.css';
+import Vue from 'vue'
 import component from './component';
+import { bake } from './shake';
+import hello from './components/hello.vue'
 
-document.body.appendChild(component());
+// test tree shaking
+bake();
 
+let a = () => {
+  console.log(123)
+  const abc = 'Hello Boy'
+  return 'Hello'
+}
+
+const test_variable = 'it\'s good'
+console.log(test_variable)
+
+// a()
+// document.body.appendChild(component());
+// export {a}
+
+new Vue(hello).$mount('#app')

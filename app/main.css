@@ -1,3 +1,8 @@
 body {
   background: cornsilk;
 }
+
+.red_btn {
+  color: red;
+  display: flex;
+}
