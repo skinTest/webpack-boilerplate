@@ -205,6 +205,11 @@ exports.setFreeVariable = (key, value) => {
   return {
     plugins: [
       new webpack.DefinePlugin(env),
+      // new webpack.DefinePlugin({
+      //   'process.env': {
+      //     NODE_ENV: JSON.stringify('production')
+      //   }
+      // }),
     ],
   };
 };
@@ -274,26 +279,76 @@ exports.setUpVueLoader = () => {
     },
   }
 }
-/*
-function generateLoaders (lang) {
-  laoders = [{
-    loader: 'css-loader',
-    options: {
-      minimize: isProd,
-      sourceMap: !isProd,
-    }
-  }]
 
-  // add the other language
-  if (lang.indexOf('css') !== -1) {
-    loaders.push({
-      loader: lang + '-loader',
-      options: {
-        sourceMap: !isProd
-      }
-    })
+exports.productionVue = () => {
+  const plugin = new ExtractTextPlugin({
+    filename: '[name]-vue-style.[contenthash:8].css',
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            loaders: {
+              less: plugin.extract({
+                use: [
+                  'css-loader',
+                  {
+                    loader: 'postcss-loader',
+                    options: {
+                      plugins: function () {
+                        return [
+                          require('precss'),
+                          require('autoprefixer')
+                        ];
+                      },
+                    },
+                  },
+                  'less-loader',
+                ],
+              }),
+              css: plugin.extract({
+                use: [
+                  'css-loader',
+                  {
+                    loader: 'postcss-loader',
+                    options: {
+                      plugins: function () {
+                        return [
+                          require('precss'),
+                          require('autoprefixer')
+                        ];
+                      },
+                    },
+                  },
+                ],
+              }),
+            },
+            postcss: [
+              require('autoprefixer')({
+                browsers: ['last 2 versions']
+              }),
+            ],
+          },
+        }
+      ],
+    },
+    plugins: [
+      plugin
+    ]
   }
-
-  return loaders
 }
-*/
+
+
+
+
+
+
+
+
+
+
+

@@ -28,7 +28,7 @@ const commonConfig = merge([
     },
     resolve: {
       alias: {
-        vue: 'vue/dist/vue.js',
+        'vue$': 'vue/dist/vue.common.js',
       },
     },
   },
@@ -44,6 +44,7 @@ const productionConfig = merge([
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
       filename: '[name].[chunkhash:8].js',
+      publicPath: '/',  // where we plublic the static files
     },
     plugins: [
       new webpack.HashedModuleIdsPlugin(),
@@ -106,20 +107,21 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[name].[hash:8].[ext]',
+      name: 'images/[name].[hash:8].[ext]',
     },
   }),
   parts.minifyJavaScript(),
-  parts.minifyCSS({
-    options: {
-      discardComments: {
-        removeAll: true,
-      },
-      // Run cssnano in safe mode to avoid
-      // potentially unsafe transformations.
-      safe: true,
-    },
-  }),
+  // parts.minifyCSS({
+  //   options: {
+  //     discardComments: {
+  //       removeAll: true,
+  //     },
+  //     // Run cssnano in safe mode to avoid
+  //     // potentially unsafe transformations.
+  //     safe: true,
+  //   },
+  // }),
+  parts.productionVue(),
   parts.clean(PATHS.build),
   parts.setFreeVariable(
     'process.env.NODE_ENV',
@@ -157,7 +159,7 @@ module.exports = (env) => {
     result = merge(commonConfig, developmentConfig);
   }
 
-  // console.log(util.inspect(result, { depth: 5 }));
+  console.log(util.inspect(result, { depth: null }));
 
   return result;
 };
