@@ -1,15 +1,15 @@
 {
-  "name": "project",
+  "name": "webpack-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "A front end boilerplate, following guidance of surviveJS, using webpack, vue, and less",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch webpack.config.js --watch webpack.parts.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production"
   },
-  "keywords": [],
-  "author": "Taylor Xue <287776261@qq.com>",
+  "keywords": ["webpack", "surviveJS", "vue", "front end"],
+  "author": "Taylor Xue <tracknsong@foxmail.com>",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.7.7",
