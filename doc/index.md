@@ -153,3 +153,9 @@ _note:_ You have to use CommonJS module definition style here as ES6 imports don
 if we lodash -> this is a [must](https://www.npmjs.com/package/lodash-webpack-plugin)
 
 
+how facebook, twitter organize their view file
+
+_components_ this is where our functional ui components live
+_containers_ this is where action handlers for our ui components live
+_screens_ technically these are just containers — but typically do more top level page fetching, and are less concerned with action handling.
+
