@@ -7,11 +7,12 @@ const merge = require('webpack-merge');
 
 const parts = require('./webpack.parts');
 
+// 使用绝对地址定义输出路径、入口文件路径。
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  style: path.join(__dirname, 'app', 'style.less'),
-  html_template: path.join(__dirname, 'app', 'index.ejs'),
-  html_static: path.join(__dirname, 'app', 'index.html'),
+  style: path.join(__dirname, 'app', 'styles','style.less'),
+  production_template: path.join(__dirname, 'app', 'template', 'index.ejs'),
+  dev_template: path.join(__dirname, 'app', 'template', 'index.html'),
   build: path.join(__dirname, 'build'),
 };
 
@@ -52,7 +53,7 @@ const productionConfig = merge([
         name: 'webpackManifest'
       }),
       new HtmlWebpackPlugin({
-        template: PATHS.html_template,
+        template: PATHS.production_template,
       }),
     ],
     // this file is used to record path input and output module ids and other composing information
@@ -133,7 +134,7 @@ const developmentConfig = merge([
   {
     plugins: [
       new HtmlWebpackPlugin({
-        template: PATHS.html_static,
+        template: PATHS.dev_template,
       }),
     ]
   },

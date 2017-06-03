@@ -75,7 +75,39 @@ $ docker run -it --rm -v "$PWD":"$PWD" -p 4000:80 ebiven/vue-cli bash
 $ docker exec -it "id of running container" bash
 ```
 
-这么的大家伙儿就可以用本地的代码仓库在稳定而统一的镜像环境中进行开发了
+搞定了环境之后让我们来建个代码仓库吧，然后开心的撸码（开心吗？）
+
+```bash
+$ mkdir webpack-demo
+$ cd webpack-demo
+$ npm init -y # -y generates *package.json*, skip for more control
+$ git init
+```
+
+安装 webpack， 虽然 webpack 可以全局安装，但是就着依赖稳定的原则，还是保证 webpack 的依赖在项目环境内保持稳定，所以 `` npm install webpack --save-dev # -D 如果你想少敲一点 ``, 其他的依赖也是同理。安装完成后我们搞定代码仓库的目录结构，各位可以自己去 git 上拉，或者锻炼一下手指的筋骨。
+
+```tree
+├── README.md                        # 快速跑起来看他
+├── app                              # 前端项目源代码，可能叫 src 更合适
+│   ├── api                          # api 的封装，暴露出一堆 Promise
+│   ├── vuex                         # vuex 状态管理文件
+│   ├── components                   # 原子级别的 UI 组件封装
+│   ├── containers                   # 有一定状态的组件封装
+│   ├── pages                        # 页面
+│   ├── template                     # 自动生成 html 的模板文件
+│   ├── styles                       # 所有的公共样式文件
+│   ├── assets                       # 所有的公共样式文件
+│   ├── libs                         # 一些前端公共库，如 swipe 一类
+│   ├── index.js                     # 项目入口文件
+│   └── postcss.config.js            # postCSS loader 的配置 hack
+├── build                            # 打包产出的文件
+├── doc                              # 文档
+│   ├── index.md                     # 我的狗屎心得
+│   └── note.md                      # 本篇
+├── package.json                     # npm 依赖管理；必备命令；项目简介
+├── webpack.config.js                # webpack 最终执行的配置
+└── webpack.parts.js                 # 为了实现一项功能的单元配置
+```
 
 
 

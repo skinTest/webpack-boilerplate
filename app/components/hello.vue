@@ -1,14 +1,11 @@
 <template>
   <div class="test">
-    <h2>HAHA</h2>
     <h1 class="hello">{{msg}}</h1>
-    <div>haha</div>
     <hi></hi>
   </div>
 </template>
 
 <script>
-console.log('in .vue file')
 import hi from './hi.vue'
 
 export default {
@@ -23,15 +20,6 @@ export default {
 
 <style lang="less">
 .hello {
-  color: red;
-}
-.test {
-  display: flex;
-}
-
-.test {
-  .hello {
-    font-weight: 300;
-  }
+  color: green;
 }
 </style>
