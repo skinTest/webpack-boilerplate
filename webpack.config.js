@@ -132,11 +132,12 @@ const productionConfig = merge([
 
 const developmentConfig = merge([
   {
+    devtool: 'cheap-source-map',
     plugins: [
       new HtmlWebpackPlugin({
         template: PATHS.dev_template,
       }),
-    ]
+    ],
   },
   parts.devServer({
     // Customize host/port here if needed
