@@ -56,7 +56,12 @@ const commonConfig = merge([
       },
     },
   },
-  parts.lintJavaScript({ include: PATHS.app }),
+  parts.lintJavaScript({
+    include: PATHS.app,
+    options: {
+      formatter: require("eslint-friendly-formatter"),
+    },
+  }),
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 

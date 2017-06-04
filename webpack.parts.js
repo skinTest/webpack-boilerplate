@@ -41,7 +41,7 @@ exports.devServer = ({ host, port, proxy } = {}) => ({
 
 /* --- --- --- JS --- --- --- */
 /*
- * 1. lint
+ * 1. lint JS and Vue
  * 2. load with babel
  */
 exports.lintJavaScript = ({ include, exclude, options }) => ({
@@ -49,11 +49,12 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
     rules: [
       {
         enforce: 'pre',
-        test: /\.js$/,
+        test: /\.(js|vue)$/,
         include,
         exclude,
-        loader: 'eslint-loader',
         options,
+        // lint 的具体配置在 .eslintrc.js 中
+        loader: 'eslint-loader',
       },
     ],
   },
@@ -66,14 +67,10 @@ exports.loadJavaScript = ({ include, exclude }) => ({
         test: /\.js$/,
         include,
         exclude,
-
         loader: 'babel-loader',
         options: {
           // Enable caching for improved performance during
           // development.
-          // It uses default OS directory by default. If you need
-          // something more custom, pass a path to it.
-          // I.e., { cacheDirectory: '<path>' }
           cacheDirectory: true,
         },
       },

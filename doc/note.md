@@ -61,7 +61,7 @@ _webpack 有哪些坑_
 
 ---
 
-## 开发
+## 基础开发
 要用 webpack 进行开发，首先，我们需要一个 [node 环境](https://nodejs.org/en/download/)， node 需要是最新的 LTS （长期稳定版本），因为本文的绝大部分配置都是用最新的 es 语法特性写的。如果想要更稳定的开发环境，推荐大家使用 Docker。正确安装 docker 后。
 
 ```bash
@@ -156,6 +156,14 @@ ref:
   * [bebel-polyfill 与 runtime 解释](https://segmentfault.com/q/1010000005596587?from=singlemessage&isappinstalled=1)
 
 
+
+### linting JS
+JS lint 工具选择了 [eslint](http://eslint.org/)。原因在于配置灵活，社区支持完善，同时支持 JSX 等格式。
+config 的形式使用文件配置形式 [.eslintrc.js](http://eslint.org/docs/user-guide/configuring#configuration-file-formats)
+如果要加载一个预设好的 config，如 airbnb ... 请[参考](http://eslint.org/docs/developer-guide/shareable-configs)
+[eslint-loader](https://github.com/MoOx/eslint-loader)
+可能需要进一步进行配置的功能 formatter
+
 ### 模块热加载 HMR -- hot module replacement
 要实现模块的热加载，需要完成以下工作：
 
@@ -171,11 +179,35 @@ HMR 的几个好处：
 * Tweak styling faster -- almost comparable to changing styles in the browser's debugger.
 
 
+### webpack dev server 注意事项
+如果要在局域网内访问 dev server，可以 `ifconfig | grep inet`
+当 WDS 的文件检测在某些版本的系统中不好使的情况下（老版本的 Ubuntu、 Windows、 Docker），可以采用 polling 的方式进行文件监测，配置如下。
+
+```js
+devServer: {
+  watchOptions: {
+    // Delay the rebuild after the first change
+    aggregateTimeout: 300,
+
+    // Poll using interval (in ms, accepts boolean too)
+    poll: 1000,
+  },
+},
+plugins: [
+  // Ignore node_modules so CPU usage with poll
+  // watching drops significantly.
+  new webpack.WatchIgnorePlugin([
+    path.join(__dirname, 'node_modules')
+  ]),
+]
+```
+
+WDS 可以作为 express 的中间键使用，配套 HMR 中间键。具体可查看官方文档。
 
 
+---
 
-
-
+## 样式
 
 
 

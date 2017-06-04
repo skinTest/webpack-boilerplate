@@ -7,7 +7,7 @@
 <script>
 export default {
   data: () => ({
-      msg: 'Hello World',
-    })
+    msg: 'Hello World',
+  }),
 }
 </script>
