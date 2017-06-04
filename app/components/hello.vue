@@ -7,6 +7,7 @@
 
 <script>
 import hi from './hi.vue'
+console.log('hello')
 
 export default {
   data: () => ({
