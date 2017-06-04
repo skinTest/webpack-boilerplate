@@ -6,28 +6,46 @@ const BabiliPlugin = require('babili-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 
-exports.devServer = ({ host, port } = {}) => ({
+/* --- --- --- dev server --- --- --- */
+
+/*
+ * 开发服务器配置
+ * doc: https://webpack.js.org/configuration/dev-server/#devserver
+ * what:
+ *   1. 配置信息展示、访问地址等基本行为
+ *   2. 配置 HMR（hot module replacement） 特性
+ * params:
+ *   host: Defaults to `localhost`, by webpack-dev-server
+ *   port: Defaults to 8080, by webpack-dev-server
+ *   proxy: 为 devserver 配置代理，[配置](https://webpack.js.org/configuration/dev-server/#devserver-proxy)[options原理](https://github.com/chimurai/http-proxy-middleware#options)
+ */
+exports.devServer = ({ host, port, proxy } = {}) => ({
   devServer: {
     historyApiFallback: true,
     stats: 'errors-only',
-    host, // Defaults to `localhost`
-    port, // Defaults to 8080
-    overlay: {
+    host,
+    port,
+    proxy,
+    overlay: {  // overlay 是一个 debug 工具，在
       errors: true,
       warnings: true,
     },
   },
 });
 
+/* --- --- --- JS --- --- --- */
+/*
+ * 1. lint
+ * 2. load with babel
+ */
 exports.lintJavaScript = ({ include, exclude, options }) => ({
   module: {
     rules: [
       {
+        enforce: 'pre',
         test: /\.js$/,
         include,
         exclude,
-        enforce: 'pre',
-
         loader: 'eslint-loader',
         options,
       },

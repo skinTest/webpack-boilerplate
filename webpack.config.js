@@ -19,7 +19,7 @@ const parts = require('./webpack.parts')
  * 4. 输出
  */
 
-// 使用绝对地址定义输出路径、入口文件路径。
+// 1. 使用绝对地址定义输出路径、入口文件路径。
 const PATHS = {
   app: path.join(__dirname, 'app'),
   style: path.join(__dirname, 'app', 'styles','style.less'),
@@ -29,12 +29,16 @@ const PATHS = {
 }
 
 
-//
+/* 2. 各个环境的公共配置
+ * 2.1 设定编译打包的出入口
+ * 2.2 解决 vue 的版本问题
+ * 2.3 对 es2015 进行支持（lint, load）
+ */
 const commonConfig = merge([
   {
     entry: {
-      app: PATHS.app,
-      style: PATHS.style,
+      app: ["babel-polyfill", PATHS.app],             // 业务逻辑入口
+      style: PATHS.style,         // 样式入口
     },
     output: {
       path: PATHS.dist,
@@ -43,7 +47,7 @@ const commonConfig = merge([
     },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.common.js',
+        'vue$': 'vue/dist/vue.common.js',     // vue.common.js 是给编译工具消费的 vue 版本
       },
     },
   },

@@ -121,6 +121,48 @@ $ git init
 webpack 提供了四种 sourcemap 的支持形式，他们精准度递增，但执行效率递减。
 [表格](https://webpack.js.org/configuration/devtool/)对各种 sourcemap 的表现进行了详细的分析
 
+### babel 编译
+babel 是现在开源社区中实现 es 未来特性支持的（几乎）标准解决方案，配合 webpack 使用过程中需要干如下几件事儿。
+
+* 使用 babel loader 加载 js 资源
+* 配置 babel 的编译机制
+
+babel 的工作原理同 webpack 相似，也是一个插件机制的东西，具体的配置方法可以查看文档，一下简单介绍我们使用的配置。
+[.babelrc 的配置方法](https://babeljs.io/docs/usage/babelrc/)
+[.babelrc 中的选项说明](https://babeljs.io/docs/usage/api/#options)
+
+```json5
+{
+  "presets": [                                  // 一套插件组合
+    [
+      "env",                                    // 使用 babel-presets-env
+      {                                         // 指定的具体环境 env
+        "modules": false,                       // 不转换 es6 模块，为了保障 tree shaking 机制。 tree shaking 由 webpack 在编译过程中通过静态分析实现。
+        "targets": {
+          "browsers": ["IE 8"]
+        }
+      }
+    ]
+  ],
+  "comments": false,                             // 在编译结果中干掉注释
+  "plugins": ["transform-runtime"],              // 防止 babel polyfill 的过程重复，减小最终产出代码的体积，为了完成对实例方法的支持，需要配合 babel-polyfill 进行使用
+}
+
+```
+
+ref:
+  * [babel-preset-env](https://github.com/babel/babel-preset-env#options)
+  * [bebel-polyfill](https://babeljs.io/docs/usage/polyfill/)
+  * [bebel-polyfill 与 runtime 解释](https://segmentfault.com/q/1010000005596587?from=singlemessage&isappinstalled=1)
+
+
+
+
+
+
+
+
+
 
 
 

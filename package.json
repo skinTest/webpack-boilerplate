@@ -8,7 +8,12 @@
     "start": "nodemon --watch webpack.config.js --watch webpack.parts.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production"
   },
-  "keywords": ["webpack", "surviveJS", "vue", "front end"],
+  "keywords": [
+    "webpack",
+    "surviveJS",
+    "vue",
+    "front end"
+  ],
   "author": "Taylor Xue <tracknsong@foxmail.com>",
   "license": "ISC",
   "devDependencies": {
