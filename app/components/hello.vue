@@ -1,5 +1,6 @@
 <template>
   <div class="test">
+    <h1>thi is so hot</h1>
     <h1 class="hello">{{msg}}</h1>
     <hi></hi>
   </div>
@@ -11,7 +12,7 @@ console.log('hello')
 
 export default {
   data: () => ({
-    msg: 'Hello Vue',
+    msg: 'Hello Another Vue',
   }),
   components: {
     hi,
@@ -20,7 +21,4 @@ export default {
 </script>
 
 <style lang="less">
-.hello {
-  color: green;
-}
 </style>

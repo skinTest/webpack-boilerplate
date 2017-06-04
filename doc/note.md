@@ -156,6 +156,20 @@ ref:
   * [bebel-polyfill 与 runtime 解释](https://segmentfault.com/q/1010000005596587?from=singlemessage&isappinstalled=1)
 
 
+### 模块热加载 HMR -- hot module replacement
+要实现模块的热加载，需要完成以下工作：
+
+1. WDS 需要在 hot mode 下运行
+2. webpack 要通过 HotModuleReplacementPlugin 给服务器提供热更新
+3. 浏览器需要执行一段特殊的脚本来提供热更新
+4. 浏览器需要通过 module.hot.accept 实现 HMR interface
+
+HMR 的几个好处：
+
+* Retain application state which is lost during a full reload.
+* Save valuable development time by only updating what's changed.
+* Tweak styling faster -- almost comparable to changing styles in the browser's debugger.
+
 
 
 

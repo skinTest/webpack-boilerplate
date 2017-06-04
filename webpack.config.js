@@ -28,6 +28,11 @@ const PATHS = {
   dist: path.join(__dirname, 'dist'),
 }
 
+const DOMAIN = {
+  host: 'localhost',
+  port: 3000,
+}
+
 
 /* 2. 各个环境的公共配置
  * 2.1 设定编译打包的出入口
@@ -130,16 +135,16 @@ const productionConfig = merge([
     },
   }),
   parts.minifyJavaScript(),
-  // parts.minifyCSS({
-  //   options: {
-  //     discardComments: {
-  //       removeAll: true,
-  //     },
-  //     // Run cssnano in safe mode to avoid
-  //     // potentially unsafe transformations.
-  //     safe: true,
-  //   },
-  // }),
+  parts.minifyCSS({
+    options: {
+      discardComments: {
+        removeAll: true,
+      },
+      // Run cssnano in safe mode to avoid
+      // potentially unsafe transformations.
+      safe: true,
+    },
+  }),
   parts.productionVue(),
   parts.clean(PATHS.dist),
   parts.setFreeVariable(
@@ -159,8 +164,8 @@ const developmentConfig = merge([
   },
   parts.devServer({
     // Customize host/port here if needed
-    host: process.env.HOST,
-    port: process.env.PORT || 3000,
+    host: DOMAIN.host,
+    port: DOMAIN.port,
   }),
   parts.loadCSS(),
   parts.loadLESS(),

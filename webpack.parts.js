@@ -21,6 +21,7 @@ const cssnano = require('cssnano');
  */
 exports.devServer = ({ host, port, proxy } = {}) => ({
   devServer: {
+    hot: true,
     historyApiFallback: true,
     stats: 'errors-only',
     host,
@@ -31,6 +32,11 @@ exports.devServer = ({ host, port, proxy } = {}) => ({
       warnings: true,
     },
   },
+  plugins: [
+    // Enable the plugin to let webpack communicate changes to WDS.
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
 });
 
 /* --- --- --- JS --- --- --- */
