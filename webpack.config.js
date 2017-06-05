@@ -172,7 +172,12 @@ const productionConfig = merge([
       safe: true,
     },
   }),
-  parts.productionVue(),
+  // parts.productionVue(),
+  parts.loadVue({
+    sourceMap: false,
+    extract: true,
+    options: [ 'less' ],
+  }),
   parts.clean(PATHS.dist),
   parts.setFreeVariable(
     'process.env.NODE_ENV',
@@ -198,7 +203,12 @@ const developmentConfig = merge([
   parts.loadCSS(),
   parts.loadLESS(),
   parts.loadImages(),
-  parts.setUpVueLoader(),
+  // parts.setUpVueLoader(),
+  parts.loadVue({
+    sourceMap: true,
+    extract: false,
+    options: [ 'less' ],
+  }),
 ]);
 
 module.exports = (env) => {

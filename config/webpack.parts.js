@@ -251,7 +251,7 @@ exports.setFreeVariable = (key, value) => {
   };
 };
 
-/* --- --- --- CSS --- --- --- */
+/* --- --- --- VUE --- --- --- */
 /*
 * get vue module system in
 * 1. hook up
@@ -380,6 +380,8 @@ exports.productionVue = () => {
   }
 }
 
+const loadVue = require('./vue.parts')
+exports.loadVue = loadVue
 
 
 

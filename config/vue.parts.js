@@ -65,7 +65,7 @@ function loaderOptionGenerator ({ sourceMap, options, extract, plugin }) {
 }
 
 // 最终生成的 loader options
-var loadVue = ({ sourceMap, extract, options }) => {
+module.exports = ({ sourceMap, extract, options }) => {
   const extractPlugin = new ExtractTextPlugin({ filename: '[name]-vue-style.[contenthash:8].css' })
   var vueLoaderOptions = extract
                        ? loaderOptionGenerator({ sourceMap, options, extract, plugin: extractPlugin })
@@ -109,31 +109,31 @@ var loadVue = ({ sourceMap, extract, options }) => {
 // })
 // ,{depth: null}))
 
-console.log(util.inspect(loadVue({
-  sourceMap: false,
-  extract: true,
-  options: [
-    'less',
-    {
-      lang: 'sass',
-      options: {
-        indent: false
-      }
-    }
-  ]
-}),{ depth: null }))
-console.log('---------\r\n\r\n')
+// console.log(util.inspect(loadVue({
+//   sourceMap: false,
+//   extract: true,
+//   options: [
+//     'less',
+//     {
+//       lang: 'sass',
+//       options: {
+//         indent: false
+//       }
+//     }
+//   ]
+// }),{ depth: null }))
+// console.log('---------\r\n\r\n')
 
-console.log(util.inspect(loadVue({
-  sourceMap: true,
-  extract: false,
-  options: [
-    'less',
-    {
-      lang: 'sass',
-      options: {
-        indent: false
-      }
-    }
-  ]
-}),{ depth: null }))
+// console.log(util.inspect(loadVue({
+//   sourceMap: true,
+//   extract: false,
+//   options: [
+//     'less',
+//     {
+//       lang: 'sass',
+//       options: {
+//         indent: false
+//       }
+//     }
+//   ]
+// }),{ depth: null }))
