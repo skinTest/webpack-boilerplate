@@ -43,6 +43,7 @@ exports.devServer = ({ host, port, proxy } = {}) => ({
 /*
  * 1. lint JS and Vue
  * 2. load with babel
+ * 3. minify JS
  */
 exports.lintJavaScript = ({ include, exclude, options }) => ({
   module: {
@@ -78,6 +79,20 @@ exports.loadJavaScript = ({ include, exclude }) => ({
   },
 });
 
+exports.minifyJavaScript = () => ({
+  plugins: [
+    new BabiliPlugin(),
+  ],
+});
+
+/* --- --- --- CSS --- --- --- */
+/*
+ * 1. load style
+ * 2. extract style
+ * 3. TODO: sprite
+ * 4. minify style
+ * 5. extract style
+ */
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
     rules: [
@@ -140,6 +155,16 @@ exports.loadLESS = ({ include, exclude } = {}) => ({
   },
 });
 
+exports.minifyCSS = ({ options }) => ({
+  plugins: [
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: options,
+      canPrint: false,
+    }),
+  ],
+});
+
 exports.extractCSS = ({ include, exclude, use, name, test } = {}) => {
   // Output extracted CSS to a file
   const plugin = new ExtractTextPlugin({
@@ -182,6 +207,11 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
   },
 });
 
+exports.provideGlobalLibs = (libs = {}) => ({
+  plugins: [
+    new webpack.ProvidePlugin(libs)
+  ],
+})
 
 exports.extractBundles = (bundles) => ({
   plugins: bundles.map((bundle) => (
@@ -203,21 +233,7 @@ exports.attachRevision = () => ({
   ],
 });
 
-exports.minifyJavaScript = () => ({
-  plugins: [
-    new BabiliPlugin(),
-  ],
-});
 
-exports.minifyCSS = ({ options }) => ({
-  plugins: [
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: options,
-      canPrint: false,
-    }),
-  ],
-});
 
 exports.setFreeVariable = (key, value) => {
   const env = {};

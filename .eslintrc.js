@@ -21,6 +21,10 @@ module.exports = {
   plugins: [
     'html'
   ],
+  globals: {
+    "_": true,
+    "$": true,
+  },
   // 最有力的规则配置。
   rules: {
     'comma-dangle': ['error', 'always-multiline'],

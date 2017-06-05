@@ -9,5 +9,8 @@ export default {
   data: () => ({
     msg: 'Hello World',
   }),
+  mounted: () => {
+    console.log('try zepto ' + $('h1').text())
+  },
 }
 </script>

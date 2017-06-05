@@ -12,4 +12,10 @@ xhr.onreadystatechange = function (res) {
 }
 xhr.send()
 
+var a = {
+  a: 123,
+}
+
+console.log('try lodash', _.get(a, 'a'))
+
 new Vue(hello).$mount('#app')

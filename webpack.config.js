@@ -41,6 +41,12 @@ const PROXY = {
   '/home': 'http://rapapi.org/mockjsdata/20109'
 }
 
+// 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
+const GLOBALLIBS = {
+  $: 'zepto-webpack',
+  _: 'lodash',
+}
+
 
 /* --- --- --- config composition --- --- --- */
 /* 1. 各个环境的公共配置
@@ -72,6 +78,7 @@ const commonConfig = merge([
     },
   }),
   parts.loadJavaScript({ include: PATHS.app }),
+  parts.provideGlobalLibs(GLOBALLIBS),
 ]);
 
 /* 2. 生成环境配置
@@ -82,7 +89,7 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue'],
+      vendor: ['vue', 'lodash', 'zepto'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
@@ -90,6 +97,7 @@ const productionConfig = merge([
       publicPath: '/',
     },
     plugins: [
+      // 解决浏览器缓存问题
       new webpack.HashedModuleIdsPlugin(),
       new InlineManifestWebpackPlugin({
         name: 'webpackManifest'

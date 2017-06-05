@@ -60,6 +60,9 @@
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
     "core-js": "^2.4.1",
-    "vue": "^2.3.3"
+    "lodash": "^4.17.4",
+    "vue": "^2.3.3",
+    "zepto": "^1.2.0",
+    "zepto-webpack": "^1.2.1"
   }
 }
