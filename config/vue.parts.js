@@ -7,129 +7,133 @@
  *    - parameter@langs: string, dot split string for language used eg: 'less,css'
  * 2. style transform
  */
-
+const util = require('util')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-exports.setUpVueLoader = () => {
-  var loader_optionos = {
-    loaders: {
-      css: [
-        'vue-style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            minimize: false,
-            sourceMap: true
-          }
-        }
-        ],
-        postcss: [
-        'vue-style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            minimize: false,
-            sourceMap: true
-          }
-        }
-      ],
-      less: [
-      'vue-style-loader',
-      {
-        loader: 'css-loader',
-        options: {
+function loaderOptionGenerator ({ sourceMap, options, extract, plugin }) {
+  var baseLoaderOption = [
+    {
+      loader: 'css-loader',
+      options: {
           minimize: false,
-          sourceMap: true
-        }
-      },
-      {
-        loader: 'less-loader',
-        options: {
-          sourceMap: true
-        }
+          sourceMap: sourceMap,
       }
-      ],
     },
-    postcss: [
-    require('autoprefixer')({
-      browsers: ['last 2 versions']
-    }),
-    ],
-  }
+  ]
+  var baseLoaders = ['css', 'postcss']
+  var loaders = options ? options.concat(baseLoaders) : baseLoaders
+  var result = {}
 
-  return {
-    module: {
-      rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: loader_optionos,
-      },
-      ],
-    },
-  }
+  loaders.forEach((loader) => {
+    let loaderOption = []
+    let lang = typeof(loader) === 'string' ? loader : loader.lang
+
+    // 处理 loader 自身配置
+    if (baseLoaders.indexOf(loader) !== -1) {
+      loaderOption = baseLoaderOption
+    }
+    else if (typeof(loader) === 'string') {
+      loaderOption = baseLoaderOption.concat({
+        loader: lang + '-loader',
+        options: { sourceMap },
+      })
+    }
+    else if (typeof(loader) === 'object') {
+      loaderOption = baseLoaderOption.concat({
+        loader: lang + '-loader',
+        options: Object.assign({sourceMap: sourceMap}, loader.options),
+      })
+    }
+    else {
+      console.warn('vue loader options item must be string or object, read code in vue.part.js')
+    }
+
+    // 处理 loader 与 extract 关系
+    if (extract) {
+      result[lang] = plugin.extract({
+        use: loaderOption,
+        fallback: 'vue-style-loader'
+      })
+    }
+    else {
+      result[lang] = ['vue-style-loader'].concat(loaderOption)
+    }
+  })
+
+  util.inspect(result, {depth: null})
+  return result
 }
 
-exports.productionVue = () => {
-  const plugin = new ExtractTextPlugin({
-    filename: '[name]-vue-style.[contenthash:8].css',
-  });
+// 最终生成的 loader options
+var loadVue = ({ sourceMap, extract, options }) => {
+  const extractPlugin = new ExtractTextPlugin({ filename: '[name]-vue-style.[contenthash:8].css' })
+  var vueLoaderOptions = extract
+                       ? loaderOptionGenerator({ sourceMap, options, extract, plugin: extractPlugin })
+                       : loaderOptionGenerator({ sourceMap, options, extract })
 
   return {
     module: {
       rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            less: plugin.extract({
-              use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: function () {
-                    return [
-                    require('precss'),
-                    require('autoprefixer')
-                    ];
-                  },
-                },
-              },
-              'less-loader',
-              ],
-            }),
-            css: plugin.extract({
-              use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: function () {
-                    return [
-                    require('precss'),
-                    require('autoprefixer')
-                    ];
-                  },
-                },
-              },
-              ],
-            }),
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            loaders: vueLoaderOptions,
+            postcss: [
+              require('autoprefixer')({
+                browsers: ['last 2 versions'],
+              }),
+            ],
           },
-          postcss: [
-          require('autoprefixer')({
-            browsers: ['last 2 versions']
-          }),
-          ],
         },
-      }
-      ],
+      ]
     },
-    plugins: [
-      plugin
-    ]
+    plugins: extract ? [extractPlugin] : [],
   }
 }
 
-function style_loader () {}
+// var extractPlugin = new ExtractTextPlugin({ filename: '[name]-vue-style.[contenthash:8].css' })
+// console.log(util.inspect(loaderOptionGenerator({
+//   sourceMap: false,
+//   extract: true,
+//   options: [
+//     'less',
+//     {
+//       lang: 'sass',
+//       options: {
+//         indent: false
+//       }
+//     }
+//   ],
+//   plugin: extractPlugin
+// })
+// ,{depth: null}))
+
+console.log(util.inspect(loadVue({
+  sourceMap: false,
+  extract: true,
+  options: [
+    'less',
+    {
+      lang: 'sass',
+      options: {
+        indent: false
+      }
+    }
+  ]
+}),{ depth: null }))
+console.log('---------\r\n\r\n')
+
+console.log(util.inspect(loadVue({
+  sourceMap: true,
+  extract: false,
+  options: [
+    'less',
+    {
+      lang: 'sass',
+      options: {
+        indent: false
+      }
+    }
+  ]
+}),{ depth: null }))
