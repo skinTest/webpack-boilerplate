@@ -11,14 +11,16 @@ const merge = require('webpack-merge')
 // webpack 的配置小仓库
 const parts = require('./webpack.parts')
 
-/*  ----------------------------------------------------------------- *
- * 配置分为三个部分
+/* --- --- --- config --- --- --- */
+/* 配置分为三个部分
+ * 0. 配置当中用到的常量
  * 1. 文件绝对路径
  * 2. 所有环境的公共配置
  * 3. 分环境的配置整合 development, production
  * 4. 输出
  */
 
+/* --- --- --- config const --- --- --- */
 // 1. 使用绝对地址定义输出路径、入口文件路径。
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -28,16 +30,23 @@ const PATHS = {
   dist: path.join(__dirname, 'dist'),
 }
 
+// 定义开发域名以及端口
 const DOMAIN = {
   host: 'localhost',
   port: 3000,
 }
 
+// 定义开发过程中的 api 代理
+const PROXY = {
+  '/home': 'http://rapapi.org/mockjsdata/20109'
+}
 
-/* 2. 各个环境的公共配置
- * 2.1 设定编译打包的出入口
- * 2.2 解决 vue 的版本问题
- * 2.3 对 es2015 进行支持（lint, load）
+
+/* --- --- --- config composition --- --- --- */
+/* 1. 各个环境的公共配置
+ * 1.1 设定编译打包的出入口
+ * 1.2 解决 vue 的版本问题
+ * 1.3 对 es2015 进行支持（lint, load）
  */
 const commonConfig = merge([
   {
@@ -65,6 +74,11 @@ const commonConfig = merge([
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
+/* 2. 生成环境配置
+ * 1.1 设定编译打包的出入口
+ * 1.2 解决 vue 的版本问题
+ * 1.3 对 es2015 进行支持（lint, load）
+ */
 const productionConfig = merge([
   {
     entry: {
@@ -73,7 +87,7 @@ const productionConfig = merge([
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
       filename: '[name].[chunkhash:8].js',
-      publicPath: '/',  // where we plublic the static files
+      publicPath: '/',
     },
     plugins: [
       new webpack.HashedModuleIdsPlugin(),
@@ -171,6 +185,7 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: DOMAIN.host,
     port: DOMAIN.port,
+    proxy: PROXY,
   }),
   parts.loadCSS(),
   parts.loadLESS(),
