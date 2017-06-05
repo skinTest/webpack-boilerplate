@@ -8,17 +8,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin') // 生成 index.html �
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 const merge = require('webpack-merge')
 
-// webpack 的配置小仓库
-const parts = require('./webpack.parts')
+// webpack 的配置仓库
+const parts = require('./config/webpack.parts')
+
 
 /* --- --- --- config --- --- --- */
-/* 配置分为三个部分
- * 0. 配置当中用到的常量
- * 1. 文件绝对路径
- * 2. 所有环境的公共配置
- * 3. 分环境的配置整合 development, production
- * 4. 输出
+/* 配置分为两个部分
+ * 1. 配置当中用到的常量
+ * 2. 具体的配置
+ * 3. 输出
  */
+
 
 /* --- --- --- config const --- --- --- */
 // 1. 使用绝对地址定义输出路径、入口文件路径。
