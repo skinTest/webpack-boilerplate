@@ -1,34 +1,71 @@
 var argv = require('yargs').argv || {}
-var ghpages = require('gh-pages');
-var path = require('path');
+var ghpages = require('gh-pages')
+var path = require('path')
+var util = require('util')
+var _ = require('lodash')
 
-var baseConfig
+// console style
+var chalk = require('chalk')
 
+var webpackConfig = require('./webpack.config.entry').productionConfig
+var webpack = require('webpack')
+
+
+/* --- --- --- config --- --- --- */
 /*
- * 默认选项
- * 配置选项说明在 https://github.com/tschaub/gh-pages
+ * 1. webpack 编译配置
+ * 2. 发布地址配置
  */
-var config = {
-  repo: 'https://github.com/skinTest/webpack-boilerplate.git'
-}
 
-/*
- * 1. 开发机配置
- * 2. 上线配置
- */
+ // 1. webpack config
 switch (argv.dest) {
   case 'test':
-
+    _.set(webpackConfig, 'output.publicPath', '/webpack-boilerplate/')
     break;
   case 'production':
     break;
 }
 
-ghpages.publish(path.join(__dirname, '..', 'dist'), config, function(err) {
-  if (err) {
-    console.log(err)
-  }
-  else {
-    console.log('deployed')
-  }
-});
+// 2. deploy config -- 配置选项参见 -- https://www.npmjs.com/package/gh-pages
+var deployConfig = {
+  repo: 'https://github.com/skinTest/webpack-boilerplate.git'
+}
+
+// 3. 配置 babel 运行环境
+process.env.BABEL_ENV = 'production'
+
+/* --- --- --- webpack bundle --- --- --- */
+/*
+ * 1. 配置 babel 环境变量
+ * 2. compile
+ */
+
+new Promise (function (resolve, reject) {
+  webpack(webpackConfig, function (err, stats) {
+    if (err) {
+      reject(err)
+    }
+
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n\n')
+    resolve('success')
+  })
+})
+.then(function (res) {
+  ghpages.publish(path.join(__dirname, '..', 'dist'), deployConfig, function(err) {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      console.log(chalk.yellow('deployed to the server'))
+    }
+  });
+})
+.catch(function (err) {
+  throw err
+})

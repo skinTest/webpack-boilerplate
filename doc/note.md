@@ -227,13 +227,21 @@ import _ from 'lodash'
 ---
 
 ## deploy
+测试机: npm run deploy_test
+原理是在 webpack 编译完成后，回调函数内用 gh-pages 发送到了一个远程的 git 仓库，可以理解为如下命令，实现上参考 config/deploy.js
 
-how to delete a remote and a local branch
+```bash
+webpack
+gh-pages -d dest
+```
 
+### how to delete a remote and a local branch
 ```bash
 $ git push origin --delete <branch_name>
 $ git branch -d <branch_name>
 ```
+
+
 
 
 
