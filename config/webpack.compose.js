@@ -211,20 +211,7 @@ const developmentConfig = merge([
   }),
 ]);
 
-exports.cliConfig = (env) => {
-  process.env.BABEL_ENV = env;
-  var result = null
-
-  if (env === 'production') {
-    result =  merge(commonConfig, productionConfig);
-  }
-  else {
-    result = merge(commonConfig, developmentConfig);
-  }
-
-  console.log(util.inspect(result, { depth: null }));
-
-  return result;
-};
-
-exports.productionConfig = merge(commonConfig, productionConfig);
+// export the config
+exports.common = commonConfig
+exports.development = developmentConfig
+exports.production = productionConfig

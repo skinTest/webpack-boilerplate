@@ -233,8 +233,6 @@ exports.attachRevision = () => ({
   ],
 });
 
-
-
 exports.setFreeVariable = (key, value) => {
   const env = {};
   env[key] = JSON.stringify(value);
@@ -242,11 +240,6 @@ exports.setFreeVariable = (key, value) => {
   return {
     plugins: [
       new webpack.DefinePlugin(env),
-      // new webpack.DefinePlugin({
-      //   'process.env': {
-      //     NODE_ENV: JSON.stringify('production')
-      //   }
-      // }),
     ],
   };
 };
@@ -258,137 +251,6 @@ exports.setFreeVariable = (key, value) => {
 *    - parameter@langs: string, dot split string for language used eg: 'less,css'
 * 2. style transform
 */
-exports.setUpVueLoader = () => {
-  var loader_optionos = {
-    loaders: {
-      css: [
-          'vue-style-loader',
-          {
-              loader: 'css-loader',
-              options: {
-                  minimize: false,
-                  sourceMap: true
-              }
-          }
-      ],
-      postcss: [
-          'vue-style-loader',
-          {
-              loader: 'css-loader',
-              options: {
-                  minimize: false,
-                  sourceMap: true
-              }
-          }
-      ],
-      less: [
-          'vue-style-loader',
-          {
-              loader: 'css-loader',
-              options: {
-                  minimize: false,
-                  sourceMap: true
-              }
-          },
-          {
-              loader: 'less-loader',
-              options: {
-                  sourceMap: true
-              }
-          }
-      ],
-    },
-    postcss: [
-      require('autoprefixer')({
-        browsers: ['last 2 versions']
-      }),
-    ],
-  }
-
-  return {
-    module: {
-      rules: [
-        {
-          test: /\.vue$/,
-          loader: 'vue-loader',
-          options: loader_optionos,
-        },
-      ],
-    },
-  }
-}
-
-exports.productionVue = () => {
-  const plugin = new ExtractTextPlugin({
-    filename: '[name]-vue-style.[contenthash:8].css',
-  });
-
-  return {
-    module: {
-      rules: [
-        {
-          test: /\.vue$/,
-          loader: 'vue-loader',
-          options: {
-            loaders: {
-              less: plugin.extract({
-                use: [
-                  'css-loader',
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      plugins: function () {
-                        return [
-                          require('precss'),
-                          require('autoprefixer')
-                        ];
-                      },
-                    },
-                  },
-                  'less-loader',
-                ],
-              }),
-              css: plugin.extract({
-                use: [
-                  'css-loader',
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      plugins: function () {
-                        return [
-                          require('precss'),
-                          require('autoprefixer')
-                        ];
-                      },
-                    },
-                  },
-                ],
-              }),
-            },
-            postcss: [
-              require('autoprefixer')({
-                browsers: ['last 2 versions']
-              }),
-            ],
-          },
-        }
-      ],
-    },
-    plugins: [
-      plugin
-    ]
-  }
-}
-
-const loadVue = require('./vue.parts')
+const loadVue = require('./parts.vue')
 exports.loadVue = loadVue
-
-
-
-
-
-
-
-
-
 

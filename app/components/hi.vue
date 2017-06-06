@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="header">{{msg}}</h1>
+    <h2>pink floyd</h2>
   </div>
 </template>
 

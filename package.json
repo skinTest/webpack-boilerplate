@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch webpack.config.js --watch ./config/webpack.parts.js --exec \"webpack-dev-server --env development\"",
-    "build": "webpack --env production",
+    "start": "nodemon --watch ./config --exec \"webpack-dev-server --config ./config/webpack.interface.js --env development\"",
+    "build": "webpack --config ./config/webpack.interface.js --env production",
     "deploy_test": "node ./config/deploy --dest=test"
   },
   "keywords": [

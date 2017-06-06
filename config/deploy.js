@@ -7,8 +7,9 @@ var _ = require('lodash')
 // console style
 var chalk = require('chalk')
 
-var webpackConfig = require('./webpack.config.entry').productionConfig
 var webpack = require('webpack')
+var merge = require('webpack-merge')
+var sourceConfig = require('./webpack.compose.js')
 
 
 /* --- --- --- config --- --- --- */
@@ -16,7 +17,7 @@ var webpack = require('webpack')
  * 1. webpack 编译配置
  * 2. 发布地址配置
  */
-
+var webpackConfig = merge(sourceConfig.common, sourceConfig.production)
  // 1. webpack config
 switch (argv.dest) {
   case 'test':
