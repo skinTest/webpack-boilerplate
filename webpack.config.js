@@ -89,7 +89,7 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue', 'lodash', 'zepto'],
+      vendor: ['vue', 'lodash', 'zepto-webpack'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
