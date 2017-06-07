@@ -44,13 +44,15 @@ _全局库：开发中不需要在文件中单独引入，就可使用的库。_
 
 * 开发配置
   1. 文档与 mock 服务器维护 -- 这个事儿 @后端同学
-  2. 本地服务器代理配置  `webpack.compose.js` `const PROXY` ，[配置选项](https://webpack.js.org/configuration/dev-server/#devserver-proxy)，代理原理是在本地开发服务器（WDS 是个基于 express 框架的服务器），中间加了个[代理中间键](https://github.com/chimurai/http-proxy-middleware)
+  2. 本地服务器代理配置  `webpack.compose.js` `const PROXY` ，[地址配置](https://webpack.js.org/configuration/dev-server/#devserver-proxy)，代理原理是在本地开发服务器（WDS 是个基于 express 框架的服务器），中间加了个[代理中间键](https://github.com/chimurai/http-proxy-middleware)
+* TODO 需要和前端资源服务器进行调试，确定在前端服务器中，请求能够正常。
 * 全局
   1. 封装 [ajax](http://zeptojs.com/#ajax) 方法
   2. 提供 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) 交互支持，解决嵌套噩梦；
   3. 提供公共的错误处理方法，视觉交互封装；
   4. 提供统一的请求地址管理，如果所有的 api 都在一个地址下面，然后靠参数区分，那就没这个事儿了。
 * 单个 api 方面，是对处理工程的封装，包括接口默认参数配置，参数传递方式封装；返回值格式校验；返回数据格式调整；错误分类，错误数据整理。建议将接口按照业务逻辑组织，最终在 api/index.js 中统一输出；或者按业务逻辑分文件组织。
+
 
 ### ajax 封装
 Promise 使用了 Babel 提供的 runtime ，无需再单独入。 ajax 方法使用 zepto 库中提供的。需要封装如下伪代码。
@@ -76,6 +78,7 @@ export function post (url, data) {
   })
 }
 ```
+
 
 ### api 编写
 丑话说在前面，都是伪代码。
@@ -124,7 +127,7 @@ export function apiFunc1A (parameters) {
 }
 ```
 
-
+---
 
 
 

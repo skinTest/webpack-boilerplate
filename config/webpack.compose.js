@@ -66,8 +66,17 @@ const commonConfig = merge([
       publicPath: '/',
     },
     resolve: {
+      extensions: ['.js', '.vue', '.less', '.json'],
       alias: {
         'vue$': 'vue/dist/vue.common.js',     // vue.common.js 是给编译工具消费的 vue 版本
+        'app': PATHS.app,
+        'api': path.resolve(PATHS.app, 'api'),
+        'assets': path.resolve(PATHS.app, 'assets'),
+        'components': path.resolve(PATHS.app, 'components'),
+        'containers': path.resolve(PATHS.app, 'containers'),
+        'vuex': path.resolve(PATHS.app, 'vuex'),
+        'libs': path.resolve(PATHS.app, 'libs'),
+        'pages': path.resolve(PATHS.app, 'pages'),
       },
     },
   },
