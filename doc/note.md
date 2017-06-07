@@ -210,6 +210,36 @@ WDS 可以作为 express 的中间键使用，配套 HMR 中间键。具体可�
 ## 样式
 
 
+---
+
+## 公共包管理
+
+### lodash && zepto 全局引用包管理
+`_` `$` 这是 js 界内最牛逼的两个符号，没有之一，为了方便引用，换句话说，不用在每次使用时，都得加上如下代码。项目中使用了 webpack.providePlugin, 配置写在了 `parts.provideGlobalLibs`。同时为了兼容 eslint 中的 [no-undef](http://eslint.org/docs/rules/no-undef) 规则，需要在 .eslintrc.js 中配置 globals，来避免冲突。
+
+```js
+import $ from 'zepto-webpack'
+import _ from 'lodash'
+```
+考虑到 jquery 库中的冗余，选择了 [zepto](http://zeptojs.com/)。方便 webpack 消费，所以使用了 zepto-webpack
+
+
+---
+
+## deploy
+测试机: npm run deploy_test
+原理是在 webpack 编译完成后，回调函数内用 gh-pages 发送到了一个远程的 git 仓库，可以理解为如下命令，实现上参考 config/deploy.js
+
+```bash
+webpack
+gh-pages -d dest
+```
+
+### how to delete a remote and a local branch
+```bash
+$ git push origin --delete <branch_name>
+$ git branch -d <branch_name>
+```
 
 
 

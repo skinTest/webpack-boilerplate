@@ -9,7 +9,7 @@ const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 const merge = require('webpack-merge')
 
 // webpack 的配置仓库
-const parts = require('./config/webpack.parts')
+const parts = require('./webpack.parts')
 
 
 /* --- --- --- config --- --- --- */
@@ -23,11 +23,11 @@ const parts = require('./config/webpack.parts')
 /* --- --- --- config const --- --- --- */
 // 1. 使用绝对地址定义输出路径、入口文件路径。
 const PATHS = {
-  app: path.join(__dirname, 'app'),
-  style: path.join(__dirname, 'app', 'styles','style.less'),
-  pro_tpl: path.join(__dirname, 'app', 'template', 'index.ejs'),
-  dev_tpl: path.join(__dirname, 'app', 'template', 'index.html'),
-  dist: path.join(__dirname, 'dist'),
+  app: path.join(__dirname, '..', 'app'),
+  style: path.join(__dirname, '..', 'app', 'styles','style.less'),
+  pro_tpl: path.join(__dirname, '..', 'app', 'template', 'index.ejs'),
+  dev_tpl: path.join(__dirname, '..', 'app', 'template', 'index.html'),
+  dist: path.join(__dirname, '..', 'dist'),
 }
 
 // 定义开发域名以及端口
@@ -172,7 +172,6 @@ const productionConfig = merge([
       safe: true,
     },
   }),
-  // parts.productionVue(),
   parts.loadVue({
     sourceMap: false,
     extract: true,
@@ -211,18 +210,7 @@ const developmentConfig = merge([
   }),
 ]);
 
-module.exports = (env) => {
-  process.env.BABEL_ENV = env;
-  var result = null
-  console.log('env:', env);
-  if (env === 'production') {
-    result =  merge(commonConfig, productionConfig);
-  }
-  else {
-    result = merge(commonConfig, developmentConfig);
-  }
-
-  console.log(util.inspect(result, { depth: null }));
-
-  return result;
-};
+// export the config
+exports.common = commonConfig
+exports.development = developmentConfig
+exports.production = productionConfig

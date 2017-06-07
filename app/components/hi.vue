@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{msg}}</h1>
+    <h1 class="header">{{msg}}</h1>
+    <h2>pink floyd</h2>
   </div>
 </template>
 
@@ -14,3 +15,9 @@ export default {
   },
 }
 </script>
+
+<style lang="less" scoped>
+.header {
+  color: pink;
+}
+</style>
