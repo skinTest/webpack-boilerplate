@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import hello from './components/hello.vue'
 
+
 var xhr = new XMLHttpRequest()
 var method = 'GET'
 // var url = 'http://rapapi.org/mockjsdata/20109/home'

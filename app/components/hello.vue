@@ -1,7 +1,7 @@
 <template>
   <div class="test">
     <h1>thi is so hot</h1>
-    <h1 class="hello">{{msg}}</h1>
+    <h1 class="hello"  id='a'>{{msg}}</h1>
     <hi></hi>
   </div>
 </template>
@@ -21,4 +21,7 @@ export default {
 </script>
 
 <style lang="less">
+#a {
+  background-image: url('~Assets/1.png');
+}
 </style>

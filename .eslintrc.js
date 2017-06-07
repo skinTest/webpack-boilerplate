@@ -27,10 +27,10 @@ module.exports = {
   },
   // 最有力的规则配置。
   rules: {
-    'comma-dangle': ['error', 'always-multiline'],
-    indent: ['error', 2],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
+    'comma-dangle': [0, 'always-multiline'],
+    indent: [0, 2],
+    'linebreak-style': [0, 'unix'],
+    quotes: [0, 'single'],
     semi: 0,
     'no-unused-vars': 0,
     'no-console': 0,

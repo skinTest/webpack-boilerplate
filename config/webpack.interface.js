@@ -17,7 +17,7 @@ module.exports = (env) => {
     throw 'env be either production or development'
   }
 
-  console.log(util.inspect(result, {depth: null}))
+  // console.log(util.inspect(result, {depth: null}))
 
   return result
 }
