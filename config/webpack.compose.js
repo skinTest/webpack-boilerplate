@@ -172,7 +172,6 @@ const productionConfig = merge([
       safe: true,
     },
   }),
-  // parts.productionVue(),
   parts.loadVue({
     sourceMap: false,
     extract: true,

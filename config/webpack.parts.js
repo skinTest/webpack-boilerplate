@@ -5,6 +5,7 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
+const path = require('path')
 
 /* --- --- --- dev server --- --- --- */
 
@@ -219,9 +220,9 @@ exports.extractBundles = (bundles) => ({
   )),
 });
 
-exports.clean = (path) => ({
+exports.clean = (dest) => ({
   plugins: [
-    new CleanWebpackPlugin([path]),
+    new CleanWebpackPlugin([dest], { root: path.resolve(__dirname , '..'), verbose: true }),
   ],
 });
 
