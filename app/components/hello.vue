@@ -2,13 +2,12 @@
   <div class="test">
     <h1>thi is so hot</h1>
     <h1 class="hello"  id='a'>{{msg}}</h1>
-    <hi></hi>
+    <hi :prop-a="'some string'"></hi>
   </div>
 </template>
 
 <script>
 import hi from './hi.vue'
-console.log('hello')
 
 export default {
   data: () => ({
