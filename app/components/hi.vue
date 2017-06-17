@@ -16,8 +16,10 @@ export default {
       type: String,
     },
   },
-  mounted: () => {
+  mounted () {
     console.log('try zepto ' + $('h1').text())
+    console.log(this)
+    console.log(this.propA)
   },
 }
 </script>
