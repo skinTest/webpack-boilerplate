@@ -67,6 +67,7 @@
     "core-js": "^2.4.1",
     "lodash": "^4.17.4",
     "vue": "^2.3.3",
+    "vue-router": "^2.5.3",
     "zepto": "^1.2.0",
     "zepto-webpack": "^1.2.1"
   }
