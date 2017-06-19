@@ -3,9 +3,8 @@
     <test-rate
       v-for="(property, index) in property_group"
       :key="index"
-      :default_value="1"
       :item-str="property">
-      </test-rate>
+    </test-rate>
   </div>
 </template>
 

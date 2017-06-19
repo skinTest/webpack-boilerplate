@@ -13,6 +13,10 @@
 export default {
   props: {
     itemStr: String,
+    apiName: {
+      type: String,
+      default: 'color',
+    },
     default_value: {
       type: Number,
       default: 0,
