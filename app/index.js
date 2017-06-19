@@ -3,6 +3,7 @@ import Vue from 'vue'
 // 插件
 import VueRouter from 'vue-router'
 import AtCells from './libs/at-cells'
+import touch from 'vue-directive-touch';
 
 /* --- 配置，组件 --- */
 import { routes } from './pages/routes.js'
@@ -16,6 +17,9 @@ import AppView from './pages/App.vue'
 /* --- VueRouter --- */
 Vue.use(VueRouter)
 var router = new VueRouter ({ routes })
+
+/* --- vue-directive-touch --- */
+Vue.use(touch);
 
 /* --- AtCells --- */
 Vue.use(AtCells)
