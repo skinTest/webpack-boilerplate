@@ -1,22 +1,27 @@
 import Vue from 'vue'
-import hello from './components/hello.vue'
 
+// 插件
+import VueRouter from 'vue-router'
+import AtCells from './libs/at-cells'
 
-var xhr = new XMLHttpRequest()
-var method = 'GET'
-// var url = 'http://rapapi.org/mockjsdata/20109/home'
-var url = '/home'
+/* --- 配置，组件 --- */
+import { routes } from './pages/routes.js'
+import AppView from './pages/App.vue'
 
-xhr.open(method, url, true)
-xhr.onreadystatechange = function (res) {
-  console.log(res)
-}
-xhr.send()
+/*
+ * 注册 vue 插件
+ * 1. VueRouter
+ * 2. AtCells
+ */
+/* --- VueRouter --- */
+Vue.use(VueRouter)
+var router = new VueRouter ({ routes })
 
-var a = {
-  a: 123,
-}
+/* --- AtCells --- */
+Vue.use(AtCells)
 
-console.log('try lodash', _.get(a, 'a'))
-
-new Vue(hello).$mount('#app')
+//  启动全局的 vue isntance
+export const app = new Vue({
+  router,
+  render: createElement => createElement(AppView),
+}).$mount('#app')

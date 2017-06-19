@@ -209,6 +209,9 @@ WDS 可以作为 express 的中间键使用，配套 HMR 中间键。具体可�
 
 ## 样式
 
+通过 file-loader、 url-loader 引入图片，路径可以两种形式进行
+1. 使用相对路径
+2. 当使用 alias 时，需要添加 `~` 标识按照模块加载形式处理，eg: `~Assets/imgs/logo.png`
 
 ---
 
