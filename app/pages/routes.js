@@ -1,8 +1,13 @@
-import About from './about.vue'
+import about from './about.vue'
+import test_rate from './test-rate.vue'
 
 export const routes = [
   {
     path: '/about',
-    component: About,
+    component: about,
+  },
+  {
+    path: '/test',
+    component: test_rate,
   },
 ]
