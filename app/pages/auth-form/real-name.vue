@@ -8,12 +8,13 @@
 
     <!-- button -->
     <div class="auth-bottom_btn_group">
-      <a
+      <button
+        :disabled="!valid"
         :class="['weui-btn',
                   valid ? 'weui-btn_primary' : 'weui-btn_default']"
         v-touch:tap="submit">
         下一步
-      </a>
+      </button>
     </div>
   </div>
 </template>
