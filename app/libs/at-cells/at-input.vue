@@ -9,7 +9,8 @@
         :value="cell.value"
         @input="cell.value = $event.target.value"
         :type="cell.type"
-        :placeholder="cell.placeholder"/>
+        :placeholder="cell.placeholder"
+        :disabled="cell.disabled === true"/>
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@ export default {
         placeholder: '请点击输入',
         value: '',
         unit: '',
+        disabled: false,
       },
     },
   },
