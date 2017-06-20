@@ -98,7 +98,7 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue', 'lodash', 'zepto-webpack'],
+      vendor: ['vue', 'lodash', 'zepto-webpack', 'vue-router', 'vue-directive-touch'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
