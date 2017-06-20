@@ -7,7 +7,6 @@
         <at-static :cell="position_cell"></at-static>
         <at-select :cell="income_cell"></at-select>
         <at-select :cell="work_year_cell"></at-select>
-        <at-input :cell="test_cell"></at-input>
       </div>
 
       <!-- button -->
@@ -63,11 +62,6 @@ export default {
         value: '',
         placeholder: '请点击选择',
         options: [],
-      },
-      test_cell: {
-        label: 'test',
-        placeholder: 'this test',
-        value: '',
       },
       activate_position_search: false,
     }

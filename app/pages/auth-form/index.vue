@@ -10,9 +10,10 @@ import eMail from './e-mail.vue'
 import realName from './real-name.vue'
 import bankCard from './bank-card.vue'
 import jobInfo from './job-info.vue'
+import personInfo from './person-info.vue'
 
 export default {
-  components: { eMail, realName, bankCard, jobInfo, },
+  components: { eMail, realName, bankCard, jobInfo, personInfo },
   data: () => ({
     controller: ''
   }),
@@ -22,7 +23,7 @@ export default {
     }
   },
   mounted: function () {
-    this.controller = 'job-info'
+    this.controller = 'person-info'
   },
 }
 </script>
