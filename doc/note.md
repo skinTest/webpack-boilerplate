@@ -250,6 +250,12 @@ $ git branch -d <branch_name>
 ### touch
 https://www.npmjs.com/package/vue-directive-touch
 
+### 页面层级顺序
+dialog  | 5000
+mask    | 1000
+action  | 500
+normal  | 0
+
 
 
 
