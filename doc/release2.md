@@ -1,15 +1,15 @@
-## 配置
+## 配置 _done_
 - 添加 production 公共包
   * vue-router
-  * vue-。。。-touch
+  * vue-diretivve-touch
 
 ## 组件：
 - input _done_
-- select
+- select _done_
 - tip
 - cells
-  - assign
-  - collect
+  - assign _init_
+  - collect _init_
 - swipe
 
 ## 页面
@@ -52,23 +52,25 @@
   * 手机验证码登录
   * 登录遇到问题
 - 信息收集
-  * 订单信息
+  * 订单信息 _half_ _need-dialog_
     1. 借款金额
     2. 借款期限
     3. 还款方式
-  * 邮箱  _done_
-  * 实名 _done_
-  * 银行卡验证 _done_
-  * 工作 _done_
+  * 邮箱  _half_ _need-dialog_
+  * 实名 _half_ _need-dialog_
+  * 银行卡验证 _half_ _need-dialog_
+  * 工作 _half_ _need-dialog_
     1. 职务（联想搜索）
     2. 收入
     3. 工作时间
-  * 个人信息
+  * 个人信息 _half_ _need-dialog_
     1. 学历
     2. 婚姻状况
-    3. 家庭住址
-  * 联系人（多个）
-    1. 姓名
-    2. 关系
-    3. 手机号
+    3. 联系地址
+  * 联系人（多个） _half_ _need-dialog_
+    - list
+    - edit
+      1. 姓名
+      2. 关系
+      3. 手机号
   * 公积金

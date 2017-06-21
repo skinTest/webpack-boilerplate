@@ -7,7 +7,7 @@
     </div>
 
     <!-- button -->
-    <div class="auth-bottom_btn_group">
+    <div class="auth-bottom">
       <a
         :class="['weui-btn', can_send ? 'weui-btn_primary' : 'weui-btn_default']"
         v-touch:tap="send_email">

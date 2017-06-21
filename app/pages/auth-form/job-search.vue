@@ -32,7 +32,7 @@
     </form>
     <a
       v-touch:tap="close_search"
-      class="weui-search-bar__cancel-btn">取消</a>
+      class="weui-search-bar__cancel-btn">关闭</a>
   </div>
 
   <!-- 搜索结果 -->
@@ -106,7 +106,7 @@ export default {
     close_search: function () {
       this.value = ''
       this.is_focus = false
-      this.$emit('position-change', { label: '', value: ''})
+      this.$emit('position-change', false)
     },
   },  // end of methods
   mounted: function () {

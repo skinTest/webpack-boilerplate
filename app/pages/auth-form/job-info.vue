@@ -10,7 +10,7 @@
       </div>
 
       <!-- button -->
-      <div class="auth-bottom_btn_group">
+      <div class="auth-bottom">
         <button
           :disabled="!submit_valid"
           :class="['weui-btn',
@@ -80,9 +80,10 @@ export default {
       }.bind(this), 300)
     },
     position_change_handler: function (item) {
-      this.position_cell.content = item.label
-      this.position_cell.value = item.value
-      this.test_cell.value = 100000000000
+      if (typeof(item) === 'object') {
+        this.position_cell.content = item.label
+        this.position_cell.value = item.value
+      }
 
       this.$nextTick(function () {
         this.activate_position_search = false
@@ -98,12 +99,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.action_panel {
-  position: fixed;
-  z-index: 500;
-  top: 0;
-  width: 100%;
-}
-</style>

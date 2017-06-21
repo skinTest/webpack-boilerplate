@@ -1,5 +1,6 @@
 import about from './about.vue'
 import auth_form from './auth-form'
+import login from './login.vue'
 
 export const routes = [
   //  默认路由
@@ -16,4 +17,8 @@ export const routes = [
     path: '/auth',
     component: auth_form,
   },
+  {
+    path: '/login',
+    component: login,
+  }
 ]

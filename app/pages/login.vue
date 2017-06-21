@@ -2,13 +2,12 @@
   <div class="">
     <!-- form -->
     <div class="weui-cells">
-      <at-input :cell="card_cell"></at-input>
-      <at-input :cell="phone_cell"></at-input>
-      <at-input :cell="vcode_cell"></at-input>
+      <at-input :cell="mobile_cell"></at-input>
+      <at-input :cell="code_cell"></at-input>
     </div>
 
     <!-- button -->
-    <div class="auth-bottom">
+    <div class="login-bottom">
       <button
         :disabled="!can_send_msg"
         :class="['weui-btn',
@@ -21,7 +20,7 @@
         :class="['weui-btn',
                   valid_submit ? 'weui-btn_primary' : 'weui-btn_default']"
         v-touch:tap="submit">
-        下一步
+        登录
       </button>
     </div>
   </div>
@@ -30,66 +29,49 @@
 <script type="text/javascript">
 export default {
   data: () => ({
-    card_cell: {
-      label: '收款卡',
-      placeholder: '请用本人名下储蓄卡',
+    mobile_cell: {
+      label: '登录手机',
+      placeholder: '请使用本人名下手机',
       type: 'number',
       value: '',
-      name: 'bank_card',
+      name: 'mobile',
     },
-    phone_cell: {
-      label: '预留手机',
-      placeholder: '银行通知接收手机',
+    code_cell: {
+      label: '验证码',
+      placeholder: '请先输入手机号',
+      disable: true,
       type: 'number',
       value: '',
       name: 'card_phone',
     },
-    vcode_cell: {
-      label: '验证码',
-      placeholder: '请先输入手机号',
-      type: 'number',
-      value: '',
-      name: 'bank_card',
-      disabled: true,
-    },
     re_msg_time: 0,
   }),
   computed: {
-    valid_card: function () {
-      return /(^\d{16})$|(^\d{19})$/.test(this.card_cell.value)
-    },
-    valid_phone: function () {
-      return /^1[34578]\d{9}$/.test(this.phone_cell.value)
+    valid_mobile: function () {
+      return /^1[34578]\d{9}$/.test(this.mobile_cell.value)
     },
     valid_submit: function () {
-      let valid_vcode = this.vcode_cell.value.length > 0
+      let valid_code = this.code_cell.value.length > 0
 
-      return this.valid_phone && valid_vcode && this.valid_card
+      return this.valid_mobile && valid_code
     },
     can_send_msg: function () {
-      return this.valid_phone && this.re_msg_time === 0
+      return this.valid_mobile && this.re_msg_time === 0
     },
     msg_btn_text: function () {
-      var result = ''
-
-      if (this.re_msg_time !== 0) {
-        result = `(${this.re_msg_time}) 秒后重新发送`
-      }
-      else {
-        result = '发送验证码'
-      }
-
-      return result
-    }
+      return this.re_msg_time !== 0
+           ? `(${this.re_msg_time}) 秒后重新发送`
+           : '发送验证码'
+    },
   },
   methods: {
     collect: function () {},
     send_msg: function () {
       if (this.can_send_msg) {
         // 开启输入框
-        this.vcode_cell.disabled = false
+        this.code_cell.disabled = false
         var timeout_id = setTimeout(function () {
-          this.vcode_cell.placeholder = '请填写验证码'
+          this.code_cell.placeholder = '请填写验证码'
           clearTimeout(timeout_id)
         }.bind(this), 500)
 
@@ -113,6 +95,15 @@ export default {
         console.log('submit')
       }
     },
-  }
+  },
+  mounted: function () {
+    console.log(this.$root)
+  },
 }
 </script>
+
+<style lang="less">
+.login-bottom {
+  padding: 80px 15px;
+}
+</style>

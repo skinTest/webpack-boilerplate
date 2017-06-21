@@ -1,9 +1,10 @@
 <template>
   <div class="">
-    <!-- form -->
+    <!-- cells -->
     <div class="weui-cells">
-      <at-input :cell="name_cell"></at-input>
-      <at-input :cell="certno_cell"></at-input>
+      <at-input :cell="money_cell"></at-input>
+      <at-select :cell="period_cell"></at-select>
+      <at-select :cell="use_cell"></at-select>
     </div>
 
     <!-- button -->
@@ -22,24 +23,32 @@
 <script type="text/javascript">
 export default {
   data: () => ({
-    name_cell: {
-      label: '姓名',
-      placeholder: '实名信息',
+    money_cell: {
+      label: '借款金额',
+      placeholder: '请输入借款金额',
       value: '',
-      name: 'borrower_name',
-    },
-    certno_cell: {
-      label: '身份证号',
-      placeholder: '实名信息',
       type: 'number',
+      name: 'money',
+    },
+    period_cell: {
+      label: '借款期限',
+      name: 'period',
+      placeholder: '请选择',
       value: '',
-      name: 'borrower_certno',
-    }
+      options: [],
+    },
+    use_cell: {
+      label: '借款用途',
+      name: 'use',
+      value: '',
+      placeholder: '请选择',
+      options: []
+    },
   }),
   computed: {
     valid: function () {
-      let cert_reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-      return cert_reg.test(this.certno_cell.value) && this.name_cell.value.length > 0
+      var money = parseInt(this.money_cell.value, 10)
+      return money > 500
     },
   },
   methods: {

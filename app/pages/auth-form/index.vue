@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Hello Auth</h1>
     <component :is="controller"></component>
   </div>
 </template>
@@ -11,9 +10,11 @@ import realName from './real-name.vue'
 import bankCard from './bank-card.vue'
 import jobInfo from './job-info.vue'
 import personInfo from './person-info.vue'
+import contactList from './contact-list.vue'
+import orderInfo from './order-info.vue'
 
 export default {
-  components: { eMail, realName, bankCard, jobInfo, personInfo },
+  components: { eMail, realName, bankCard, jobInfo, personInfo, contactList, orderInfo },
   data: () => ({
     controller: ''
   }),
@@ -23,13 +24,20 @@ export default {
     }
   },
   mounted: function () {
-    this.controller = 'person-info'
+    this.controller = 'order-info'
   },
 }
 </script>
 
 <style lang="less">
-.auth-bottom_btn_group {
+.auth-bottom {
   padding: 80px 15px;
+}
+
+.action_panel {
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  width: 100%;
 }
 </style>

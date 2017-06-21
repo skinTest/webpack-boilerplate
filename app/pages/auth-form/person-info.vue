@@ -8,7 +8,7 @@
   </div>
 
   <!-- button -->
-  <div class="auth-bottom_btn_group">
+  <div class="auth-bottom">
     <button
       :disabled="!valid"
       :class="['weui-btn',
@@ -17,6 +17,7 @@
       下一步
     </button>
   </div>
+
 </div>
 </template>
 
@@ -49,6 +50,9 @@ export default {
     valid: function () {
       return true
     },
-  }
+  },
+  methods: {
+    submit: function () {}
+  },
 }
 </script>
