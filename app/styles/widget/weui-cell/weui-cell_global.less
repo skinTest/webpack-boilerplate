@@ -41,6 +41,14 @@ z-index:
         .setBottomLine(@weuiCellBorderColor);
         z-index: 2;
     }
+
+    // 大儿子没上头
+    &:first-child {
+        margin-top: 0;
+        &:before {
+            border: 0;
+        }
+    }
 }
 
 .weui-cells__title {
