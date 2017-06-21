@@ -51,10 +51,17 @@ export default {
     this.cell.options = Array.isArray(this.cell.options) ? this.cell.options : []
 
     // 处理 placeholder
-    this.cell.placeholder && this.cell.options.unshift({
+    if (!this.cell.options[0] || this.cell.options[0].label !== this.cell.placeholder) {
+      this.cell.placeholder && this.cell.options.unshift({
         value: '',
         label: this.cell.placeholder
-    })
+      })
+    }
+
+    // 处理默认选项问题
+    if (this.cell.placeholder && this.cell.value === undefined) {
+      this.cell.value = ''
+    }
   },
 }
 </script>
