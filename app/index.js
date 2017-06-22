@@ -8,6 +8,9 @@ import touch from 'vue-directive-touch';
 /* --- 配置 --- */
 import { routes } from './pages/routes.js'
 
+/* --- 伪根节点 --- */
+import appView from './containers/app.vue'
+
 /*
  * 注册 vue 插件
  * 1. VueRouter
@@ -27,6 +30,6 @@ Vue.use(AtCells)
 export const app = new Vue({
   router,
   render: function (createElement) {
-    return createElement('router-view')
+    return createElement(appView)
   },
 }).$mount('#app')

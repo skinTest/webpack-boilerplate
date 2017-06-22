@@ -57,7 +57,7 @@ _webpack 有哪些坑_
 4. plugins: loader 这个东西虽然好用，但是他有个局限，他是基于一个一个的资源工作的，那么如果要对整个的打包过程进行处理该怎么办呢？直观的想，有两个要素，
   1. 选择一个执行的时机
   2. 确定清楚要干什么事情
-这两个东西包在一块儿就是一个插件了。常见的插件包括提取公共代码的 commonChunksPlugin，生成 html 模板的 htmlWebpackPlugin
+     这两个东西包在一块儿就是一个插件了。常见的插件包括提取公共代码的 commonChunksPlugin，生成 html 模板的 htmlWebpackPlugin
 
 ---
 
@@ -151,7 +151,7 @@ babel 的工作原理同 webpack 相似，也是一个插件机制的东西，�
 ```
 
 ref:
-  * [babel-preset-env](https://github.com/babel/babel-preset-env#options)
+* [babel-preset-env](https://github.com/babel/babel-preset-env#options)
   * [bebel-polyfill](https://babeljs.io/docs/usage/polyfill/)
   * [bebel-polyfill 与 runtime 解释](https://segmentfault.com/q/1010000005596587?from=singlemessage&isappinstalled=1)
 
@@ -204,7 +204,6 @@ plugins: [
 
 WDS 可以作为 express 的中间键使用，配套 HMR 中间键。具体可查看官方文档。
 
-
 ---
 
 ## 样式
@@ -226,7 +225,6 @@ import _ from 'lodash'
 ```
 考虑到 jquery 库中的冗余，选择了 [zepto](http://zeptojs.com/)。方便 webpack 消费，所以使用了 zepto-webpack
 
-
 ---
 
 ## deploy
@@ -244,7 +242,6 @@ $ git push origin --delete <branch_name>
 $ git branch -d <branch_name>
 ```
 
-
 ---
 
 ### touch
@@ -256,7 +253,34 @@ mask    | 1000
 action  | 500
 normal  | 0
 
+### 加载全局组件
+全局组件：全局可用的 `dialog`, `todo: alert, toast, loading, action_sheet, picker`
 
+为了少写模板；明确引用关系；防止后来我把所有全局组件注册在正经的根节点之后，在全局 find & replace 引用关系。所以需要按照以下步骤引入全局组件。
+
+
+```js
+// 1. 引入地址注册函数； 初始化全局组件变量
+import { find_app_ref } from 'Libs/g_com'
+var g_com;
+
+// 2. 在 vue 的语境中注册
+mounted: function () {
+  g_com = find_app_ref.call(this)
+}
+
+// 3. 引用； 具体配置查看组件内注释
+g_com = find_app_ref.call(this)
+g_com.dialog.init({
+  title: 'dialog',
+  desc: 'some description',
+  left: 'left',
+  right: 'right',
+})
+  .then(function (res) {
+    console.log('then --- ', res)
+  })
+```
 
 
 
