@@ -23,11 +23,19 @@
         登录
       </button>
     </div>
+
+    <!-- dialog -->
+    <!-- <at-dialog></at-dialog> -->
   </div>
 </template>
 
 <script type="text/javascript">
+import atDialog from 'Components/at-dialog'
+
 export default {
+  components: {
+    atDialog,
+  },
   data: () => ({
     mobile_cell: {
       label: '登录手机',
