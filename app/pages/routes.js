@@ -1,14 +1,19 @@
 import about from './about.vue'
 import auth_form from './auth-form'
 import login from './login.vue'
+import home from './home'
 
 export const routes = [
   //  默认路由
   {
     path: '*',
-    component: about,
+    component: home,
   },
   // 路由配置
+  {
+    path: '/',
+    component: home,
+  },
   {
     path: '/about',
     component: about,

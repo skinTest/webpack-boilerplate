@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <!-- form -->
     <div class="weui-cells">
       <at-input :cell="mobile_cell"></at-input>
@@ -30,6 +30,9 @@
 </template>
 
 <script type="text/javascript">
+import { find_app_ref } from 'Libs/g_com'
+var g_com;
+
 import atDialog from 'Components/at-dialog'
 
 export default {
@@ -105,7 +108,7 @@ export default {
     },
   },
   mounted: function () {
-    console.log(this.$root)
+    g_com = find_app_ref.call(this)
   },
 }
 </script>

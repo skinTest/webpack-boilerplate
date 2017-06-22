@@ -37,9 +37,9 @@ const DOMAIN = {
 }
 
 // 定义开发过程中的 api 代理
-const PROXY = {
-  '/home': 'http://rapapi.org/mockjsdata/20109'
-}
+// const PROXY = {
+//   '/wallet': 'http://rapapi.org/mockjsdata/21150/wallet'
+// }
 
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
 const GLOBALLIBS = {
@@ -206,7 +206,7 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: DOMAIN.host,
     port: DOMAIN.port,
-    proxy: PROXY,
+    // proxy: PROXY,
   }),
   parts.loadCSS(),
   parts.loadLESS(),
