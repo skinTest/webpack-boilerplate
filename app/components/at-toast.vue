@@ -45,9 +45,22 @@ export default {
 
       // 显示信息
       this.show = true
+
+      // 上闹钟
+      if (typeof(opt.time) === 'number' && opt.time > 0) {
+        this.close(opt.time)
+      }
     },
-    close: function () {
-      this.show = false
+    close: function (time) {
+      if (typeof(time) !== 'number') {
+        this.show = false
+      }
+      else {
+        var timer = setTimeout(function () {
+          this.show = false
+          clearTimeout(timer)
+        }.bind(this), time)
+      }
     }
   },
 }

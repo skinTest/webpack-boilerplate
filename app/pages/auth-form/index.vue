@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted: function () {
-    this.controller = 'order-info'
+    this.controller = 'job-info'
   },
 }
 </script>

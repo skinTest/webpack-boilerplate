@@ -24,12 +24,11 @@
       </button>
     </div>
 
-    <!-- dialog -->
-    <!-- <at-dialog></at-dialog> -->
   </div>
 </template>
 
 <script type="text/javascript">
+import api from 'Api'
 import { find_app_ref } from 'Libs/g_com'
 var g_com;
 
@@ -76,38 +75,79 @@ export default {
     },
   },
   methods: {
-    collect: function () {},
     send_msg: function () {
       if (this.can_send_msg) {
-        // 开启输入框
-        this.code_cell.disabled = false
-        var timeout_id = setTimeout(function () {
-          this.code_cell.placeholder = '请填写验证码'
-          clearTimeout(timeout_id)
-        }.bind(this), 500)
 
-        // 重发短信计时
-        this.re_msg_time = 5
-        var msg_count = setInterval(function () {
-          if (this.re_msg_time > 0) {
-            console.log(this.re_msg_time)
-            this.re_msg_time -= 1
-          }
-          else {
-            console.log(this.re_msg_time + ' timer end')
-            clearInterval(msg_count)
-          }
-        }.bind(this), 1000)
-        console.log('msg send')
+
+        // 请求服务器发送验证码
+        api.send_code(this.mobile_cell.value)
+          .then(function (data) {
+            // toast 用户
+            g_com.toast.init({
+              desc: '已发送',
+              time: 1000,
+            })
+          })
+          .then(function () {
+            // 开启验证码输入框
+            this.code_cell.disabled = false
+            var timeout_id = setTimeout(function () {
+              this.code_cell.placeholder = '请填写验证码'
+              clearTimeout(timeout_id)
+            }.bind(this), 500)
+
+            // 重发短信计时
+            this.re_msg_time = 5
+            var msg_count = setInterval(function () {
+              if (this.re_msg_time > 0) {
+                this.re_msg_time -= 1
+              }
+              else {
+                clearInterval(msg_count)
+              }
+            }.bind(this), 1000)
+
+          }.bind(this))  // end of 组件内显示管理
+          .catch(function (err) {
+            console.log(err)
+            g_com.dialog.init({
+              desc: err.message
+            })
+          })
       }
     },
     submit: function () {
-      if (this.valid_submit) {
-        console.log('submit')
+      if (!this.valid_submit) {
+        g_com.dialog({ desc: '请完整填写手机号，验证码再提交' })
+        return
       }
+
+      api.login({ code: this.code_cell.value })
+        .then(function () {
+          return api.get_order_info()
+        })
+        .then(function (data) {
+          // 跳转到订单对应路由
+          this.$router.push(data.next || '/')
+        }.bind(this))
+        .catch(function (err) {
+          switch (err.message) {
+            case 'order_info_error':
+              this.$router.push('/')
+              break
+
+            case 'net_error':
+              api.net_error_handler.call(this)
+              break
+
+            default:
+              g_com.dialog.init({ desc: err.message })
+          }
+        }.bind(this)) // end of catch
     },
   },
   mounted: function () {
+    // 注册全局组件
     g_com = find_app_ref.call(this)
   },
 }
