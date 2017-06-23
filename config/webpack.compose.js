@@ -217,6 +217,10 @@ const developmentConfig = merge([
     extract: false,
     options: [ 'less' ],
   }),
+  parts.setFreeVariable(
+    'process.env.NODE_ENV',
+    'development'
+  ),
 ]);
 
 // export the config

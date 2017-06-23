@@ -10,7 +10,7 @@ export default function (opt) {
         resolve(res)
       },
       error: function (error) {
-        reject('net work error')
+        reject(new Error('net_error'))
       },
     }, opt))  // end of ajax call
   })
@@ -26,7 +26,23 @@ export const post = function (url, data) {
         resolve(res)
       },
       error: function (error) {
-        reject('net work error')
+        reject(new Error('net_error'))
+      },
+    })  // end of ajax call
+  })
+}
+
+export const get = function (url, data) {
+  return new Promise (function (resolve, reject) {
+    $.ajax({
+      type: 'GET',
+      data,
+      url,
+      success: function (res) {
+        resolve(res)
+      },
+      error: function (error) {
+        reject('net_error')
       },
     })  // end of ajax call
   })
