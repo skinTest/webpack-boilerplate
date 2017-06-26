@@ -32,14 +32,15 @@ const PATHS = {
 
 // 定义开发域名以及端口
 const DOMAIN = {
-  host: 'localhost',
+  host: '192.168.30.171' || 'localhost',
   port: 3000,
 }
 
 // 定义开发过程中的 api 代理
-// const PROXY = {
-//   '/wallet': 'http://rapapi.org/mockjsdata/21150/wallet'
-// }
+const PROXY = {
+  '/wallet': 'http://wallet.d.yilumofang.com',
+  // '/wallet': 'http://172.16.2.9:8080/mockjsdata/1',
+}
 
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
 const GLOBALLIBS = {
@@ -206,7 +207,7 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: DOMAIN.host,
     port: DOMAIN.port,
-    // proxy: PROXY,
+    proxy: PROXY,
   }),
   parts.loadCSS(),
   parts.loadLESS(),
