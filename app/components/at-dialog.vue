@@ -44,14 +44,25 @@ export default {
   }),
   methods: {
     init: function (opt) {
+      switch (typeof(opt)) {
+        case 'object':
+          Object.assign(this.render_data, opt)
+          break;
+
+        case 'string':
+          this.render_data.desc = opt
+          break;
+
+        default:
+          throw new Error('parameter for at-dialog.init must be either a string or an object')
+      }
+
       // 初始化渲染
-      Object.assign(this.render_data, opt)
       this.show = true
 
       // 异步形式(Promise)返回用户的点击选择
       return new Promise(function (resolve, reject) {
         this.$el.addEventListener('touchstart', function (event) {
-          console.log(event.target.attributes)
           Array.prototype.forEach.call(event.target.attributes, function (item) {
             this.close()
             if (item.name === 'data-area') {

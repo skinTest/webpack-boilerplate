@@ -20,8 +20,8 @@ export const post = function (url, data) {
   return new Promise (function (resolve, reject) {
     $.ajax({
       type: 'POST',
-      url,
-      data,
+      url: url,
+      data: data,
       success: function (res) {
         resolve(res)
       },

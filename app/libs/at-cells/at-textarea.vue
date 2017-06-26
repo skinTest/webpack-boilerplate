@@ -31,10 +31,6 @@ export default {
       },
     },
   },
-  created: function () {
-    this.cell.rows = parseInt(this.cell.rows, 10) || 3
-    this.cell.limit = parseInt(this.cell.limit, 10) || 0
-  },
   methods: Object.assign({}, mixin_methods, {
     checkLimit: function () {
       if (this.cell.limit === 0)
@@ -43,5 +39,9 @@ export default {
         this.cell.value = this.cell.value.substr(0, this.cell.limit)
     }
   }),
+  created: function () {
+    this.cell.rows = parseInt(this.cell.rows, 10) || 3
+    this.cell.limit = parseInt(this.cell.limit, 10) || 0
+  },
 }
 </script>

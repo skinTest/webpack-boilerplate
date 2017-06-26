@@ -6,7 +6,11 @@
       </label>
     </div>
     <div class="weui-cell__bd">
-      <select class="weui-select" v-model="cell.value">
+      <select
+        class="weui-select"
+        v-model="cell.value"
+        :class="[cell.value === '' ? 'at-select_empty' : '']"
+      >
         <option
           v-for="option in cell.options"
           :value="option.value"
