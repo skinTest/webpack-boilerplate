@@ -18,18 +18,26 @@ var sourceConfig = require('./webpack.compose.js')
  * 2. 发布地址配置
  */
 var webpackConfig = merge(sourceConfig.common, sourceConfig.production)
- // 1. webpack config
-switch (argv.dest) {
-  case 'test':
-    _.set(webpackConfig, 'output.publicPath', '/webpack-boilerplate/')
-    break;
-  case 'production':
-    break;
+var deployConfig = {
+  repo: 'https://github.com/skinTest/webpack-boilerplate.git',
+  branch: 'master',
+  dest: 'app/views'
+  message: argv.message || 'Auto-push to remote by FE'
 }
 
-// 2. deploy config -- 配置选项参见 -- https://www.npmjs.com/package/gh-pages
-var deployConfig = {
-  repo: 'https://github.com/skinTest/webpack-boilerplate.git'
+switch (argv.dest) {
+  case 'github':
+    _.set(webpackConfig, 'output.publicPath', '/webpack-boilerplate/')
+    deployConfig.repo = 'https://github.com/skinTest/webpack-boilerplate.git'
+    deployConfig.branch = 'gh-pages'
+    break;
+
+  case 'test':
+    _.set(webpackConfig, 'output.publicPath', '/')
+    break;
+
+  case 'production':
+    break;
 }
 
 // 3. 配置 babel 运行环境
@@ -56,6 +64,12 @@ new Promise (function (resolve, reject) {
     }) + '\n\n')
     resolve('success')
   })
+})
+.then(function (res) {
+  // 将 dist index.html -> index.phtml
+  if (/test/.test(argv.dest)) {
+
+  }
 })
 .then(function (res) {
   ghpages.publish(path.join(__dirname, '..', 'dist'), deployConfig, function(err) {

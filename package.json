@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch ./config --exec \"webpack-dev-server --config ./config/webpack.interface.js --env development\"",
     "build": "webpack --config ./config/webpack.interface.js --env production",
-    "deploy_test": "node ./config/deploy --dest=test"
+    "deploy_test": "node ./config/deploy --dest=test",
+    "deploy_github": "node ./config/deploy --dest=github"
   },
   "keywords": [
     "webpack",
