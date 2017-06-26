@@ -32,4 +32,9 @@ export const app = new Vue({
   render: function (createElement) {
     return createElement(appView)
   },
+  data: () => ({
+    store: {
+      auth_controller: '',
+    },
+  })
 }).$mount('#app')

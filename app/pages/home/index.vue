@@ -11,13 +11,7 @@ var g_com;
 
 export default {
   mounted: function () {
-    api.send_code('12345678901')
-      .then(function (res) {
-        console.log(res)
-      })
-      .catch(function (err) {
-        console.log('err --', err)
-      })
+    // 注册全局组件
     g_com = find_app_ref.call(this)
   },
 }
