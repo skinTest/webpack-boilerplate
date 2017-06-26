@@ -1,8 +1,8 @@
 // import ADDR from './address.js'
 import { post, get } from './request.js'
-import { find_app_ref } from 'Libs/g_com.js'
+import { find_root, find_app_ref } from 'Libs/g_com.js'
 
-const support_tel = '400400400'
+const support_tel = '一个 400 电话'
 const api = {}
 const ADDR = {
   send_code: '/user/sendcode',  // done
@@ -24,7 +24,9 @@ const ADDR = {
 // 根据环境选择地址前缀
 if (process.env.NODE_ENV !== 'production') {
   Object.keys(ADDR).forEach(function (key) {
-    ADDR[key] = 'http://rapapi.org/mockjsdata/21150/wallet' + ADDR[key]
+    // ADDR[key] = 'http://172.16.2.9:8080/mockjsdata/1/wallet' + ADDR[key]
+    // ADDR[key] = 'http://wallet.d.yilumofang.com/wallet' + ADDR[key]
+    ADDR[key] = '/wallet' + ADDR[key]
   })
 }
 else {
@@ -55,12 +57,12 @@ api.send_code = function (mobile) {
  */
 api.login = function (code) {
   // 参数校验
-  if (typeof(code) === 'string' || code === '')
+  if (typeof(code) !== 'string' || code === '')
     return Promise.reject(new Error('请输入验证码'))
 
   // 请求
   return post(ADDR.login, { code })
-    .then(check_retcode('请使用【金融魔方】发送的短信验证码登录'))
+    .then(check_retcode(`不明原因导致您未能成功登录，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -126,7 +128,7 @@ api.email_submit = function (email) {
 
   // 请求
   return post(ADDR.email_submit, { email })
-    .then(check_retcode('不明原因导致提交企业邮箱失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致提交企业邮箱失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -141,7 +143,7 @@ api.email_validate = function (code) {
 
   // 请求
   return post(ADDR.email_validate, { code })
-    .then(check_retcode('不明原因导致验证企业邮箱失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致验证企业邮箱失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -156,13 +158,13 @@ api.id_submit = function (data) {
 
   // 请求
   return post(ADDR.id_submit, data)
-    .then(check_retcode('不明原因导致验证企业邮箱失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致验证企业邮箱失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
 /*
- * 验证企业邮箱
- * @parameter: data - string - 邮箱收到的验证码
+ * 银行卡信息提交
+ * @parameter: data - object - 银行卡四要素信息
  */
 api.bank_card_submit = function (data) {
   // 参数校验
@@ -171,13 +173,13 @@ api.bank_card_submit = function (data) {
 
   // 请求
   return post(ADDR.bank_card_submit, data)
-    .then(check_retcode('不明原因导致您银行卡信息提交失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致您银行卡信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
 /*
  * 验证四要素对应手机的验证码
- * @parameter: code - string - 邮箱收到的验证码
+ * @parameter: code - string - 验证码
  */
 api.bank_card_validate = function (code) {
   // 参数校验
@@ -186,7 +188,7 @@ api.bank_card_validate = function (code) {
 
   // 请求
   return post(ADDR.bank_card_validate, { code })
-    .then(check_retcode('不明原因导致您银行卡信息验证失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致您银行卡信息验证失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -201,7 +203,7 @@ api.person_submit = function (data) {
 
   // 请求
   return post(ADDR.person_submit, data)
-    .then(check_retcode('不明原因导致您的个人信息提交失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致您的个人信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -216,7 +218,7 @@ api.contact_submit = function (data) {
 
   // 请求
   return post(ADDR.contact_submit, data)
-    .then(check_retcode('不明原因导致您的联系人信息提交失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致您的联系人信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -226,7 +228,7 @@ api.contact_submit = function (data) {
 api.get_map = function () {
   // 请求
   return get(ADDR.get_map)
-    .then(check_retcode('不明原因导致您的联系人信息提交失败，您可以联系 ${support_tel} 解决相关问题'))
+    .then(check_retcode(`不明原因导致您的联系人信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -239,7 +241,11 @@ function check_retcode (err_msg) {
     if (typeof(res) === 'object' && res.retcode == 2000000) {
       return Promise.resolve(res.data)
     }
+    else if (typeof(res) === 'object' && res.retcode == 5004001) {
+      return Promise.reject(new Error('to_log_in'))
+    }
     else {
+      console.log('res--- ', res)
       var err = new Error(res.msg || err_msg)
       err.server_res = res
       return Promise.reject(err)
@@ -254,7 +260,28 @@ function check_retcode (err_msg) {
  */
 api.net_error_handler = function () {
   var g_com = find_app_ref.call(this)
-  g_com.dialog.init({ desc: '不好意思，网络开小差了，请稍后再试。' })
+  g_com.dialog.init('不好意思，网络开小差了，请稍后再试。')
+}
+
+api.common_error_handler = function (err) {
+  var g_com = find_app_ref.call(this)
+
+  switch (err.message) {
+    case 'net_error':
+      g_com.dialog.init('不好意思，网络开小差了，请稍后再试。')
+      break;
+
+    case 'to_log_in':
+      g_com.dialog.init('尊敬的访客，请先登录，以便为您提供更好的服务')
+        .then(function () {
+          this.$router.replace('/login')
+        }.bind(this))
+      break;
+
+    default:
+      g_com.dialog.init(err.message)
+      break;
+  }
 }
 
 // 输出 api 对象
