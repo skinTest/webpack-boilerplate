@@ -122,18 +122,26 @@ export default {
         return
       }
 
-      api.login({ code: this.code_cell.value })
+      // 请求登录接口
+      api.login(this.code_cell.value)
         .then(function () {
+          // 查看用户订单状态，确认用户跳转的路由
           return api.get_order_info()
         })
         .then(function (data) {
           // 跳转到订单对应路由
-          this.$router.push(data.next || '/')
+          if (/auth/.test(data.next)) {
+            this.$router.replace('/auth')
+            this.$root.store.auth_controller = data.next.substr(5)
+          }
+          else {
+            this.$router.replace(data.next || '/')
+          }
         }.bind(this))
         .catch(function (err) {
           switch (err.message) {
             case 'order_info_error':
-              this.$router.push('/')
+              this.$router.replace('/')
               break
 
             case 'net_error':
@@ -148,6 +156,7 @@ export default {
   },
   mounted: function () {
     // 注册全局组件
+    document.title = '登录'
     g_com = find_app_ref.call(this)
   },
 }

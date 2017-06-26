@@ -33,6 +33,10 @@
 
 <script type="text/javascript">
 import jobSearch from './job-search'
+import api from 'Api'
+import { find_app_ref } from 'Libs/g_com'
+import options from 'Libs/options/index.js'
+var g_com;
 
 export default {
   components: {
@@ -54,25 +58,34 @@ export default {
         name: 'income',
         value: '',
         placeholder: '请点击选择',
-        options: [],
+        options: options.income,
       },
       work_year_cell: {
         label: '工作年限',
         name: 'work_year',
         value: '',
         placeholder: '请点击选择',
-        options: [],
+        options: options.work_year,
       },
       activate_position_search: false,
+      cell_names: ['position', 'income', 'work_year'],
     }
   },
   computed: {
     submit_valid: function () {
-      return true
+      return this.cell_names.every(function (name) {
+        return this[`${name}_cell`]['value'] !== ''
+      }.bind(this))
     },
   },
   methods: {
-    collect: function () {},
+    collect: function () {
+      var result = {}
+
+      this.cell_names.forEach(name => { result[name] = this[`${name}_cell`]['value'] })
+
+      return result
+    },
     show_job_search: function () {
       this.activate_position_search = true
       var timer = setTimeout(function () {
@@ -90,12 +103,18 @@ export default {
       })
     },
     submit: function () {
-      if (this.submit_valid) {
-        console.log('submit')
-      }
+      api.person_submit(this.collect())
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
   },
 }
 </script>

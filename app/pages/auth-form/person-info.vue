@@ -22,6 +22,12 @@
 </template>
 
 <script type="text/javascript">
+import api from 'Api'
+import { find_app_ref } from 'Libs/g_com'
+import options from 'Libs/options/index.js'
+var g_com;
+
+
 export default {
   data: () => ({
     marry_cell: {
@@ -29,30 +35,51 @@ export default {
       placeholder: '请点击选择',
       value: '',
       name: 'marry',
-      options: [],
+      options: options.marry,
     },
     edu_degree_cell: {
       label: '学历',
       placeholder: '请点击选择',
       value: '',
       name: 'edu_degree',
-      options: [],
+      options: options.edu_degree,
     },
     address_cell: {
       name: 'address',
       placeholder: '联系地址',
       value: '',
       rows: 3,
-      limit: 200,
-    }
+      limit: 50,
+    },
+    cell_names: ['address', 'edu_degree', 'marry'],
   }),
   computed: {
     valid: function () {
-      return true
+      return this.cell_names.every(function (name) {
+        return this[`${name}_cell`]['value'] !== ''
+      }.bind(this))
     },
   },
   methods: {
-    submit: function () {}
+    collect: function () {
+      var result = {}
+      this.cell_names.forEach(name => { result[name] = this[`${name}_cell`]['value'] })
+
+      return result
+    },
+    submit: function () {
+      api.person_submit(this.collect())
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
+    }
   },
+  mounted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
+  }
 }
 </script>

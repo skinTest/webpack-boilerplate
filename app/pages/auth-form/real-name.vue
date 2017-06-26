@@ -3,7 +3,7 @@
     <!-- form -->
     <div class="weui-cells">
       <at-input :cell="name_cell"></at-input>
-      <at-input :cell="certno_cell"></at-input>
+      <at-input :cell="cert_no_cell"></at-input>
     </div>
 
     <!-- button -->
@@ -20,6 +20,10 @@
 </template>
 
 <script type="text/javascript">
+import api from 'Api'
+import { find_app_ref } from 'Libs/g_com'
+var g_com;
+
 export default {
   data: () => ({
     name_cell: {
@@ -28,7 +32,7 @@ export default {
       value: '',
       name: 'borrower_name',
     },
-    certno_cell: {
+    cert_no_cell: {
       label: '身份证号',
       placeholder: '实名信息',
       type: 'number',
@@ -39,16 +43,29 @@ export default {
   computed: {
     valid: function () {
       let cert_reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-      return cert_reg.test(this.certno_cell.value) && this.name_cell.value.length > 0
+      return cert_reg.test(this.cert_no_cell.value) && this.name_cell.value.length > 0
     },
   },
   methods: {
-    collect: function () {},
     submit: function () {
-      if (this.valid) {
-        console.log('submit')
-      }
+      api.id_submit({
+        cert_no: this.cert_no_cell.value,
+        name: this.name_cell.value
+      })
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+          else {
+            console.warn('some thing went wrong with auth real-name')
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
     },
+  },
+  mounted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
   }
 }
 </script>

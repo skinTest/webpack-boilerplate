@@ -1,6 +1,10 @@
 <template>
   <div>
-    <component :is="controller"></component>
+    <component
+      :is="controller"
+      v-on:controller-change="change_controller"
+    >
+    </component>
   </div>
 </template>
 
@@ -20,11 +24,14 @@ export default {
   }),
   methods: {
     change_controller: function (controller) {
-
+      this.$root.store.auth_controller = controller
+      this.controller = controller
     }
   },
   mounted: function () {
-    this.controller = 'job-info'
+    this.$root.store.auth_controller = this.$root.store.auth_controller
+    this.change_controller(this.$root.store.auth_controller)
+    document.title = '授信申请'
   },
 }
 </script>

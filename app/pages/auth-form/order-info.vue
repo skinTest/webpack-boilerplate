@@ -20,7 +20,13 @@
   </div>
 </template>
 
+
 <script type="text/javascript">
+import api from 'Api'
+import { find_app_ref } from 'Libs/g_com'
+import options from 'Libs/options/index.js'
+var g_com;
+
 export default {
   data: () => ({
     money_cell: {
@@ -35,29 +41,44 @@ export default {
       name: 'period',
       placeholder: '请选择',
       value: '',
-      options: [],
+      options: options.period,
     },
     use_cell: {
       label: '借款用途',
       name: 'use',
       value: '',
       placeholder: '请选择',
-      options: []
+      options: options.use
     },
+    cell_names: ['money', 'period', 'use'],
   }),
   computed: {
     valid: function () {
-      var money = parseInt(this.money_cell.value, 10)
-      return money > 500
+      return this.cell_names.every(function (name) {
+        return this[`${name}_cell`]['value'] !== ''
+      }.bind(this))
     },
   },
   methods: {
-    collect: function () {},
-    submit: function () {
-      if (this.valid) {
-        console.log('submit')
-      }
+    collect: function () {
+      var result = {}
+      this.cell_names.forEach(name => { result[name] = this[`${name}_cell`]['value'] })
+
+      return result
     },
-  }
+    submit: function () {
+      api.order_apply(this.collect())
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
+    },
+  },
+  mouted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
+  },
 }
 </script>
