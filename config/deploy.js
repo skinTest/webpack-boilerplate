@@ -14,31 +14,33 @@ var sourceConfig = require('./webpack.compose.js')
 
 /* --- --- --- config --- --- --- */
 /*
- * 1. webpack 编译配置
+ * 1. 调整 webpack 编译配置
  * 2. 发布地址配置
  */
 var webpackConfig = merge(sourceConfig.common, sourceConfig.production)
-var deployConfig = {
-  repo: 'https://github.com/skinTest/webpack-boilerplate.git',
-  branch: 'master',
-  dest: 'app/views'
-  message: argv.message || 'Auto-push to remote by FE'
-}
+_.set(webpackConfig, 'output.publicPath', '/static')
 
+var deployTpl = {
+  src: '**/*.phtml',
+  dest: 'app/views',
+  message: argv.message || 'Auto-push to remote by FE; find out the sucking commit boy ...',
+  repo: 'git@gitlab.yilumofang.com:cash-loan/wallet.git',
+}
+var deployAssest = _.defaults({
+  src: 'js|css|png'.split('|').map((suffix) => `**/*.` + suffix),
+  dest: 'public/static',
+}, deployTpl)
+
+/* --- --- --- 环境分支对应关系 --- --- --- */
 switch (argv.dest) {
-  case 'github':
-    _.set(webpackConfig, 'output.publicPath', '/webpack-boilerplate/')
-    deployConfig.repo = 'https://github.com/skinTest/webpack-boilerplate.git'
-    deployConfig.branch = 'gh-pages'
+  case 'joint':
+    deployTpl.branch = deployAssest.branch = 'master'
     break;
 
-  case 'test':
-    _.set(webpackConfig, 'output.publicPath', '/')
-    break;
-
-  case 'production':
-    break;
+  default:
+    deployTpl.branch = deployAssest.branch = 'master'
 }
+
 
 // 3. 配置 babel 运行环境
 process.env.BABEL_ENV = 'production'
@@ -65,22 +67,28 @@ new Promise (function (resolve, reject) {
     resolve('success')
   })
 })
-.then(function (res) {
-  // 将 dist index.html -> index.phtml
-  if (/test/.test(argv.dest)) {
-
-  }
-})
-.then(function (res) {
-  ghpages.publish(path.join(__dirname, '..', 'dist'), deployConfig, function(err) {
+// 发布静态资源
+.then(function () {
+  ghpages.publish(path.join(__dirname, '..', 'dist'), deployAssest, function (err) {
     if (err) {
-      console.log(err)
+      throw err
     }
     else {
-      console.log(chalk.yellow('deployed to the server'))
+      console.log(chalk.yellow('assets deployed to "/public/static"'))
+    }
+  })
+})
+// 发布页面模板
+.then(function () {
+  ghpages.publish(path.join(__dirname, '..', 'dist'), deployTpl, function(err) {
+    if (err) {
+      throw err
+    }
+    else {
+      console.log(chalk.yellow('template deployed to the server'))
     }
   });
 })
 .catch(function (err) {
-  throw err
+  console.log(err)
 })

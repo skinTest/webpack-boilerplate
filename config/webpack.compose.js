@@ -104,7 +104,7 @@ const productionConfig = merge([
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
       filename: '[name].[chunkhash:8].js',
-      publicPath: '/',
+      publicPath: '/static',
     },
     plugins: [
       // 解决浏览器缓存问题
@@ -114,6 +114,7 @@ const productionConfig = merge([
       }),
       new HtmlWebpackPlugin({
         template: PATHS.pro_tpl,
+        filename: 'Index.phtml',
       }),
     ],
     // this file is used to record path input and output module ids and other composing information
