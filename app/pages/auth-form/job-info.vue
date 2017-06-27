@@ -103,7 +103,7 @@ export default {
       })
     },
     submit: function () {
-      api.person_submit(this.collect())
+      api.person_submit(Object.assign(this.collect(), this.$root.store.person_info))
         .then(function (data) {
           if (/auth\//.test(data.next)) {
             this.$emit('controller-change', data.next.substr(5))
