@@ -270,33 +270,70 @@ export function apiFunc1A (parameters) {
 ```
 
 ---
-
+---
 ## deploy
 
-### 新增发布地址
+### 使用
+支持两种模式的使用，两种模式都是在跑自己的脚本
 
-1. 在 config/deploy.js 中添加静态资源在服务器上的访问路径 `_.set(webpackConfig, 'output.publicPath', '/webpack-boilerplate/')`
-2. 配置 gh-pages 发布选项中的远程仓库、分支，这个 @后端大哥， 和他们协调一下。然后配到
-
-```js
-var deployConfig = {
-  repo: 'https://github.com/skinTest/webpack-boilerplate.git'
-}
-```
-
-3. 手动跑脚本或者写到 package.json 中，参考 scripts.deploy， 其中的 dest 参数是和发布环境的那几个 case 之一对应的
-
-
-### 原理
-原理是在 webpack 编译完成后，回调函数内用 gh-pages 发送到了一个远程的 git 仓库，可以理解为如下命令，实现上参考 config/deploy.js
+1. 编译代码，然后将代码推送到后端代码仓库
+2. 直接推送代码到后端代码仓库
 
 ```bash
-webpack
-gh-pages -d dest
+# 编译后发布，推荐使用
+# 1. 对源码进行编译，成功后进行版本提交
+npm run build
+
+# 2. 将代码发送到后端代码仓库
+$DEST=<发送的环境> $MSG=<git commit 的信息> npm run deploy
+
+# 3. 在服务器上拉取代码，手动确定代码更新
+ssh root@172...
+<pwd>
+cd <path-to-project>
+git pull # 完成上线
 ```
+
+### 配置写法
+原理上跑的是 node 的脚本，变量通过 bash 传递到 node ，在脚本中用 [yargs](https://www.npmjs.com/package/yargs) 取出变量，然后配置相应的地址等信息
+
+```js
+// 1. 配置静态资源根路径
+_.set(webpackConfig, 'output.publicPath', '/static')
+
+// 2. 配置发布环境对应的分支
+switch (argv.dest) {
+  case 'joint':
+    deployTpl.branch = deployAssest.branch = 'master'
+    break;
+```
+
+
+### 工具，文档
+[gh-pages](https://www.npmjs.com/package/gh-pages)
+
+```js
+var ghpages = require('gh-pages')
+
+ghpages.publish(dir, [options, [callback]])
+```
+
+`options` js 对象
+`options.src` 接收 blob 字符串或 blob（基于 minimatch） 字符串组成的数组
+`options.branch` 推送到的分支
+`options.repo` 推送到的代码仓库地址
+`options.dest` 将文件推送到的 directory 。 options.dest + options.src 相当于在代码仓库中的地址
+
+### todo
+
+1. 在 node 环境中，自动化 git 提交
+2. 使用环境变量进行 webpack 编译打包过程
+
 
 ---
 
 有问题 提 issue
 有问题 @skinTest
+
+
 
