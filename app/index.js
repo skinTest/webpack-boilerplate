@@ -35,6 +35,7 @@ export const app = new Vue({
   data: () => ({
     store: {
       auth_controller: '',
+      person_info: {},
     },
   })
 }).$mount('#app')

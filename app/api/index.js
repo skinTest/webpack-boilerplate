@@ -217,7 +217,7 @@ api.contact_submit = function (data) {
     return Promise.reject(new TypeError('parameter data must be an array'))
 
   // 请求
-  return post(ADDR.contact_submit, data)
+  return post(ADDR.contact_submit, JSON.stringify(data))
     .then(check_retcode(`不明原因导致您的联系人信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 

@@ -1,3 +1,5 @@
+import options from './options'
+
 export var contact_edit_cells = [
   {
     at_name: 'at-input',
@@ -19,7 +21,7 @@ export var contact_edit_cells = [
     placeholder: '请点击选择',
     value: '',
     name: 'relation',
-    options: [],
+    options: options.relation,
   },
   {
     at_name: 'at-input',

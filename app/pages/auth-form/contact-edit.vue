@@ -44,6 +44,8 @@
 
 <script type="text/javascript">
 import { contact_edit_cells } from 'Libs/cell-config'
+import { find_app_ref } from 'Libs/g_com'
+var g_com;
 
 export default {
   data: () => ({
@@ -89,12 +91,17 @@ export default {
     change_contact: function () {
       // 检验联系人数据是否正确
       if (this.submit_valid() !== 'valid') {
-        console.log('invalid contact')
+        g_com.dialog.init('请确认信息格式正确')
+        return
       }
 
       // 组装编辑后的 list
-      if (this.target === -1) {
+      if (this.target === -1 && this.contact_list.length === 0) {
         this.contact_list.push(this.collect_value())
+      }
+      else if (this.target === -1 && this.contact_list.length > 0) {
+        var index = this.contact_list.length - 1
+        this.contact_list[index] = this.collect_value()
       }
       else {
         this.contact_list[this.target] = this.collect_value()
@@ -124,6 +131,10 @@ export default {
         return 'valid'
       }
     },
+  },
+  mounted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
   },
 }
 </script>

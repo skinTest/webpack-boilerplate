@@ -46,6 +46,9 @@
 
 <script type="text/javascript">
 import contactEdit from './contact-edit'
+import api from 'Api'
+import { find_app_ref } from 'Libs/g_com'
+var g_com;
 
 export default {
   components: { contactEdit },
@@ -100,13 +103,20 @@ export default {
      * 4. toast
      */
     change_contact: function (new_list) {
-      // 赋值
-      this.contact_list = new_list
+      // 接口保存
+      api.contact_submit(new_list)
+        .then(function (data) {
+          console.log(data)
+          // 显示情况赋值
+          this.contact_list = new_list
 
-      // 切换显示组件
-      this.$nextTick(function () {
-        this.toggle_list()
-      })
+          // 切换显示组件
+          this.$nextTick(function () {
+            this.toggle_list()
+          })
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
+      // 赋值
     },
     /*
      * 1. 检验是否完成
@@ -115,6 +125,9 @@ export default {
     submit: function () {}
   },
   mounted: function () {
+    // 注册全局组件
+    g_com = find_app_ref.call(this)
+
     if (this.contact_list.length === 0) {
       this.$refs.edit_panel.init({
         target: -1,
