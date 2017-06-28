@@ -38,8 +38,14 @@ const DOMAIN = {
 
 // 定义开发过程中的 api 代理
 const PROXY = {
-  '/wallet': 'http://wallet.d.yilumofang.com',
-  // '/wallet': 'http://172.16.2.9:8080/mockjsdata/1',
+  // '/wallet': {
+  //   target:'http://172.16.2.9:8080/mockjsdata/1',
+  //   changeOrigin: true,
+  // },
+  '/wallet': {
+    target: 'http://wallet.d.yilumofang.com',
+    changeOrigin: true,
+  },
 }
 
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
