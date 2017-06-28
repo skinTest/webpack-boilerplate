@@ -68,8 +68,13 @@ export default {
       return result
     },
     submit: function () {
-      this.$root.store.person_info = this.collect()
-      this.$emit('controller-change', 'job-info')
+      api.person_submit(this.collect())
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
     }
   },
   mounted: function () {
