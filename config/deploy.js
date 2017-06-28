@@ -18,7 +18,6 @@ var sourceConfig = require('./webpack.compose.js')
  * 2. 发布地址配置
  */
 var webpackConfig = merge(sourceConfig.common, sourceConfig.production)
-_.set(webpackConfig, 'output.publicPath', '/static')
 
 var deployTpl = {
   src: '**/*.phtml',
@@ -35,9 +34,11 @@ var deployAssest = _.defaults({
 switch (argv.dest) {
   case 'joint':
     deployTpl.branch = deployAssest.branch = 'master'
+    _.set(webpackConfig, 'output.publicPath', '/static')
     break;
 
   default:
+    _.set(webpackConfig, 'output.publicPath', '/static')
     deployTpl.branch = deployAssest.branch = 'master'
 }
 
