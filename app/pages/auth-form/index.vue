@@ -16,9 +16,10 @@ import jobInfo from './job-info.vue'
 import personInfo from './person-info.vue'
 import contactList from './contact-list.vue'
 import orderInfo from './order-info.vue'
+import publicFund from './public-fund.vue'
 
 export default {
-  components: { eMail, realName, bankCard, jobInfo, personInfo, contactList, orderInfo },
+  components: { eMail, realName, bankCard, jobInfo, personInfo, contactList, orderInfo, publicFund },
   data: () => ({
     controller: ''
   }),
@@ -29,7 +30,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$root.store.auth_controller = this.$root.store.auth_controller
+    this.$root.store.auth_controller = this.$root.store.auth_controller || 'contact-list'
     this.change_controller(this.$root.store.auth_controller)
     document.title = '授信申请'
   },

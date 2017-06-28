@@ -1,12 +1,13 @@
 <template>
 <div>
-  <h1 class="home-head"> 首页 </h1>
+  <h1 class="public-fun-head"> 公积金 </h1>
 
-  <div class="home-bottom">
+  <div class="public-fun-bottom">
     <button
       class="weui-btn weui-btn_primary"
-      v-touch:tap="apply">
-      借款
+      v-touch:tap="get_public_fund"
+    >
+      授权公积金查询
     </button>
   </div>
 
@@ -20,17 +21,10 @@ var g_com;
 
 export default {
   methods: {
-    apply: function () {
-      api.get_order_info()
+    get_public_fund: function () {
+      api.get_public_fund_url()
         .then(function (data) {
-          // 跳转到相应路由
-          if (/auth/.test(data.next)) {
-            this.$router.replace('/auth')
-            this.$root.store.auth_controller = data.next.substr(5)
-          }
-          else {
-            g_com.dialog.init('订单处理中')
-          }
+          data.url && window.location.replace(data.url)
         }.bind(this))
         .catch(api.common_error_handler.bind(this))
     },
@@ -44,10 +38,10 @@ export default {
 </script>
 
 <style lang="less">
-.home-bottom {
+.public-fun-bottom {
   padding: 80px 15px;
 }
-.home-head {
+.public-fun-head {
   text-align: center;
   padding: 80px;
 }

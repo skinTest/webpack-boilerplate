@@ -106,7 +106,6 @@ export default {
       // 接口保存
       api.contact_submit(new_list)
         .then(function (data) {
-          console.log(data)
           // 显示情况赋值
           this.contact_list = new_list
 
@@ -122,7 +121,18 @@ export default {
      * 1. 检验是否完成
      * 2. 请求下一步路由
      */
-    submit: function () {}
+    submit: function () {
+      api.contact_submit(this.contact_list)
+        .then(function (data) {
+          if (/auth\//.test(data.next)) {
+            this.$emit('controller-change', data.next.substr(5))
+          }
+          else {
+            console.warn('some thing went wrong with auth real-name')
+          }
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
+    }
   },
   mounted: function () {
     // 注册全局组件

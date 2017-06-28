@@ -2,6 +2,7 @@ import about from './about.vue'
 import auth_form from './auth-form'
 import login from './login.vue'
 import home from './home'
+import toast from './toast'
 
 export const routes = [
   //  默认路由
@@ -25,5 +26,9 @@ export const routes = [
   {
     path: '/login',
     component: login,
-  }
+  },
+  {
+    path: '/toast',
+    component: toast,
+  },
 ]
