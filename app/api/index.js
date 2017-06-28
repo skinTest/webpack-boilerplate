@@ -17,7 +17,9 @@ const ADDR = {
   bank_card_submit: '/collect/bankcard/submit',  // done
   bank_card_validate: '/collect/bankcard/validate',  // done
   person_submit: '/collect/person',  // done
-  contact_submit: '/collect/linkman',
+  work_submit: '/collect/work',  // done
+  contact_submit: '/collect/linkman',  // done
+  get_public_fund_url: '/collect/publicfund',  // done
   get_map: '/datamap'
 }
 
@@ -89,6 +91,15 @@ api.get_user_info = function () {
 
 
 /*
+ * 获取用户个人信息
+ * @parameter: mobile - string - 接收验证码的手机
+ */
+api.get_public_fund_url = function () {
+  return get(ADDR.get_public_fund_url)
+    .then(check_retcode(`不明原因导致查询公积金信息失败，您可以联系 ${support_tel}`))
+}
+
+/*
  * 申请贷款，贷款相关信息
  * @parameter: data - object
  */
@@ -148,8 +159,8 @@ api.email_validate = function (code) {
 
 
 /*
- * 验证企业邮箱
- * @parameter: data - string - 邮箱收到的验证码
+ * 验证实名信息
+ * @parameter: data - object - 实名信息
  */
 api.id_submit = function (data) {
   // 参数校验
@@ -158,7 +169,7 @@ api.id_submit = function (data) {
 
   // 请求
   return post(ADDR.id_submit, data)
-    .then(check_retcode(`不明原因导致验证企业邮箱失败，您可以联系 ${support_tel} 解决相关问题`))
+    .then(check_retcode(`不明原因导致验证实名信息失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -204,6 +215,21 @@ api.person_submit = function (data) {
   // 请求
   return post(ADDR.person_submit, data)
     .then(check_retcode(`不明原因导致您的个人信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
+}
+
+
+/*
+ * 提交用户工作信息
+ * @parameter: data - object - 用户工作信息
+ */
+api.work_submit = function (data) {
+  // 参数校验
+  if (typeof(data) !== 'object')
+    return Promise.reject(new TypeError('parameter data must be an object'))
+
+  // 请求
+  return post(ADDR.work_submit, data)
+    .then(check_retcode(`不明原因导致您的工作信息提交失败，您可以联系 ${support_tel} 解决相关问题`))
 }
 
 
@@ -265,7 +291,7 @@ api.net_error_handler = function () {
 
 api.common_error_handler = function (err) {
   var g_com = find_app_ref.call(this)
-
+  console.error('common_error_handler:', err)
   switch (err.message) {
     case 'net_error':
       g_com.dialog.init('不好意思，网络开小差了，请稍后再试。')

@@ -62,17 +62,19 @@ export default {
 
       // 异步形式(Promise)返回用户的点击选择
       return new Promise(function (resolve, reject) {
-        this.$el.addEventListener('touchstart', function (event) {
-          Array.prototype.forEach.call(event.target.attributes, function (item) {
-            this.close()
-            if (item.name === 'data-area') {
-              resolve(item.value)
-            }
-          }.bind(this)) // end of attribute forEach
+        ['click', 'touchstart'].forEach(function (eventType) {
+          this.$el.addEventListener(eventType, function (event) {
+            Array.prototype.forEach.call(event.target.attributes, function (item) {
+              if (item.name === 'data-area') {
+                this.close()
+                resolve(item.value)
+              }
+            }.bind(this)) // end of attribute forEach
 
-          this.show = _.stubFalse()
-          resolve('')
-        }.bind(this))  // end of event listener
+            this.close()
+            resolve('')
+          }.bind(this), { capture: true })  // end of event listener
+        }.bind(this))  // end of event type iteration
       }.bind(this))  // end of return Promise
     },
     close: function () {

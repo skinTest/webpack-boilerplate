@@ -42,7 +42,7 @@ export const get = function (url, data) {
         resolve(res)
       },
       error: function (error) {
-        reject('net_error')
+        reject(new Error('net_error'))
       },
     })  // end of ajax call
   })
