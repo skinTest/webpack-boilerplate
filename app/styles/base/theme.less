@@ -1,16 +1,5 @@
 @import "./fn.less";
 
-// text-color
-.text-danger {
-  color: @weuiColorWarn
-}
-.text-primary {
-  color: @weuiColorPrimary
-}
-.text-tip {
-  color: @weuiTextColorTips;
-}
-
 // vue transition
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s
@@ -18,3 +7,41 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
+
+/* --- --- common layout --- --- */
+// set content to the right part of the page
+// use absolute position
+.at-page_container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.at-panel {
+  margin-bottom: 20px;
+}
+.at-panel_header {
+  padding: 10px 15px;
+  font-size: 13px;
+  .text-sub();
+  &:before {
+    content: " ";
+    margin-right: 10px;
+    border-left: 3px solid @weuiColorPrimary;
+  }
+}
+
+.at-page_bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.at-page_btn_group {
+  padding: 0 15px;
+  margin-top: 40px;
+}
+
+
