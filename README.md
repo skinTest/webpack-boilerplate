@@ -288,7 +288,8 @@ npm run build
 $DEST=<发送的环境> $MSG=<git commit 的信息> npm run deploy
 
 # 3. 在服务器上拉取代码，手动确定代码更新
-ssh root@172...
+ssh root@172.16.2.102
+Root1.pwd
 <pwd>
 cd <path-to-project>
 git pull # 完成上线

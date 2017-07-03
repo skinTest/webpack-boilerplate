@@ -42,6 +42,10 @@ const PROXY = {
   //   target:'http://172.16.2.9:8080/mockjsdata/1',
   //   changeOrigin: true,
   // },
+  // '/wallet': {
+  //   target: 'http://rapapi.org/mockjs/21150',
+  //   changeOrigin: true,
+  // },
   '/wallet': {
     target: 'http://wallet.d.yilumofang.com',
     changeOrigin: true,
