@@ -50,6 +50,19 @@ export default {
   }),
   methods: Object.assign({}, mixin_methods, {
   }),
+  watch:{
+    'cell.options': function (options) {
+      if (!Array.isArray(options)) {
+        throw new TypeError('at-select options must be an array')
+      }
+      else if (options.length === 0 || options[0].value !== '') {
+        this.cell.options.unshift({
+          value: '',
+          label: this.cell.placeholder || '请点击选择'
+        })
+      }
+    }
+  },
   created: function () {
     // type check
     this.cell.options = Array.isArray(this.cell.options) ? this.cell.options : []

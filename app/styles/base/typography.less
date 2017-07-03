@@ -20,8 +20,11 @@
 // text-combination
 .at-footer {
   .text-tip();
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
   padding-top: 40px;
   padding-bottom: 10px;
+  &:after , &:before {
+    content: "——",
+  }
 }

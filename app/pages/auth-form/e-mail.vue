@@ -1,17 +1,27 @@
 <template>
-  <div class="">
+<div class="at-page_container">
+
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">企业邮箱</div>
+      <div class="at-jumbotron_desc">请使用您本人的企业邮箱进行认证</div>
+    </div>
+  </div>
+
+
     <!-- form -->
-    <div class="weui-cells">
+    <div class="at-panel weui-cells">
       <at-input :cell="email_cell"></at-input>
       <at-input :cell="code_cell"></at-input>
     </div>
 
     <!-- button -->
-    <div class="auth-bottom">
+    <div class="at-panel at-page_btn_group">
       <button
         :class="['weui-btn', can_send ? 'weui-btn_primary' : 'weui-btn_default']"
         :disabled="!can_send"
-        v-touch:tap="send_email">
+        @click="send_email">
         发送验证邮件
       </button>
       <button
@@ -22,13 +32,13 @@
         下一步
       </button>
     </div>
-  </div>
+
+</div>
 </template>
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
+import tip from 'Libs/at-tip.js'
 
 export default {
   data: () => ({
@@ -60,25 +70,18 @@ export default {
     send_email: function (event) {
       api.email_submit(this.email_cell.value)
         .then(function () {
-          g_com.toast.init('发送成功')
-          g_com.toast.close(800)
+          tip(this).toast.init('发送成功')
+          tip(this).toast.close(800)
         })
         .catch(api.common_error_handler.bind(this))
     },
     submit: function () {
       api.email_validate(this.code_cell.value)
-        .then(function (data) {
-          console.log(data)
-          if (/auth\//.test(data.next)) {
-            this.$emit('controller-change', data.next.substr(5))
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
   },
 }
 </script>

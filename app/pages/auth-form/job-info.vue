@@ -1,6 +1,16 @@
 <template>
 <div>
 
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">工作信息</div>
+      <div class="at-jumbotron_desc">
+        {{show_position_input ? '请补充您的具体职务信息' : '我们将严格保障您的个人信息安全'}}
+      </div>
+    </div>
+  </div>
+
   <!-- form -->
   <div class="weui-cells">
     <at-select :cell="position_cell"></at-select>
@@ -10,7 +20,7 @@
   </div>
 
   <!-- button -->
-  <div class="auth-bottom">
+  <div class="at-panel at-page_btn_group">
     <button
       :disabled="!submit_valid"
       :class="['weui-btn',
@@ -25,9 +35,7 @@
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
 import options from 'Libs/options/index.js'
-var g_com;
 
 export default {
   data: function () {
@@ -43,7 +51,7 @@ export default {
         name: 'position_input',
         label: '职务补充',
         value: '',
-        placeholder: '请补充您的具体职务',
+        placeholder: '请填写',
       },
       income_cell: {
         label: '年收入',
@@ -93,20 +101,13 @@ export default {
 
       return result
     },
-
     submit: function () {
       api.work_submit(this.collect())
-        .then(function (data) {
-          if (/auth\//.test(data.next)) {
-            this.$emit('controller-change', data.next.substr(5))
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
   },
 }
 </script>

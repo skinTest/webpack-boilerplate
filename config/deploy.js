@@ -23,7 +23,7 @@ var deployTpl = {
   src: '**/*.phtml',
   dest: 'app/views',
   message: argv.message || 'Auto-push to remote by FE; find out the sucking commit boy ...',
-  repo: 'git@gitlab.yilumofang.com:cash-loan/wallet.git',
+  repo: 'git@gitlab.yilumofang.com:cash-loan/client.git',
 }
 var deployAssest = _.defaults({
   src: 'js|css|png'.split('|').map((suffix) => `**/*.` + suffix),
@@ -33,13 +33,13 @@ var deployAssest = _.defaults({
 /* --- --- --- 环境分支对应关系 --- --- --- */
 switch (argv.dest) {
   case 'joint':
-    deployTpl.branch = deployAssest.branch = 'master'
+    deployTpl.branch = deployAssest.branch = 'summer'
     _.set(webpackConfig, 'output.publicPath', '/static')
     break;
 
   default:
     _.set(webpackConfig, 'output.publicPath', '/static')
-    deployTpl.branch = deployAssest.branch = 'master'
+    deployTpl.branch = deployAssest.branch = 'summer'
 }
 
 
@@ -69,18 +69,23 @@ new Promise (function (resolve, reject) {
   })
 })
 // 发布静态资源
-.then(function () {
-  ghpages.publish(path.join(__dirname, '..', 'dist'), deployAssest, function (err) {
-    if (err) {
-      throw err
-    }
-    else {
-      console.log(chalk.yellow('assets deployed to "/public/static"'))
-    }
+.then(function (res) {
+  console.log('first ---', res)
+  return new Promise (function (resolve, reject) {
+    ghpages.publish(path.join(__dirname, '..', 'dist'), deployAssest, function (err) {
+      if (err) {
+        reject(err)
+      }
+      else {
+        console.log(chalk.yellow('assets deployed to "/public/static"'))
+        resolve('success')
+      }
+    })
   })
 })
 // 发布页面模板
-.then(function () {
+.then(function (res) {
+  console.log('second ---', res)
   ghpages.publish(path.join(__dirname, '..', 'dist'), deployTpl, function(err) {
     if (err) {
       throw err

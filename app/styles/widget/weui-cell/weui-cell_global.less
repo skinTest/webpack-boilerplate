@@ -96,5 +96,28 @@ z-index:
 }
 .weui-cell__ft {
     text-align: right;
-    color: @weuiTextColorGray;
+    .text-tip();
+}
+
+.at-cells_panel {
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 13px;
+    background-color: #fff;
+    .weui-cells {
+        margin-top: 0;
+        &:before {
+            display: none;
+        }
+    }
+}
+.at-cells_title {
+    padding: 15px 15px 5px;
+    .text-tip();
+    position: relative;
+    &:before {
+        content: " ";
+        border-left: 3px solid @weuiColorPrimaryBg;
+        margin-right: 10px;
+    }
 }

@@ -8,7 +8,7 @@
     </div>
 
     <!-- button -->
-    <div class="auth-bottom">
+    <div class="at-panel at-page_btn_group">
       <button
         :disabled="!valid"
         :class="['weui-btn',

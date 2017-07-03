@@ -6,12 +6,14 @@
     <div class="weui-cell__bd">
       <input
         class="weui-input"
+        ref="input"
         :value="cell.value"
         @input="cell.value = $event.target.value"
         :type="cell.type"
         :placeholder="cell.placeholder"
         :disabled="cell.disabled === true"/>
     </div>
+
   </div>
 </template>
 

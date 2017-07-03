@@ -1,13 +1,21 @@
 <template>
-<div>
-  <h1 class="public-fun-head"> 公积金 </h1>
+<div class="at-page_container">
 
-  <div class="public-fun-bottom">
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <img class="toast_img" src="~Assets/image/toast.png"/>
+      <div class="at-jumbotron_main">公积金认证</div>
+      <div class="at-jumbotron_desc">我们将保护您的个人信息安全</div>
+      <div class="at-jumbotron_desc">请前往小 Fang 的合作方获取公积金数据</div>
+    </div>
+  </div>
+
+  <div class="at-panel at-page_btn_group">
     <button
       class="weui-btn weui-btn_primary"
       v-touch:tap="get_public_fund"
     >
-      授权公积金查询
+      查询公积金信息
     </button>
   </div>
 
@@ -16,8 +24,6 @@
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
 
 export default {
   methods: {
@@ -29,20 +35,5 @@ export default {
         .catch(api.common_error_handler.bind(this))
     },
   },
-  mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
-
-  },
 }
 </script>
-
-<style lang="less">
-.public-fun-bottom {
-  padding: 80px 15px;
-}
-.public-fun-head {
-  text-align: center;
-  padding: 80px;
-}
-</style>

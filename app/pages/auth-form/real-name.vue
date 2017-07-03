@@ -1,28 +1,39 @@
 <template>
-  <div class="">
-    <!-- form -->
-    <div class="weui-cells">
-      <at-input :cell="name_cell"></at-input>
-      <at-input :cell="cert_no_cell"></at-input>
-    </div>
+<div class="page_container">
 
-    <!-- button -->
-    <div class="auth-bottom">
-      <button
-        :disabled="!valid"
-        :class="['weui-btn',
-                  valid ? 'weui-btn_primary' : 'weui-btn_default']"
-        v-touch:tap="submit">
-        下一步
-      </button>
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">实名认证</div>
+      <div class="at-jumbotron_desc">我们将保护您的个人信息</div>
+      <div class="at-jumbotron_desc">魔方将只向您本人发放借款</div>
     </div>
   </div>
+
+
+  <!-- form -->
+  <div class="at-panel weui-cells">
+    <at-input :cell="name_cell"></at-input>
+    <at-input :cell="cert_no_cell"></at-input>
+  </div>
+
+  <!-- button -->
+  <div class="at-panel at-page_btn_group">
+    <button
+      :disabled="!valid"
+      :class="['weui-btn',
+                valid ? 'weui-btn_primary' : 'weui-btn_default']"
+      v-touch:tap="submit">
+      下一步
+    </button>
+  </div>
+
+</div>
 </template>
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
+import tip from 'Libs/at-tip'
 
 export default {
   data: () => ({
@@ -30,14 +41,14 @@ export default {
       label: '姓名',
       placeholder: '实名信息',
       value: '',
-      name: 'borrower_name',
+      name: 'name',
     },
     cert_no_cell: {
       label: '身份证号',
       placeholder: '实名信息',
       type: 'number',
       value: '',
-      name: 'borrower_certno',
+      name: 'cert_no',
     }
   }),
   computed: {
@@ -52,20 +63,11 @@ export default {
         cert_no: this.cert_no_cell.value,
         name: this.name_cell.value
       })
-        .then(function (data) {
-          if (/auth\//.test(data.next)) {
-            this.$emit('controller-change', data.next.substr(5))
-          }
-          else {
-            console.warn('some thing went wrong with auth real-name')
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
   }
 }
 </script>

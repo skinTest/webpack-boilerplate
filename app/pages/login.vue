@@ -1,36 +1,48 @@
 <template>
-  <div>
-    <!-- form -->
-    <div class="weui-cells">
-      <at-input :cell="mobile_cell"></at-input>
-      <at-input :cell="code_cell"></at-input>
-    </div>
+<div class="at-page_container">
 
-    <!-- button -->
-    <div class="login-bottom">
-      <button
-        :disabled="!can_send_msg"
-        :class="['weui-btn',
-                  can_send_msg ? 'weui-btn_primary' : 'weui-btn_default']"
-        v-touch:tap="send_msg">
-        {{msg_btn_text}}
-      </button>
-      <button
-        :disabled="!valid_submit"
-        :class="['weui-btn',
-                  valid_submit ? 'weui-btn_primary' : 'weui-btn_default']"
-        v-touch:tap="submit">
-        登录
-      </button>
-    </div>
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">手机登录</div>
+      <div class="at-jumbotron_desc">请使用您本人名下手机</div>
+      <div class="at-jumbotron_desc">手机号将作为您的登录凭证</div>
 
+      <div class="at-jumbotron_title">
+        <button
+          class="weui-btn weui-btn_mini weui-btn_plain-primary"
+          :class="[can_send_code ? '' : 'weui-btn_plain-disabled']"
+          v-touch:tap="send_code"
+        >
+          {{msg_btn_text}}
+        </button>
+      </div>
+    </div>
   </div>
+
+  <!-- form -->
+  <div class="at-panel weui-cells">
+    <at-input :cell="mobile_cell"></at-input>
+    <at-input v-if="got_code" :cell="code_cell"></at-input>
+  </div>
+
+  <!-- button -->
+  <div class="at-panel at-page_btn_group">
+    <button
+      :disabled="!valid_submit"
+      :class="['weui-btn',
+                valid_submit ? 'weui-btn_primary' : 'weui-btn_default']"
+      v-touch:tap="submit">
+      登录
+    </button>
+  </div>
+
+</div>
 </template>
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
+import tip from 'Libs/at-tip'
 
 import atDialog from 'Components/at-dialog'
 
@@ -40,32 +52,30 @@ export default {
   },
   data: () => ({
     mobile_cell: {
-      label: '登录手机',
-      placeholder: '请使用本人名下手机',
+      label: '手机号',
+      placeholder: '请输入',
       type: 'number',
       value: '',
       name: 'mobile',
     },
     code_cell: {
       label: '验证码',
-      placeholder: '请先输入手机号',
-      disable: true,
+      placeholder: '请输入',
       type: 'number',
       value: '',
-      name: 'card_phone',
+      name: 'code',
     },
     re_msg_time: 0,
+    got_code: false,
   }),
   computed: {
     valid_mobile: function () {
       return /^1[34578]\d{9}$/.test(this.mobile_cell.value)
     },
     valid_submit: function () {
-      let valid_code = this.code_cell.value.length > 0
-
-      return this.valid_mobile && valid_code
+      return this.valid_mobile && this.code_cell.value.length > 0
     },
-    can_send_msg: function () {
+    can_send_code: function () {
       return this.valid_mobile && this.re_msg_time === 0
     },
     msg_btn_text: function () {
@@ -75,28 +85,22 @@ export default {
     },
   },
   methods: {
-    send_msg: function () {
-      if (this.can_send_msg) {
+    send_code: function () {
+      if (!this.can_send_code) { return }
 
-
-        // 请求服务器发送验证码
-        api.send_code(this.mobile_cell.value)
+      // 请求服务器发送验证码
+      api.send_code(this.mobile_cell.value)
           .then(function (data) {
-            // toast 用户
-            g_com.toast.init({
+            // 1. toast 用户
+            tip(this).toast.init({
               desc: '已发送',
-              time: 1000,
+              time: 800,
             })
-          })
-          .then(function () {
-            // 开启验证码输入框
-            this.code_cell.disabled = false
-            var timeout_id = setTimeout(function () {
-              this.code_cell.placeholder = '请填写验证码'
-              clearTimeout(timeout_id)
-            }.bind(this), 500)
 
-            // 重发短信计时
+            // 2. 开启验证码输入框
+            this.got_code = true
+
+            // 3. 短信计时
             this.re_msg_time = 5
             var msg_count = setInterval(function () {
               if (this.re_msg_time > 0) {
@@ -105,22 +109,17 @@ export default {
               else {
                 clearInterval(msg_count)
               }
-            }.bind(this), 1000)
-
-          }.bind(this))  // end of 组件内显示管理
-          .catch(function (err) {
-            console.log(err)
-            g_com.dialog.init({
-              desc: err.message
-            })
-          })
-      }
+            }.bind(this), 1000) // end of interval
+          }.bind(this)) // end of send success
+          .catch(api.common_error_handler.bind(this))
     },
     submit: function () {
       if (!this.valid_submit) {
-        g_com.dialog({ desc: '请完整填写手机号，验证码再提交' })
         return
       }
+
+      // 开启 loading
+      tip(this).toast.init({type: 'loading'})
 
       // 请求登录接口
       api.login(this.code_cell.value)
@@ -129,41 +128,15 @@ export default {
           return api.get_order_info()
         })
         .then(function (data) {
-          // 跳转到订单对应路由
-          if (/auth/.test(data.next)) {
-            this.$router.replace('/auth')
-            this.$root.store.auth_controller = data.next.substr(5)
-          }
-          else {
-            this.$router.replace(data.next || '/')
-          }
+          tip(this).toast.close()
+          return Promise.resolve(data)
         }.bind(this))
-        .catch(function (err) {
-          switch (err.message) {
-            case 'order_info_error':
-              this.$router.replace('/')
-              break
-
-            case 'net_error':
-              api.net_error_handler.call(this)
-              break
-
-            default:
-              g_com.dialog.init({ desc: err.message })
-          }
-        }.bind(this)) // end of catch
+        .then(api.router_next(this))
+        .catch(api.common_error_handler.bind(this)) // end of catch
     },
   },
   mounted: function () {
-    // 注册全局组件
     document.title = '登录'
-    g_com = find_app_ref.call(this)
   },
 }
 </script>
-
-<style lang="less">
-.login-bottom {
-  padding: 80px 15px;
-}
-</style>

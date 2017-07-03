@@ -5,9 +5,11 @@
 </template>
 
 <script type="text/javascript">
+import api from 'Api'
+
 export default {
   mounted: function () {
-    document.title = '借款申请'
+    document.title = '借款'
   },
 }
 </script>

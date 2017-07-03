@@ -1,14 +1,22 @@
 <template>
-<div class="">
+<div class="at-page_container">
+
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">个人信息</div>
+      <div class="at-jumbotron_desc">我们将严格保障您的个人信息安全</div>
+    </div>
+  </div>
+
   <!-- form -->
-  <div class="weui-cells">
+  <div class="at-panel weui-cells">
     <at-select :cell="marry_cell"></at-select>
     <at-select :cell="degree_cell"></at-select>
     <at-textarea :cell="address_cell"></at-textarea>
   </div>
 
   <!-- button -->
-  <div class="auth-bottom">
+  <div class="at-panel at-page_btn_group">
     <button
       :disabled="!valid"
       :class="['weui-btn',
@@ -69,11 +77,7 @@ export default {
     },
     submit: function () {
       api.person_submit(this.collect())
-        .then(function (data) {
-          if (/auth\//.test(data.next)) {
-            this.$emit('controller-change', data.next.substr(5))
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     }
   },

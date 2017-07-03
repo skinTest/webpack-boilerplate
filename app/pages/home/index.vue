@@ -1,13 +1,23 @@
 <template>
-<div>
-  <h1 class="home-head"> 首页 </h1>
+<div class="page_container">
 
-  <div class="home-bottom">
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div v-for="item in head" :class="['at-jumbotron_' + item[0]]">{{item[1]}}</div>
+    </div>
+  </div>
+
+  <div class="at-panel home-btn-groupt">
     <button
       class="weui-btn weui-btn_primary"
       v-touch:tap="apply">
-      借款
+      {{action_text}}
     </button>
+  </div>
+
+  <div class="at-page_bottom">
+    <app-tab></app-tab>
   </div>
 
 </div>
@@ -15,40 +25,52 @@
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
+import tip from 'Libs/at-tip'
+import tpl from './tpl'
+import appTab from 'Components/tab'
 
 export default {
+  components: {
+    appTab,
+  },
+  data: () => ({
+    head: [
+      ['desc', '最高可借'],
+    ],
+    action_text: '我要借款',
+  }),
   methods: {
     apply: function () {
       api.get_order_info()
-        .then(function (data) {
-          // 跳转到相应路由
-          if (/auth/.test(data.next)) {
-            this.$router.replace('/auth')
-            this.$root.store.auth_controller = data.next.substr(5)
-          }
-          else {
-            g_com.dialog.init('订单处理中')
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
-
+    api.get_order_info()
+      .then(function (data) {
+        if (data.status) {
+          this.head = tpl[data.status].head
+          this.action_text = tpl[data.status].action_text
+        }
+      }.bind(this))
+      .catch(function (err) {
+        if (err.message === 'to_log_in') {
+          console.log('called')
+          this.head = tpl['0'].head
+          this.action_text = tpl['0'].action_text
+        }
+        else {
+          return Promise.reject(err)
+        }
+      }.bind(this))
+      .catch(api.common_error_handler.bind(this))
   },
 }
 </script>
 
 <style lang="less">
-.home-bottom {
-  padding: 80px 15px;
-}
-.home-head {
-  text-align: center;
-  padding: 80px;
+.home-btn-groupt {
+  padding: 0 15px;
 }
 </style>

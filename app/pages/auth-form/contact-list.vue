@@ -1,46 +1,58 @@
 <template>
 <transition-group name="fade" tag="div">
-  <!-- list -->
-  <div key="list" class="weui-cells" v-show="show_list">
-    <at-static
-      v-for="cell in contact_cells"
-      :key=cell.content
-      :cell="cell"
-    ></at-static>
-  </div>
-
-  <!-- 添加按钮 -->
-  <div key="add" class="weui-cells" v-show="show_list">
-    <div
-      class="weui-cell weui-cell_access"
-      v-touch:tap="add_contact"
-    >
-      <div class="weui-cell__bd">
-        <p class="text-primary">添加联系人</p>
+  <!-- 列表面板 -->
+  <div class="at-page_container" key="show_list" v-show="show_list">
+    <!-- privacy -->
+    <div class="at-page_head">
+      <div class="at-jumbotron">
+        <div class="at-jumbotron_main">联系人信息</div>
+        <div class="at-jumbotron_desc">为了更好的为您提供服务，请确保与金融魔方的联系</div>
       </div>
-      <div class="weui-cell__ft"></div>
     </div>
-  </div>
 
-  <!-- 提交按钮 -->
-  <div class="auth-bottom" key="submit" v-show="show_list">
-    <button
-      :disabled="!submit_valid"
-      :class="['weui-btn',
-                submit_valid ? 'weui-btn_primary' : 'weui-btn_default']"
-      v-touch:tap="submit">
-      下一步
-    </button>
+    <!-- list -->
+    <div class="weui-cells at-panel">
+      <at-static
+        v-for="cell in contact_cells"
+        :key=cell.content
+        :cell="cell"
+      ></at-static>
+    </div>
+
+    <!-- 添加按钮 -->
+    <div class="weui-cells at-panel">
+      <div
+        class="weui-cell weui-cell_access"
+        v-touch:tap="add_contact"
+      >
+        <div class="weui-cell__bd">
+          <p class="text-primary">添加联系人</p>
+        </div>
+        <div class="weui-cell__ft"></div>
+      </div>
+    </div>
+
+    <!-- 提交按钮 -->
+    <div class="at-panel at-page_btn_group">
+      <button
+        :disabled="!submit_valid"
+        :class="['weui-btn',
+                  submit_valid ? 'weui-btn_primary' : 'weui-btn_default']"
+        v-touch:tap="submit">
+        下一步
+      </button>
+    </div>
+
   </div>
 
   <!-- 联系人编辑面板 -->
-  <div key="panel" class="action_panel" v-show="!show_list">
-    <contact-edit
-      v-on:contact-change="change_contact"
-      ref="edit_panel"
-    >
-    </contact-edit>
-  </div>
+  <contact-edit
+    v-on:contact-change="change_contact"
+    v-show="!show_list"
+    ref="edit_panel"
+    key="edit"
+  >
+  </contact-edit>
 </transition-group>
 </template>
 
@@ -103,6 +115,7 @@ export default {
      * 4. toast
      */
     change_contact: function (new_list) {
+      console.log(new_list)
       // 接口保存
       api.contact_submit(new_list)
         .then(function (data) {
@@ -112,7 +125,7 @@ export default {
           // 切换显示组件
           this.$nextTick(function () {
             this.toggle_list()
-          })
+          }.bind(this))
         }.bind(this))
         .catch(api.common_error_handler.bind(this))
       // 赋值
@@ -123,14 +136,7 @@ export default {
      */
     submit: function () {
       api.contact_submit(this.contact_list)
-        .then(function (data) {
-          if (/auth\//.test(data.next)) {
-            this.$emit('controller-change', data.next.substr(5))
-          }
-          else {
-            console.warn('some thing went wrong with auth real-name')
-          }
-        }.bind(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     }
   },

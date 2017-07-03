@@ -1,36 +1,38 @@
 <template>
-  <div class="">
-    <!-- form -->
-    <div class="weui-cells">
-      <at-input :cell="card_cell"></at-input>
-      <at-input :cell="phone_cell"></at-input>
-      <at-input :cell="code_cell"></at-input>
-    </div>
+<div class="at-page_container">
 
-    <!-- button -->
-    <div class="auth-bottom">
-      <button
-        :disabled="!to_check_card"
-        :class="['weui-btn',
-                  to_check_card ? 'weui-btn_primary' : 'weui-btn_default']"
-        v-touch:tap="send_msg">
-        {{msg_btn_text}}
-      </button>
-      <button
-        :disabled="!can_validate_code"
-        :class="['weui-btn',
-                  can_validate_code ? 'weui-btn_primary' : 'weui-btn_default']"
-        v-touch:tap="validate_phone">
-        下一步
-      </button>
+  <!-- 解说 -->
+  <div class="at-page_head">
+    <div class="at-jumbotron">
+      <div class="at-jumbotron_main">收款卡验证</div>
+      <div class="at-jumbotron_desc">为了保障资金安全</div>
+      <div class="at-jumbotron_desc">收款卡必须是您本人名下的储蓄卡</div>
     </div>
   </div>
+
+  <!-- form -->
+  <div class="at-panel weui-cells">
+    <at-input :cell="card_cell"></at-input>
+    <at-input :cell="phone_cell"></at-input>
+  </div>
+
+  <!-- button -->
+  <div class="at-panel at-page_btn_group">
+    <button
+      :disabled="!to_check_card"
+      :class="['weui-btn',
+                to_check_card ? 'weui-btn_primary' : 'weui-btn_default']"
+      v-touch:tap="send_msg">
+      校验银行卡
+    </button>
+  </div>
+
+</div>
 </template>
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
+import tip from 'Libs/at-tip'
 
 export default {
   data: () => ({
@@ -48,15 +50,6 @@ export default {
       value: '',
       name: 'bank_mobile',
     },
-    code_cell: {
-      label: '验证码',
-      placeholder: '请先完善银行卡信息',
-      type: 'number',
-      value: '',
-      name: 'code',
-    },
-    re_msg_time: 0,
-    card_checked: false,
   }),
   computed: {
     valid_card: function () {
@@ -68,76 +61,23 @@ export default {
     to_check_card: function () {
       return this.valid_phone && this.valid_card
     },
-    msg_btn_text: function () {
-      var result = ''
-
-      if (!this.card_checked) {
-        result = '校验银行卡'
-      }
-      else if (this.re_msg_time !== 0) {
-        result = `(${this.re_msg_time}) 秒后重新发送`
-      }
-      else {
-        result = '发送验证码'
-      }
-
-      return result
-    },
-    can_validate_code: function () {
-      return this.card_checked && this.code_cell.value !== ''
-    },
-  },
-  watch: {
-    'card_cell.value': function () { this.card_checked = false },
-    'phone_cell.value': function () { this.card_checked = false },
   },
   methods: {
     send_msg: function () {
-      api.bank_card_submit({
+      var bank_data = {
         card_num: this.card_cell.value,
         bank_mobile: this.phone_cell.value,
-      })
-        .then(function (data) {
-          // 判定下一个 controller
-          if (/auth\//.test(data.next))
-            this.$emit('controller-change', data.next.substr(5))
-        }.bind(this))
-        .then(function () {
-          // 1. 更改银行卡验证状态
-          this.card_checked = true
+      }
 
-          // 2. 更改 code_cell placeholder
-          var timeout_id = setTimeout(function () {
-            this.code_cell.placeholder = '请填写验证码'
-            clearTimeout(timeout_id)
-          }.bind(this), 500)
-
-          // 3. 短信重发计时
-          this.re_msg_time = 5
-          var msg_count = setInterval(function () {
-            if (this.re_msg_time > 0) {
-              this.re_msg_time -= 1
-            }
-            else {
-              clearInterval(msg_count)
-            }
-          }.bind(this), 1000)
-        }.bind(this))
-        .catch(api.common_error_handler.bind(this))
-    },
-    validate_phone: function () {
-      api.bank_card_validate(this.code_cell.value)
+      api.bank_card_submit(bank_data)
         .then(function (data) {
-          // 前往下一个 controller
-          if (/auth\//.test(data.next))
-            this.$emit('controller-change', data.next.substr(5))
-        })
+          this.$root.store.bank = bank_data
+          this.$router.replace(data.next || '/auth/bank-mobile')
+        }.bind(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
   },
 }
 </script>

@@ -7,7 +7,7 @@
       <div class="at-jumbotron_desc">
         您的借款金额上限
       </div>
-      <div class="at-jumbotron_main">￥100,00.00</div>
+      <div class="at-jumbotron_title">￥100,00.00</div>
       <div class="at-jumbotron_desc">
         由于您的申请金额超出评估上限
       </div>
@@ -19,7 +19,12 @@
 
   <!-- body -->
   <div class="at-panel at-page_btn_group">
-    <button class="weui-btn weui-btn_primary">修改借款订单</button>
+    <button
+      class="weui-btn weui-btn_primary"
+      v-touch:tap="apply_order"
+    >
+      修改借款订单
+    </button>
   </div>
 
 
@@ -39,8 +44,13 @@ export default {
   data: () => ({
     name: '薛淞之',
   }),
+  methods: {
+    apply_order: function () {
+      this.$router.replace('/order/apply/adjust')
+    },
+  },
   mounted: function () {
-    document.title = '借款'
+
   },
 }
 </script>
