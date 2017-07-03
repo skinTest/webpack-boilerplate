@@ -5,22 +5,22 @@ import { find_root, find_app_ref } from 'Libs/g_com.js'
 const support_tel = '一个 400 电话'
 const api = {}
 const ADDR = {
-  send_code: '/user/sendcode',  // done
-  login: '/user/login',  // done
-  get_user_info: '/user/info',  // done
-  order_apply: '/order/apply',  // done
-  order_change: '/order/change',  // done
-  order_info: '/order/info',  // done
-  email_submit: '/collect/email/submit', // done
-  email_validate: '/collect/email/validate',  // done
-  id_submit: '/collect/identify',  // done
-  bank_card_submit: '/collect/bankcard/submit',  // done
-  bank_card_validate: '/collect/bankcard/validate',  // done
-  person_submit: '/collect/person',  // done
-  work_submit: '/collect/work',  // done
-  contact_submit: '/collect/linkman',  // done
-  get_public_fund_url: '/collect/publicfund',  // done
-  get_map: '/datamap'
+  send_code: '/user/sendcode',
+  login: '/user/login',
+  get_user_info: '/user/info',
+  order_apply: '/order/apply',
+  order_change: '/order/change',
+  order_info: '/order/info',
+  email_submit: '/collect/email/submit',
+  email_validate: '/collect/email/validate',
+  id_submit: '/collect/identify',
+  bank_card_submit: '/collect/bankcard/submit',
+  bank_card_validate: '/collect/bankcard/validate',
+  person_submit: '/collect/person',
+  work_submit: '/collect/work',
+  contact_submit: '/collect/linkman',
+  get_public_fund_url: '/collect/publicfund',
+  get_map: '/datamap',
 }
 
 // 根据环境选择地址前缀
@@ -291,6 +291,7 @@ api.net_error_handler = function () {
 
 api.common_error_handler = function (err) {
   var g_com = find_app_ref.call(this)
+  g_com.toast.close()
   console.error('common_error_handler:', err)
   switch (err.message) {
     case 'net_error':
@@ -309,6 +310,16 @@ api.common_error_handler = function (err) {
       break;
   }
 }
+
+/* --- --- next 跳转函数 --- --- */
+api.router_next = function (vi) {
+  return function (data) {
+    console.log(data)
+    if (data.next)
+      vi.$router.replace(data.next)
+  }
+}
+
 
 // 输出 api 对象
 export default api

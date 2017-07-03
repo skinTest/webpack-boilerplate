@@ -1,7 +1,7 @@
 <template>
-<transition name="fade">
+<!-- <transition name="fade"> -->
   <div v-show="show">
-    <div class="weui-mask" data-area="mask"></div>
+    <div class="weui-mask"></div>
     <div class="weui-dialog">
       <div class="weui-dialog__hd" data-area="head">
         <strong class="weui-dialog__title" data-area="title">
@@ -28,7 +28,7 @@
       </div>
     </div>
   </div>
-</transition>
+<!-- </transition> -->
 </template>
 
 <script type="text/javascript">
@@ -70,9 +70,6 @@ export default {
                 resolve(item.value)
               }
             }.bind(this)) // end of attribute forEach
-
-            this.close()
-            resolve('')
           }.bind(this), { capture: true })  // end of event listener
         }.bind(this))  // end of event type iteration
       }.bind(this))  // end of return Promise
