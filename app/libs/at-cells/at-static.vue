@@ -37,8 +37,9 @@ export default {
   }),
   methods: Object.assign({}, mixin_methods, {
     handler: function () {
-      if (typeof(this.cell.touch_handler) === 'function')
+      if (typeof(this.cell.touch_handler) === 'function') {
         this.cell.touch_handler()
+      }
     }
   }),
 }
