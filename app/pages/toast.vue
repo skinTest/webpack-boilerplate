@@ -4,7 +4,9 @@
   <!-- head part -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <img class="toast_img" src="~Assets/image/toast.png"/>
+      <img class="toast_img" src="https://cdn.bdstatic.com/portal/img/customer/case/baidu_waimai/waimai_728bb8a2.png"/>
+      <!-- <img class="toast_img" src="http://img.maijia.com/news/main/201605/26132137mrxl.png"/> -->
+      <!-- <img class="toast_img" src="http://www.xiazaiba.com/uploadfiles/sub_ico/2015/0420/2015042015450949579.png"/> -->
       <div class="at-jumbotron_title">{{tpl.title}}</div>
       <div class="at-jumbotron_main">{{tpl.desc}}</div>
     </div>

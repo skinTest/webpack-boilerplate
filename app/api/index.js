@@ -19,6 +19,7 @@ const ADDR = {
   person_submit: '/collect/person',
   work_submit: '/collect/work',
   contact_submit: '/collect/linkman',
+  get_repay_url: '/repay',
   get_public_fund_url: '/collect/publicfund',
   get_map: '/datamap',
 }
@@ -258,6 +259,23 @@ api.get_map = function () {
 }
 
 
+/*
+ * 获取还款地址
+ * parameter@type: string, 后续处理方式 1. default 直接跳转 2. 'url' 返回 url 地址
+ */
+api.get_repay_url = function (type) {
+  return get(ADDR.get_repay_url)
+    .then(check_retcode(`不明原因导致还款操作失败，您可以联系 ${support_tel} 解决相关问题`))
+    .then(function (data) {
+      if (type === 'url') {
+        return Promise.resolve(data.url)
+      } else if (data.url) {
+        window.location.href = data.url
+      }
+    })
+}
+
+
 /* --- 公共函数 --- */
 /*
  * 制作一个回调函数，用来检测返回值是否是 200
@@ -295,7 +313,7 @@ api.common_error_handler = function (err) {
   console.error('common_error_handler:', err)
   switch (err.message) {
     case 'net_error':
-      g_com.dialog.init('不好意思，网络开小差了，请稍后再试。')
+      g_com.dialog.init('网络异常，请稍后再试。')
       break;
 
     case 'to_log_in':

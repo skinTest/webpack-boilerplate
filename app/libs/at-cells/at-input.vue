@@ -40,6 +40,10 @@ export default {
     at_name: 'at-input',
   }),
   methods: Object.assign({}, mixin_methods, {
+    focus: function () {
+      console.log('input ---- ', this.$refs.input)
+      this.$refs.input.focus()
+    }
   }),
 }
 </script>

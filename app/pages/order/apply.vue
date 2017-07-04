@@ -4,7 +4,7 @@
   <!-- head -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">{{title}}</div>
+      <div class="at-jumbotron_title">{{title}}</div>
       <div class="at-jumbotron_desc">{{desc}}</div>
     </div>
   </div>
@@ -50,7 +50,7 @@ import options from 'Libs/options/index.js'
 
 export default {
   data: () => ({
-    title: '请填写借款信息',
+    title: '借款信息',
     desc: '您的借款信息将用于魔方的放款评估',
     cell_names: ['money', 'period', 'use'],
     oid: '',
@@ -105,10 +105,14 @@ export default {
           cv.obj_assign(vi, data)
           this.oid = data.oid
           this.desc = '魔方提供的借款上限 ￥' + data.loan_amount
-          this.title = '请修改您的借款订单'
+          this.title = '请修改借款订单'
           this.rate_cell.content = '初始借款金额的 ' + data.rate
+
+          this.$nextTick(function () {
+            this.money_cell.value = ''
+          })
         }.bind(this))
-    } // end of it
+    } // end of if
   },
 }
 </script>

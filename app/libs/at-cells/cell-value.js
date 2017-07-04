@@ -27,5 +27,10 @@ export default {
     })
 
     return vi
-  }
+  },
+  arr_assign: function (vi, data, src_path, dest_prop_name) {
+    vi[src_path].forEach(function (cell, ind) {
+      vi[src_path][ind][dest_prop_name] = data[vi[src_path][ind]['name']]
+    })
+  },
 }

@@ -39,7 +39,7 @@ const DOMAIN = {
 // 定义开发过程中的 api 代理
 const PROXY = {
   '/wallet': {
-    target:'http://rap.yilumofang.com/mockjsdata/2',
+    target:'http://rap.yilumofang.com/mockjsdata/3',
     changeOrigin: true,
   },
   // '/wallet': {
