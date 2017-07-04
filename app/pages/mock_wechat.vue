@@ -33,31 +33,31 @@
 
 <script type="text/javascript">
 export default {
-  data: () => ({
-    home_cell: {
-      label: '业务入口',
-      content: '/home',
-      is_link: true,
-      touch_handler: function () { this.$router.push('/home') }.bind(this)
-    },
-    account_cell: {
-      label: '更换登录手机',
-      content: '/account',
-      is_link: true,
-      touch_handler: function () { this.$router.push('/account') }.bind(this)
-    },
-    help_cell: {
-      label: '更换登录手机',
-      content: '/help',
-      is_link: true,
-      touch_handler: function () { this.$router.push('/help') }.bind(this)
-    },
-  }),
-  method: {
-    make_route: function (route) {
-      return function () {
-        this.router.push(route)
-      }.bind(this)
+  data: function () {
+    return {
+      home_cell: {
+        label: '业务入口',
+        content: '/home',
+        is_link: true,
+        touch_handler: this.route_push.bind(this, '/home'),
+      },
+      account_cell: {
+        label: '账户',
+        content: '/account',
+        is_link: true,
+        touch_handler: this.route_push.bind(this, '/account'),
+      },
+      help_cell: {
+        label: '帮助',
+        content: '/help',
+        is_link: true,
+        touch_handler: this.route_push.bind(this, '/help'),
+      },
+    }
+  },
+  methods: {
+    route_push: function (route) {
+      this.$router.push(route)
     }
   }
 }

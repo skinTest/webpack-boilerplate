@@ -3,6 +3,8 @@ import auth_form from './auth-form'
 import login from './login.vue'
 import home from './home'
 import toast from './toast'
+import account from './account'
+import help from './help'
 import mockWechat from './mock_wechat'
 
 // 订单
@@ -79,5 +81,13 @@ export const routes = [
   {
     path: '/mock-wechat',
     component: mockWechat
+  },
+  {
+    path: '/help',
+    component: help
+  },
+  {
+    path: '/account',
+    component: account
   },
 ]

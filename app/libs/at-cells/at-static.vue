@@ -20,7 +20,7 @@ export default {
   props: {
     cell: {
       type: Object,
-      default: {
+      default: () => ({
         name: 'lack_name',
         label: 'lack_label',
         content: '',
@@ -29,7 +29,7 @@ export default {
         is_link: false,        // 是否跟后缀的右向箭头
         touch_handler: null,   // 需要传一个 function，会在被 touch 的时候 call
         disabled: false,
-      },
+      }),
     },
   },
   data: () => ({
