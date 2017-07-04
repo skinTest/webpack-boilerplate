@@ -5,8 +5,9 @@
     <!-- privacy -->
     <div class="at-page_head">
       <div class="at-jumbotron">
-        <div class="at-jumbotron_main">联系人信息</div>
-        <div class="at-jumbotron_desc">为了更好的为您提供服务，请确保与金融魔方的联系</div>
+        <div class="at-jumbotron_title">联系人</div>
+        <div class="at-jumbotron_desc">为了更好的服务质量</div>
+        <div class="at-jumbotron_desc">请确保联系人信息准确，谢谢</div>
       </div>
     </div>
 
@@ -59,14 +60,13 @@
 <script type="text/javascript">
 import contactEdit from './contact-edit'
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
-var g_com;
 
 export default {
   components: { contactEdit },
   data: () => ({
     show_list: true,
     contact_list: [],
+    show_update: false,
   }),
   computed: {
     submit_valid: function () {
@@ -141,16 +141,23 @@ export default {
     }
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
-
-    if (this.contact_list.length === 0) {
-      this.$refs.edit_panel.init({
-        target: -1,
-        list: [],
-      })
-      this.toggle_list()
+    // update 类型区别对待
+    if (this.$route.query.type === 'update') {
+      api.get_user_info()
+        .then(function (data) {
+          this.contact_list = data.linkman || []
+        }.bind(this))
+        .catch(api.common_error_handler.bind(this))
     }
-  }
+    else {
+      if (this.contact_list.length === 0) {
+        this.$refs.edit_panel.init({
+          target: -1,
+          list: [],
+        })
+        this.toggle_list()
+      }
+    }  // end of else
+  }  // end of mount
 }
 </script>

@@ -4,7 +4,7 @@
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">收款卡验证</div>
+      <div class="at-jumbotron_title">收款卡验证</div>
       <div class="at-jumbotron_desc">为了保障资金安全</div>
       <div class="at-jumbotron_desc">收款卡必须是您本人名下的储蓄卡</div>
     </div>

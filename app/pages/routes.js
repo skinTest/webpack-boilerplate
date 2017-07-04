@@ -8,9 +8,7 @@ import help from './help'
 import mockWechat from './mock_wechat'
 
 // 订单
-import order from './order'
-import order_offer from './order/offer'
-import order_apply from './order/apply'
+import order from './order/index'
 
 // 信审信息收集
 import eMail from './auth-form/e-mail.vue'
@@ -20,7 +18,6 @@ import bankMobile from './auth-form/bank-mobile.vue'
 import jobInfo from './auth-form/job-info.vue'
 import personInfo from './auth-form/person-info.vue'
 import contactList from './auth-form/contact-list.vue'
-import orderInfo from './auth-form/order-info.vue'
 import publicFund from './auth-form/public-fund.vue'
 
 export const routes = [
@@ -49,7 +46,6 @@ export const routes = [
       ['job-info',jobInfo],
       ['person-info',personInfo],
       ['contact-list',contactList],
-      ['order-info',orderInfo],
       ['public-fund',publicFund]
     ].map(item => ({
       path: item[0],
@@ -65,18 +61,8 @@ export const routes = [
     component: toast,
   },
   {
-    path: '/order',
+    path: '/order/:type',
     component: order,
-    children: [
-      {
-        path: 'offer',
-        component: order_offer,
-      },
-      {
-        path: 'apply/:type',
-        component: order_apply,
-      },
-    ],
   },
   {
     path: '/mock-wechat',

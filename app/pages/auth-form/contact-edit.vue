@@ -3,7 +3,7 @@
   <!-- privacy -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">联系人信息</div>
+      <div class="at-jumbotron_title">联系人信息</div>
       <div class="at-jumbotron_desc">{{page_desc}}</div>
       <div class="at-jumbotron_desc">我们将严格保障您的个人信息安全</div>
     </div>

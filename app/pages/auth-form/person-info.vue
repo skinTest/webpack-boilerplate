@@ -3,7 +3,8 @@
 
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">个人信息</div>
+      <div class="at-jumbotron_title">个人信息</div>
+      <div class="at-jumbotron_desc" v-if="show_update">请修改您的个人信息</div>
       <div class="at-jumbotron_desc">我们将严格保障您的个人信息安全</div>
     </div>
   </div>
@@ -31,10 +32,8 @@
 
 <script type="text/javascript">
 import api from 'Api'
-import { find_app_ref } from 'Libs/g_com'
 import options from 'Libs/options/index.js'
-var g_com;
-
+import cv from 'Libs/at-cells/cell-value'
 
 export default {
   data: () => ({
@@ -60,6 +59,7 @@ export default {
       limit: 50,
     },
     cell_names: ['address', 'degree', 'marry'],
+    show_update: false,
   }),
   computed: {
     valid: function () {
@@ -82,8 +82,17 @@ export default {
     }
   },
   mounted: function () {
-    // 注册全局组件
-    g_com = find_app_ref.call(this)
+    // update 类型区别对待
+    if (this.$route.query.type !== 'update') {
+      return
+    }
+    this.show_update = true
+
+    api.get_user_info()
+      .then(function (data) {
+        cv.obj_assign(this, data)
+      }.bind(this))
+      .catch(api.common_error_handler.bind(this))
   }
 }
 </script>

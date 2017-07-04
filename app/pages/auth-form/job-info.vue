@@ -4,9 +4,10 @@
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">工作信息</div>
+      <div class="at-jumbotron_title">工作信息</div>
+      <div class="at-jumbotron_desc" v-if="show_update">请修改您的工作信息</div>
       <div class="at-jumbotron_desc">
-        {{show_position_input ? '请补充您的具体职务信息' : '我们将严格保障您的个人信息安全'}}
+        {{show_position_input ? '请完善您的具体职务信息' : '我们将严格保障您的个人信息安全'}}
       </div>
     </div>
   </div>
@@ -67,6 +68,7 @@ export default {
         placeholder: '请点击选择',
         options: options.work_year,
       },
+      show_update: false,
     }
   },
   computed: {
@@ -108,6 +110,26 @@ export default {
     },
   },
   mounted: function () {
+
+    // update 类型区别对待
+    if (this.$route.query.type !== 'update') {
+      return
+    }
+    this.show_update = true
+
+    api.get_user_info()
+      .then(function (data) {
+        this.income_cell.value = data.income
+        this.work_year_cell.value = data.work_year
+        if (data.position.indexOf('其他 - ') === 0) {
+          this.position_cell.value = '其他'
+          this.position_input_cell.value = data.position.replace(/^其他 - /, '')
+        }
+        else {
+          this.position_cell.value = data.position
+        }
+      }.bind(this))
+      .catch(api.common_error_handler.bind(this))
   },
 }
 </script>

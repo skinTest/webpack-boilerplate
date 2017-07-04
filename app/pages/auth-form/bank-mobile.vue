@@ -4,7 +4,7 @@
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">预留手机验证</div>
+      <div class="at-jumbotron_title">预留手机验证</div>
       <div class="at-jumbotron_main">{{mobile_render}}</div>
       <div class="at-jumbotron_desc">验证信息已发送到您的预留手机号</div>
       <div class="at-jumbotron_title">

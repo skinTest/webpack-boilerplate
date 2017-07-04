@@ -4,8 +4,9 @@
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">企业邮箱</div>
-      <div class="at-jumbotron_desc">请使用您本人的企业邮箱进行认证</div>
+      <div class="at-jumbotron_title">企业邮箱</div>
+      <div class="at-jumbotron_desc">{{head_desc}}</div>
+      <div class="at-jumbotron_desc" v-if="original_email">原邮箱: {{original_email}}</div>
     </div>
   </div>
 
@@ -47,15 +48,17 @@ export default {
       placeholder: '请先输入邮箱地址',
       type: 'email',
       value: '',
-      name: 'e_mail',
+      name: 'email',
     },
     code_cell: {
       label: '验证码',
       placeholder: '魔方邮件中的验证码',
       type: 'number',
       value: '',
-      name: 'vcode',
-    }
+      name: 'code',
+    },
+    head_desc: '请使用您本人的企业邮箱进行认证',
+    original_email: '',
   }),
   computed: {
     can_send: function () {
@@ -82,6 +85,16 @@ export default {
     },
   },
   mounted: function () {
+    // 修改的特有逻辑
+    if (this.$route.query.type !== 'update') {
+      return
+    }
+    this.head_desc = '请修改您的企业邮箱重新认证'
+
+    api.get_user_info()
+      .then(function (data) {
+        this.original_email = data.email || ''
+      }.bind(this))
   },
 }
 </script>

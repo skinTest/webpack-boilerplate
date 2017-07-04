@@ -4,6 +4,7 @@
   <!-- head -->
   <div class="at-page_head">
     <div class="at-jumbotron">
+      <img class="toast_img" src="http://img.ymatou.com/product/brand/brand/okamoto.gif"/>
       <div class="at-jumbotron_main">微信公众号</div>
       <div class="at-jumbotron_desc">mock 页面，设置了路由，感受一下</div>
     </div>

@@ -4,7 +4,7 @@
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_main">实名认证</div>
+      <div class="at-jumbotron_title">实名认证</div>
       <div class="at-jumbotron_desc">我们将保护您的个人信息</div>
       <div class="at-jumbotron_desc">魔方将只向您本人发放借款</div>
     </div>
