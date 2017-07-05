@@ -34,10 +34,7 @@ export const app = new Vue({
   },
   data: () => ({
     store: {
-      bank: {
-        bank_mobile: '12345678901',
-        card_num: '1234567890123456',
-      },
+      user: {},
     },
   })
 }).$mount('#app')

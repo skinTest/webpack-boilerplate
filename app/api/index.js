@@ -22,6 +22,7 @@ const ADDR = {
   get_repay_url: '/repay',
   get_public_fund_url: '/collect/publicfund',
   get_map: '/datamap',
+  log_out: '/user/logout',
 }
 
 // 根据环境选择地址前缀
@@ -260,6 +261,15 @@ api.get_map = function () {
 
 
 /*
+ * 退出登录
+ */
+api.log_out = function () {
+  return get(ADDR.log_out)
+    .then(check_retcode(`不明原因导致您退出登录失败，您可以联系 ${support_tel} 解决相关问题`))
+}
+
+
+/*
  * 获取还款地址
  * parameter@type: string, 后续处理方式 1. default 直接跳转 2. 'url' 返回 url 地址
  */
@@ -334,7 +344,7 @@ api.router_next = function (vi) {
   return function (data) {
     console.log(data)
     if (data.next)
-      vi.$router.replace(data.next)
+      vi.$router.replace(data.next || '/')
   }
 }
 
