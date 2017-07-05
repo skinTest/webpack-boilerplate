@@ -3,7 +3,6 @@ var merge = require('webpack-merge')
 var util = require('util')
 
 module.exports = (env) => {
-  console.log('env-------', env)
   process.env.BABEL_ENV = env;
   var result;
 

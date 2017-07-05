@@ -32,13 +32,27 @@ const PATHS = {
 
 // 定义开发域名以及端口
 const DOMAIN = {
-  host: 'localhost',
+  host: '192.168.30.171' || 'localhost',
   port: 3000,
 }
 
 // 定义开发过程中的 api 代理
 const PROXY = {
-  '/home': 'http://rapapi.org/mockjsdata/20109'
+  // 内网 RAP
+  // '/wallet': {
+  //   target:'http://rap.yilumofang.com/mockjsdata/3',
+  //   changeOrigin: true,
+  // },
+  // 公网 RAP
+  // '/wallet': {
+  //   target: 'http://rapapi.org/mockjs/21150',
+  //   changeOrigin: true,
+  // },
+  // 联调环境
+  '/wallet': {
+    target: 'http://wallet.d.yilumofang.com',
+    changeOrigin: true,
+  },
 }
 
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
@@ -98,12 +112,12 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue', 'lodash', 'zepto-webpack'],
+      vendor: ['vue', 'lodash', 'zepto-webpack', 'vue-router', 'vue-directive-touch'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
       filename: '[name].[chunkhash:8].js',
-      publicPath: '/',
+      publicPath: '/static',
     },
     plugins: [
       // 解决浏览器缓存问题
@@ -113,6 +127,7 @@ const productionConfig = merge([
       }),
       new HtmlWebpackPlugin({
         template: PATHS.pro_tpl,
+        filename: 'Index.phtml',
       }),
     ],
     // this file is used to record path input and output module ids and other composing information
@@ -217,6 +232,10 @@ const developmentConfig = merge([
     extract: false,
     options: [ 'less' ],
   }),
+  parts.setFreeVariable(
+    'process.env.NODE_ENV',
+    'development'
+  ),
 ]);
 
 // export the config

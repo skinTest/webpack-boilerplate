@@ -3,10 +3,13 @@ import Vue from 'vue'
 // 插件
 import VueRouter from 'vue-router'
 import AtCells from './libs/at-cells'
+import touch from 'vue-directive-touch';
 
-/* --- 配置，组件 --- */
+/* --- 配置 --- */
 import { routes } from './pages/routes.js'
-import AppView from './pages/App.vue'
+
+/* --- 伪根节点 --- */
+import appView from './containers/app.vue'
 
 /*
  * 注册 vue 插件
@@ -17,11 +20,24 @@ import AppView from './pages/App.vue'
 Vue.use(VueRouter)
 var router = new VueRouter ({ routes })
 
+/* --- vue-directive-touch --- */
+Vue.use(touch);
+
 /* --- AtCells --- */
 Vue.use(AtCells)
 
 //  启动全局的 vue isntance
 export const app = new Vue({
   router,
-  render: createElement => createElement(AppView),
+  render: function (createElement) {
+    return createElement(appView)
+  },
+  data: () => ({
+    store: {
+      bank: {
+        bank_mobile: '12345678901',
+        card_num: '1234567890123456',
+      },
+    },
+  })
 }).$mount('#app')
