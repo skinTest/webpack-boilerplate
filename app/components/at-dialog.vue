@@ -37,7 +37,7 @@ export default {
     at_name: 'at-dialog',
     show: false,
     render_data: {
-      title: '系统提示',
+      title: '魔方钱包',
       desc: '网络连接有误，请稍后再试',
       right: '确定'
     },
@@ -62,7 +62,7 @@ export default {
 
       // 异步形式(Promise)返回用户的点击选择
       return new Promise(function (resolve, reject) {
-        ['click', 'touchstart'].forEach(function (eventType) {
+        ['click'].forEach(function (eventType) {
           this.$el.addEventListener(eventType, function (event) {
             Array.prototype.forEach.call(event.target.attributes, function (item) {
               if (item.name === 'data-area') {
@@ -76,6 +76,11 @@ export default {
     },
     close: function () {
       this.show = false
+      this.render_data = {
+        title: '魔方钱包',
+        desc: '网络连接有误，请稍后再试',
+        right: '确定'
+      }
     },
   },
 }

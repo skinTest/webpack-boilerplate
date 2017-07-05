@@ -115,25 +115,31 @@ export default {
      * 4. toast
      */
     change_contact: function (new_list, target) {
-      console.log(new_list)
-      // 接口保存
-      api.contact_submit(new_list)
-        .then(function (data) {
-          // 显示情况赋值
-          this.contact_list = new_list
+      this.contact_list = new_list
 
-          // 切换显示组件
-          this.$nextTick(function () {
-            this.toggle_list()
-          }.bind(this))
-        }.bind(this))
-        .catch(function (err) {
-          if (target === -1)
-            this.$refs.edit_panel.recover()
+      // 切换显示组件
+      this.$nextTick(function () {
+        this.toggle_list()
+      })
 
-          return Promise.reject(err)
-        }.bind(this))
-        .catch(api.common_error_handler.bind(this))
+      // // 接口保存
+      // api.contact_submit(new_list)
+      //   .then(function (data) {
+      //     // 显示情况赋值
+      //     this.contact_list = new_list
+
+      //     // 切换显示组件
+      //     this.$nextTick(function () {
+      //       this.toggle_list()
+      //     }.bind(this))
+      //   }.bind(this))
+      //   .catch(function (err) {
+      //     if (target === -1)
+      //       this.$refs.edit_panel.recover()
+
+      //     return Promise.reject(err)
+      //   }.bind(this))
+      //   .catch(api.common_error_handler.bind(this))
     },
     /*
      * 1. 检验是否完成
