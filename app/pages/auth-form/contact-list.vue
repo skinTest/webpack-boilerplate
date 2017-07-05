@@ -114,7 +114,7 @@ export default {
      * 3. panel -> list
      * 4. toast
      */
-    change_contact: function (new_list) {
+    change_contact: function (new_list, target) {
       console.log(new_list)
       // 接口保存
       api.contact_submit(new_list)
@@ -127,8 +127,13 @@ export default {
             this.toggle_list()
           }.bind(this))
         }.bind(this))
+        .catch(function (err) {
+          if (target === -1)
+            this.$refs.edit_panel.recover()
+
+          return Promise.reject(err)
+        }.bind(this))
         .catch(api.common_error_handler.bind(this))
-      // 赋值
     },
     /*
      * 1. 检验是否完成

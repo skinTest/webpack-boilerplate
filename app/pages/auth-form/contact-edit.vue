@@ -107,6 +107,9 @@ export default {
         }.bind(this))  // end of every
       }  // end of else
     },
+    recover: function () {
+      this.contact_list.pop()
+    },
     collect_value: function () {
       var result = {}
       this.$refs.cells.forEach((cell) => {
@@ -139,8 +142,8 @@ export default {
         this.contact_list[this.target] = this.collect_value()
       }
 
-      // 向父组件递交 list
-      this.$emit('contact-change', this.contact_list)
+      // 向父组件递交 list target
+      this.$emit('contact-change', this.contact_list, this.target)
     },
     cancel_edit: function () {
       this.$emit('contact-change', this.contact_list)

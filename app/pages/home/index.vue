@@ -60,6 +60,14 @@ export default {
       api.get_repay_url()
         .catch(api.common_error_handler.bind(this))
     },
+    get_user_info: function () {
+      if (this.handler_arg) {
+        this.$router.replace(this.handler_arg)
+        return
+      }
+      api.get_user_info()
+        .catch(api.common_error_handler.bind(this))
+    }
   },
   mounted: function () {
     api.get_order_info()
@@ -103,6 +111,8 @@ export default {
       .catch(function (err) {
         if (err.message === 'to_log_in') {
           console.log('called')
+          this.handler_name = home_tpl['0'].handler_name
+          this.head_img = home_tpl['0'].head_img
           this.head = home_tpl['0'].head
           this.action_text = home_tpl['0'].action_text
         }

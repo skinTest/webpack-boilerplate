@@ -1,12 +1,12 @@
-<template>
+login<template>
 <div class="at-page_container">
 
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
       <div class="at-jumbotron_main">手机登录</div>
-      <div class="at-jumbotron_desc">请使用您本人名下手机</div>
-      <div class="at-jumbotron_desc">手机号将作为您的登录凭证</div>
+      <div class="at-jumbotron_desc">{{head_desc[0]}}</div>
+      <div class="at-jumbotron_desc">{{head_desc[1]}}</div>
 
       <div class="at-jumbotron_title">
         <button
@@ -67,6 +67,7 @@ export default {
     },
     re_msg_time: 0,
     got_code: false,
+    head_desc: ['请使用您本人名下手机', '手机号将作为您的登录凭证']
   }),
   computed: {
     valid_mobile: function () {
@@ -97,8 +98,10 @@ export default {
               time: 800,
             })
 
-            // 2. 开启验证码输入框
+            // 2. 开启验证码输入框，更改提示
             this.got_code = true
+            this.head_desc[0] = '短信已发送到 ' + this.mobile_cell.value
+            this.head_desc[1] = '请输入验证码'
 
             // 3. 短信计时
             this.re_msg_time = 5

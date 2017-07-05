@@ -317,7 +317,7 @@ api.common_error_handler = function (err) {
       break;
 
     case 'to_log_in':
-      g_com.dialog.init('尊敬的访客，请先登录，以便为您提供更好的服务')
+      g_com.dialog.init('尊敬的用户，请先登录，以便为您提供更好的服务')
         .then(function () {
           this.$router.replace('/login')
         }.bind(this))

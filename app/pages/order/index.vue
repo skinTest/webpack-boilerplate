@@ -50,8 +50,8 @@ import options from 'Libs/options/index.js'
 
 export default {
   data: () => ({
-    title: '借款信息',
-    desc: '您的借款信息将用于魔方的放款评估',
+    title: '借款订单',
+    desc: '借款信息将用于放款评估',
     cell_names: ['money', 'period', 'use'],
     oid: '',
     money_cell: {
@@ -91,11 +91,12 @@ export default {
 
       // 将订单数据递交服务端
       api[this.oid ? 'order_change' : 'order_apply'](order_data)
-        .then(api.router_replace(this))
+        .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
+    document.title = '借款申请'
     var vi = this;
 
     if (this.$route.params.type !== 'init') {

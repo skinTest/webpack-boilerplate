@@ -7,12 +7,12 @@ export default {
       ['desc', '借10,000元月费仅需 50 元起'],
     ],
     action_text: '我要借款',
-    handler_name: 'router_replace',
+    handler_name: 'get_user_info',
   },
   '1': {
     head_img: 'http://img.maijia.com/news/main/201605/26132137mrxl.png',
     head: [
-      ['title', '申请已经完成 70%'],
+      ['title', '即将完成申请'],
       ['desc', '￥10,000月费仅 50 元起'],
     ],
     action_text: '继续申请',

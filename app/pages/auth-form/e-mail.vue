@@ -75,7 +75,7 @@ export default {
         .then(function () {
           tip(this).toast.init('发送成功')
           tip(this).toast.close(800)
-        })
+        }.bind(this))
         .catch(api.common_error_handler.bind(this))
     },
     submit: function () {
