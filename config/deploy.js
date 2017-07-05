@@ -23,7 +23,7 @@ var deployTpl = {
   src: '**/*.phtml',
   dest: 'app/views',
   message: argv.message || 'Auto-push to remote by FE; find out the sucking commit boy ...',
-  repo: 'git@gitlab.yilumofang.com:cash-loan/client.git',
+  repo: 'git@gitlab.yilumofang.com:cash-loan/wallet.git',
 }
 var deployAssest = _.defaults({
   src: 'js|css|png'.split('|').map((suffix) => `**/*.` + suffix),
@@ -33,13 +33,13 @@ var deployAssest = _.defaults({
 /* --- --- --- 环境分支对应关系 --- --- --- */
 switch (argv.dest) {
   case 'joint':
-    deployTpl.branch = deployAssest.branch = 'summer'
+    deployTpl.branch = deployAssest.branch = 'master'
     _.set(webpackConfig, 'output.publicPath', '/static')
     break;
 
   default:
     _.set(webpackConfig, 'output.publicPath', '/static')
-    deployTpl.branch = deployAssest.branch = 'summer'
+    deployTpl.branch = deployAssest.branch = 'master'
 }
 
 

@@ -285,7 +285,7 @@ export function apiFunc1A (parameters) {
 npm run build
 
 # 2. 将代码发送到后端代码仓库
-$DEST=<发送的环境> $MSG=<git commit 的信息> npm run deploy
+DEST=<发送的环境> MSG=<git commit 的信息> npm run deploy
 
 # 3. 在服务器上拉取代码，手动确定代码更新
 ssh root@172.16.2.102
