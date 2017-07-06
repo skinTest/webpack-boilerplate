@@ -32,7 +32,7 @@ const PATHS = {
 
 // 定义开发域名以及端口
 const DOMAIN = {
-  host: '192.168.30.170' || 'localhost',
+  host: '192.168.30.171' || 'localhost',
   port: 3000,
 }
 
@@ -58,7 +58,7 @@ const PROXY = {
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性
 const GLOBALLIBS = {
   $: 'zepto-webpack',
-  _: 'lodash',
+  // _: 'lodash',
 }
 
 
@@ -112,7 +112,7 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue', 'lodash', 'zepto-webpack', 'vue-router', 'vue-directive-touch'],
+      vendor: ['vue', 'zepto-webpack', 'vue-router', 'vue-directive-touch', 'babel-polyfill'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
