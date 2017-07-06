@@ -1,6 +1,7 @@
 // import ADDR from './address.js'
 import { post, get } from './request.js'
 import { find_root, find_app_ref } from 'Libs/g_com.js'
+import tip from 'Libs/at-tip'
 
 const support_tel = '一个 400 电话'
 const api = {}
@@ -348,6 +349,13 @@ api.router_next = function (vi) {
   }
 }
 
+/* --- --- end loading --- --- */
+api.close_loading = function (vi) {
+  return function (data) {
+    tip(vi).toast.close()
+    return Promise.resolve(data)
+  }
+}
 
 // 输出 api 对象
 export default api

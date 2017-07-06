@@ -71,7 +71,10 @@ export default {
   },
   methods: {
     send_email: function (event) {
+      tip(this).toast.init({type: 'loading'})
+
       api.email_submit(this.email_cell.value)
+        .then(api.close_loading(this))
         .then(function () {
           tip(this).toast.init('发送成功')
           tip(this).toast.close(800)
@@ -79,7 +82,10 @@ export default {
         .catch(api.common_error_handler.bind(this))
     },
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.email_validate(this.code_cell.value)
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },

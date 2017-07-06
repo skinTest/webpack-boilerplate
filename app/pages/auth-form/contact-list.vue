@@ -59,6 +59,7 @@
 
 <script type="text/javascript">
 import contactEdit from './contact-edit'
+import tip from 'Libs/at-tip'
 import api from 'Api'
 
 export default {
@@ -153,7 +154,10 @@ export default {
      * 2. 请求下一步路由
      */
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.contact_submit(this.contact_list)
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     }

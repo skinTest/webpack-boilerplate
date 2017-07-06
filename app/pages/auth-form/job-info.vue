@@ -36,6 +36,7 @@
 
 <script type="text/javascript">
 import api from 'Api'
+import tip from 'Libs/at-tip'
 import options from 'Libs/options/index.js'
 
 export default {
@@ -104,7 +105,10 @@ export default {
       return result
     },
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.work_submit(this.collect())
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },

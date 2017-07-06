@@ -32,6 +32,7 @@
 
 <script type="text/javascript">
 import api from 'Api'
+import tip from 'Libs/at-tip'
 import options from 'Libs/options/index.js'
 import cv from 'Libs/at-cells/cell-value'
 
@@ -76,7 +77,10 @@ export default {
       return result
     },
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.person_submit(this.collect())
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     }

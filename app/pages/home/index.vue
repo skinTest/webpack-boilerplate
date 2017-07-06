@@ -57,7 +57,9 @@ export default {
       this.$router.replace(this.handler_arg)
     },
     href_repay: function () {
+      tip(this).toast.init({type: 'loading'})
       api.get_repay_url()
+        .then(api.close_loading(this))
         .catch(api.common_error_handler.bind(this))
     },
     get_user_info: function () {

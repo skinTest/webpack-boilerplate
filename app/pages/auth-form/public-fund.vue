@@ -24,11 +24,15 @@
 
 <script type="text/javascript">
 import api from 'Api'
+import tip from 'Libs/at-tip'
 
 export default {
   methods: {
     get_public_fund: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.get_public_fund_url()
+        .then(api.close_loading(this))
         .then(function (data) {
           data.url && window.location.replace(data.url)
         }.bind(this))

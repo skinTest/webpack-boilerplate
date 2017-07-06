@@ -22,7 +22,7 @@
       :disabled="!to_check_card"
       :class="['weui-btn',
                 to_check_card ? 'weui-btn_primary' : 'weui-btn_default']"
-      v-touch:tap="send_msg">
+      v-touch:tap="submit">
       校验银行卡
     </button>
   </div>
@@ -63,13 +63,15 @@ export default {
     },
   },
   methods: {
-    send_msg: function () {
+    submit: function () {
+      tip(this).toast.init({type: 'loading'})
       var bank_data = {
         card_num: this.card_cell.value,
         bank_mobile: this.phone_cell.value,
       }
 
       api.bank_card_submit(bank_data)
+        .then(api.close_loading(this))
         .then(function (data) {
           this.$root.store.bank = bank_data
           this.$router.replace(data.next || '/auth/bank-mobile')

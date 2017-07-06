@@ -89,8 +89,11 @@ export default {
     send_code: function () {
       if (!this.can_send_code) { return }
 
+      tip(this).toast.init({type: 'loading'})
+
       // 请求服务器发送验证码
       api.send_code(this.mobile_cell.value)
+          .then(api.close_loading(this))
           .then(function (data) {
             // 1. toast 用户
             tip(this).toast.init({
@@ -130,10 +133,7 @@ export default {
           // 查看用户订单状态，确认用户跳转的路由
           return api.get_order_info()
         })
-        .then(function (data) {
-          tip(this).toast.close()
-          return Promise.resolve(data)
-        }.bind(this))
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this)) // end of catch
     },

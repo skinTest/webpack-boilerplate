@@ -85,12 +85,14 @@ export default {
   }),
   methods: {
     apply_order: function () {
+      tip(this).toast.init({type: 'loading'})
       var order_data = cv.obj_collect(this)
       if (this.oid)
         order_data.oid = this.oid
 
       // 将订单数据递交服务端
       api[this.oid ? 'order_change' : 'order_apply'](order_data)
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },
