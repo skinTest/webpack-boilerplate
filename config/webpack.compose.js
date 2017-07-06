@@ -32,7 +32,7 @@ const PATHS = {
 
 // 定义开发域名以及端口
 const DOMAIN = {
-  host: '192.168.30.171' || 'localhost',
+  host: '192.168.30.170' || 'localhost',
   port: 3000,
 }
 

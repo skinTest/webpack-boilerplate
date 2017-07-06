@@ -15,7 +15,7 @@
     <div class="weui-cells at-panel">
       <at-static
         v-for="cell in contact_cells"
-        :key=cell.content
+        :key=cell.key
         :cell="cell"
       ></at-static>
     </div>
@@ -67,6 +67,7 @@ export default {
     show_list: true,
     contact_list: [],
     show_update: false,
+    // contact_cells: [],
   }),
   computed: {
     submit_valid: function () {
@@ -81,7 +82,7 @@ export default {
           this.edit_contact(index)
         }.bind(this),
       }))
-    }
+    },
   },
   methods: {
     toggle_list: function () {
@@ -115,7 +116,13 @@ export default {
      * 4. toast
      */
     change_contact: function (new_list, target) {
-      this.contact_list = new_list
+      // this.contact_list = new_list
+      if (target === -1) {
+        this.contact_list = new_list
+      }
+      else {
+        this.contact_list.splice(target, 1, new_list[target])
+      }
 
       // 切换显示组件
       this.$nextTick(function () {
