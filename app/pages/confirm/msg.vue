@@ -81,7 +81,7 @@ export default {
     },
     mobile: function () {
       if (this.$root.store.user.mobile)
-        var mobile_tail = String.prototype.replace.call(this.$root.store.user.mobile, /\*+/, '')
+        var mobile_tail = String.prototype.replace.call(this.$root.store.user.mobile, /\d+\*+/, '')
 
       return mobile_tail
            ? '尾号为 ' + mobile_tail + ' 的手机'
