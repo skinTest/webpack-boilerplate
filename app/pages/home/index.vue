@@ -78,6 +78,9 @@ export default {
         data.status = data.status || '0'
         data.status += ''
 
+        // 处理待还金额
+        data.need_repay_money = data.need_repay_money || '0'
+
         // 储存处理函数 头部图片
         this.handler_arg = data.next
         this.handler_name = home_tpl[data.status].handler_name

@@ -115,7 +115,7 @@ export default {
             this.money_cell.value = ''
           })
         }.bind(this))
-    } // end of if
+    } // end of if !init
   },
 }
 </script>
