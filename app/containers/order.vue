@@ -57,7 +57,7 @@ export default {
     init: function (data) {
       if (data.oid) {
         this.oid = data.oid
-        this.rate_cell.content = `初始借款金额的${data.rate}%`
+        this.rate_cell.content = `初始借款金额的 ${data.rate}%`
       }
 
       cv.obj_assign(this, data)
