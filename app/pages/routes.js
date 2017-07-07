@@ -10,15 +10,20 @@ import mockWechat from './mock_wechat'
 // 订单
 import order from './order/index'
 
+// 确认订单
+import confirm from './confirm/index'
+import confirmOrder from './confirm/order'
+import confirmMsg from './confirm/msg'
+
 // 信审信息收集
-import eMail from './auth-form/e-mail.vue'
-import realName from './auth-form/real-name.vue'
-import bankCard from './auth-form/bank-card.vue'
-import bankMobile from './auth-form/bank-mobile.vue'
-import jobInfo from './auth-form/job-info.vue'
-import personInfo from './auth-form/person-info.vue'
-import contactList from './auth-form/contact-list.vue'
-import publicFund from './auth-form/public-fund.vue'
+import eMail from './auth-form/e-mail'
+import realName from './auth-form/real-name'
+import bankCard from './auth-form/bank-card'
+import bankMobile from './auth-form/bank-mobile'
+import jobInfo from './auth-form/job-info'
+import personInfo from './auth-form/person-info'
+import contactList from './auth-form/contact-list'
+import publicFund from './auth-form/public-fund'
 
 export const routes = [
   //  默认路由
@@ -63,6 +68,20 @@ export const routes = [
   {
     path: '/order/:type',
     component: order,
+  },
+  {
+    path: '/confirm',
+    component: confirm,
+    children: [
+      {
+        path: 'order',
+        component: confirmOrder,
+      },
+      {
+        path: 'msg',
+        component: confirmMsg,
+      },
+    ]
   },
   {
     path: '/mock-wechat',

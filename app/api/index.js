@@ -24,6 +24,8 @@ const ADDR = {
   get_public_fund_url: '/collect/publicfund',
   get_map: '/datamap',
   log_out: '/user/logout',
+  order_confirm_send_code: '/order/confirm/sendcode',
+  order_confirm: '/order/confirm/validate',
 }
 
 // 根据环境选择地址前缀
@@ -285,6 +287,32 @@ api.get_repay_url = function (type) {
       }
     })
 }
+
+
+/*
+ * 发送订单校验码
+ */
+api.order_confirm_send_code = function () {
+  return get(ADDR.order_confirm_send_code)
+    .then(check_retcode(`不明原因导致向您发送订单校验码失败，您可以联系 ${support_tel} 解决相关问题`))
+}
+
+
+/*
+ *   用户确认订单
+ * @parameter: code - string - 手机收到的验证码
+ */
+api.order_confirm = function (code) {
+  // 参数校验
+  if (typeof(code) !== 'string' || code === '')
+    return Promise.reject(new Error('请输入验证码'))
+
+  // 请求
+  return post(ADDR.order_confirm, { code })
+    .then(check_retcode(`不明原因导致您未能成功确认订单，您可以联系 ${support_tel} 解决相关问题`))
+}
+
+
 
 
 /* --- 公共函数 --- */
