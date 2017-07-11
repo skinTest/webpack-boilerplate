@@ -59,10 +59,13 @@ export default {
   },
   methods: {
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.id_submit({
         cert_no: this.cert_no_cell.value,
         name: this.name_cell.value
       })
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },

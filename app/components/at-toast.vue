@@ -26,6 +26,7 @@ export default {
   }),
   methods: {
     init: function (opt) {
+      this.close()
       if (typeof(opt) === 'object') {
         this.type = opt.type || 'toast'
 
@@ -52,10 +53,14 @@ export default {
     close: function (time) {
       if (typeof(time) !== 'number') {
         this.show = false
+        this.type = 'toast'
+        this.desc = '操作成功'
       }
       else {
         var timer = setTimeout(function () {
           this.show = false
+          this.type = 'toast'
+          this.desc = '操作成功'
           clearTimeout(timer)
         }.bind(this), time)
       }

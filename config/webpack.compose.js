@@ -39,20 +39,20 @@ const DOMAIN = {
 // 定义开发过程中的 api 代理
 const PROXY = {
   // 内网 RAP
-  // '/wallet': {
-  //   target:'http://rap.yilumofang.com/mockjsdata/3',
-  //   changeOrigin: true,
-  // },
+  '/wallet': {
+    target:'http://rap.yilumofang.com/mockjsdata/3',
+    changeOrigin: true,
+  },
   // 公网 RAP
   // '/wallet': {
   //   target: 'http://rapapi.org/mockjs/21150',
   //   changeOrigin: true,
   // },
   // 联调环境
-  '/wallet': {
-    target: 'http://wallet.d.yilumofang.com',
-    changeOrigin: true,
-  },
+  // '/wallet': {
+  //   target: 'http://wallet.d.yilumofang.com',
+  //   changeOrigin: true,
+  // },
 }
 
 // 定义开发中的全局工具；配置本处的同时需要到 .eslintrc.js 配置 globals 属性

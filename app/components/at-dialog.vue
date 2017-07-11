@@ -44,6 +44,7 @@ export default {
   }),
   methods: {
     init: function (opt) {
+      this.close();
       switch (typeof(opt)) {
         case 'object':
           Object.assign(this.render_data, opt)

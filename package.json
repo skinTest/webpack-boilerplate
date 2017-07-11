@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --watch ./config --exec \"webpack-dev-server --config ./config/webpack.interface.js --env development\"",
-    "build": "webpack --config ./config/webpack.interface.js --env production --profile --json > stats.json",
+    "build-in": "webpack --config ./config/webpack.interface.js --env innet --profile --json > stats.json",
+    "build-pro": "webpack --config ./config/webpack.interface.js --env production --profile --json > stats.json",
     "deploy": "node ./config/deploy --dest=$DEST --message=$MSG"
   },
   "keywords": [

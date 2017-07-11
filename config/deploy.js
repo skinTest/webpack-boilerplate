@@ -32,14 +32,20 @@ var deployAssest = _.defaults({
 
 /* --- --- --- 环境分支对应关系 --- --- --- */
 switch (argv.dest) {
+  case 'production':
+    deployTpl.branch = deployAssest.branch = 'master'
+    _.set(deployAssest, 'dest', 'static')
+    _.set(webpackConfig, 'output.publicPath', 'https://static-jrmf360.oss-cn-beijing.aliyuncs.com/wallet')
+    break;
+
   case 'joint':
     deployTpl.branch = deployAssest.branch = 'master'
     _.set(webpackConfig, 'output.publicPath', '/static')
     break;
 
   default:
-    _.set(webpackConfig, 'output.publicPath', '/static')
     deployTpl.branch = deployAssest.branch = 'master'
+    _.set(webpackConfig, 'output.publicPath', '/static')
 }
 
 

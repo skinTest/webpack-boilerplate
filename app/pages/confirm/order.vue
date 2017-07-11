@@ -4,8 +4,9 @@
   <!-- head -->
   <div class="at-page_head">
     <div class="at-jumbotron">
-      <div class="at-jumbotron_title">{{title}}</div>
-      <div class="at-jumbotron_desc">{{desc}}</div>
+      <div class="at-jumbotron_title">借款订单</div>
+      <div class="at-jumbotron_desc">请确认您的借款信息</div>
+      <div class="at-jumbotron_desc">您可以通过本页面修改您的借款信息</div>
     </div>
   </div>
 
@@ -17,7 +18,7 @@
   <div class="at-panel at-page_btn_group">
     <button
       class="weui-btn weui-btn_primary"
-      v-touch:tap="apply_order"
+      v-touch:tap="confirm_order"
     >
       确定
     </button>
@@ -35,42 +36,37 @@
 <script type="text/javascript">
 import api from 'Api'
 import tip from 'Libs/at-tip.js'
-import orderPanel from 'Containers/order'
+import cv from 'Libs/at-cells/cell-value'
+import options from 'Libs/options/index.js'
+import orderPanel from 'Containers/order.vue'
 
 export default {
   components: {
-    orderPanel
+    orderPanel,
   },
   data: () => ({
-    title: '借款订单',
-    desc: '借款信息将用于放款评估',
+    order_got: false,
   }),
   methods: {
-    apply_order: function () {
-      var order_data = this.$refs.order_panel.collect()
+    confirm_order: function () {
       tip(this).toast.init({type: 'loading'})
 
-      // 将订单数据递交服务端
-      api[this.oid ? 'order_change' : 'order_apply'](order_data)
+      api.order_change(this.$refs.order_panel.collect())
         .then(api.close_loading(this))
-        .then(api.router_next(this))
+        .then(function () {
+          this.$router.push('/confirm/msg')
+        }.bind(this))
         .catch(api.common_error_handler.bind(this))
     },
   },
   mounted: function () {
-    document.title = '借款申请'
-    var vi = this;
-
-    if (this.$route.params.type !== 'init') {
-      // 给订单赋值
-      api.get_order_info()
-        .then(function (data) {
-          data.money = ''
-          this.$refs.order_panel.init(data)
-        }.bind(this))
-        .catch(api.common_error_handler.bind(this))
-
-    } // end of if !init
+    document.title = '魔方钱包'
+    api.get_order_info()
+      .then(function (data) {
+        this.order_got = true
+        this.$refs.order_panel.init(data)
+      }.bind(this))
+      .catch(api.common_error_handler.bind(this))
   },
 }
 </script>

@@ -80,10 +80,12 @@ export default {
       if (!this.can_send)
         return
 
+      tip(this).toast.init({type: 'loading'})
       api.bank_card_submit({
         card_num: this.card_num,
         bank_mobile: this.bank_mobile,
       })
+        .then(api.close_loading(this))
         .then(function () {
           this.re_send_time = 5
           var interval_id = setInterval(function () {
@@ -98,7 +100,10 @@ export default {
         .catch(api.common_error_handler.bind(this))
     },
     submit: function () {
+      tip(this).toast.init({type: 'loading'})
+
       api.bank_card_validate(this.code_cell.value)
+        .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
     },

@@ -57,7 +57,9 @@ export default {
       this.$router.replace(this.handler_arg)
     },
     href_repay: function () {
+      tip(this).toast.init({type: 'loading'})
       api.get_repay_url()
+        .then(api.close_loading(this))
         .catch(api.common_error_handler.bind(this))
     },
     get_user_info: function () {
@@ -75,6 +77,9 @@ export default {
         // 处理用户订单状态
         data.status = data.status || '0'
         data.status += ''
+
+        // 处理待还金额
+        data.need_repay_money = data.need_repay_money || '0'
 
         // 储存处理函数 头部图片
         this.handler_arg = data.next
