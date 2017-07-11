@@ -27,6 +27,10 @@ var deployAssest = _.defaults({
 
 /* --- --- --- 环境分支对应关系 --- --- --- */
 switch (argv.dest) {
+  case 'production':
+    deployTpl.branch = deployAssest.branch = 'master'
+    deployAssest.dest = 'static'
+    break;
   case 'joint':
     deployTpl.branch = deployAssest.branch = 'master'
     break;
