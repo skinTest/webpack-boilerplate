@@ -49,13 +49,9 @@
 <script type="text/javascript">
 import api from 'Api'
 import tip from 'Libs/at-tip'
-
-import atDialog from 'Components/at-dialog'
+import { RESENDTIME } from 'Libs/constant'
 
 export default {
-  components: {
-    atDialog,
-  },
   data: () => ({
     code_cell: {
       label: '验证码',
@@ -64,7 +60,7 @@ export default {
       value: '',
       name: 'code',
     },
-    re_msg_time: 5,
+    re_msg_time: RESENDTIME,
     got_code: true,
   }),
   computed: {
@@ -105,7 +101,7 @@ export default {
             })
 
             // 2. 短信计时
-            this.re_msg_time = 5
+            this.re_msg_time = RESENDTIME
             var msg_count = setInterval(function () {
               if (this.re_msg_time > 0) {
                 this.re_msg_time -= 1

@@ -44,6 +44,7 @@
 <script type="text/javascript">
 import api from 'Api'
 import tip from 'Libs/at-tip.js'
+import { RESENDTIME } from 'Libs/constant'
 
 export default {
   data: () => ({
@@ -89,7 +90,7 @@ export default {
           tip(this).toast.init('发送成功')
           tip(this).toast.close(800)
 
-          this.re_msg_time = 5
+          this.re_msg_time = RESENDTIME
           var interval = setInterval(function () {
             if (this.re_msg_time > 0) {
               this.re_msg_time -= 1

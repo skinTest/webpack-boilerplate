@@ -43,6 +43,7 @@ login<template>
 <script type="text/javascript">
 import api from 'Api'
 import tip from 'Libs/at-tip'
+import { RESENDTIME } from 'Libs/constant'
 
 import atDialog from 'Components/at-dialog'
 
@@ -107,7 +108,7 @@ export default {
             this.head_desc[1] = '请输入验证码'
 
             // 3. 短信计时
-            this.re_msg_time = 5
+            this.re_msg_time = RESENDTIME
             var msg_count = setInterval(function () {
               if (this.re_msg_time > 0) {
                 this.re_msg_time -= 1

@@ -22,6 +22,5 @@ module.exports = (env) => {
     throw 'env be either production or development'
   }
 
-
   return result
 }

@@ -49,6 +49,7 @@
 <script type="text/javascript">
 import api from 'Api'
 import tip from 'Libs/at-tip'
+import { RESENDTIME } from 'Libs/constant'
 
 export default {
   data: () => ({
@@ -87,7 +88,7 @@ export default {
       })
         .then(api.close_loading(this))
         .then(function () {
-          this.re_send_time = 5
+          this.re_send_time = RESENDTIME
           var interval_id = setInterval(function () {
             if (this.re_send_time >= 1) {
               this.re_send_time -= 1
