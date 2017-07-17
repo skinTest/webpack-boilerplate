@@ -1,11 +1,26 @@
 @import "./fn.less";
 
-// vue transition
+/* --- --- vue transition --- ---*/
+// 1. fade
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
+}
+
+// 2. bottom-in
+.bottom-in-enter-active, .bottom-in-leave-active {
+  transition: all .3s ease;
+}
+
+.bottom-in-enter, .bottom-in-leave-to {
+  transform: translate(0, 100%);
+  // transition: transform .3s;
+}
+
+.bottom-in-leave, .bottom-in-enver-to {
+  transform: translate(0, 0);
 }
 
 /* --- --- common layout --- --- */

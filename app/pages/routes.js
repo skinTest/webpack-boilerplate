@@ -1,3 +1,7 @@
+// 开发用页面
+import mockWechat from './mock_wechat'
+import devComponent from './dev-component'
+
 import about from './about.vue'
 import auth_form from './auth-form'
 import login from './login.vue'
@@ -5,7 +9,6 @@ import home from './home'
 import toast from './toast'
 import account from './account'
 import help from './help'
-import mockWechat from './mock_wechat'
 
 // 订单
 import order from './order/index'
@@ -54,7 +57,7 @@ export const routes = [
       ['public-fund',publicFund]
     ].map(item => ({
       path: item[0],
-      component: item[1]
+      component: item[1],
     }))
   },
   {
@@ -84,15 +87,34 @@ export const routes = [
     ]
   },
   {
-    path: '/mock-wechat',
-    component: mockWechat
-  },
-  {
     path: '/help',
-    component: help
+    component: help,
   },
   {
     path: '/account',
-    component: account
+    component: account,
+  },
+  {
+    path: '/mock-wechat',
+    component: mockWechat,
+  },
+  {
+    path: '/dev-component',
+    component: devComponent,
   },
 ]
+
+
+// 测试用路由
+const dev_path = [
+  '/mock-wechat',
+  '/about',
+  '/dev-component',
+]
+
+// 生产环境干掉测试路由
+if (process.env.NODE_ENV !== 'production') {
+  routes.forEach(function (val, ind, arr) {
+    dev_path.indexOf(val.path) !== -1 && arr.splice(ind, 1)
+  })
+}
