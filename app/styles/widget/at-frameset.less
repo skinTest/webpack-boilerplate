@@ -1,3 +1,38 @@
+@import "../base/fn";
+
 iframe {
-  border: 1px solid red;
+  border: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 90px;
+  width: 100%;
+  z-index: 5;
+}
+
+.at-bottom-btn.weui-btn {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 5;
+
+  background-color: #fff;
+  color: @weuiColorPrimary;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 15px;
+  border-top: 1px solid @weuiColorPrimary;
+  border-radius: 0;
+
+  &:after {
+    display: none;
+  }
+  &:active {
+    color: lighten(@weuiColorPrimary, 10%);
+  }
 }

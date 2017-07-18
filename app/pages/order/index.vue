@@ -13,6 +13,14 @@
   <!-- order info -->
   <order-panel ref="order_panel"></order-panel>
 
+  <!-- 合同模块 -->
+  <contract-panel ref="contract"></contract-panel>
+  <div class="at-panel">
+    <p class="at-jumbotron_desc">
+      继续操作代表您同意金融魔方的相关<a @click="show_contract">服务协议</a>
+    </p>
+  </div>
+
   <!-- button group -->
   <div class="at-panel at-page_btn_group">
     <button
@@ -36,10 +44,12 @@
 import api from 'Api'
 import tip from 'Libs/at-tip.js'
 import orderPanel from 'Containers/order'
+import contractPanel from 'Containers/contract-panel'
 
 export default {
   components: {
-    orderPanel
+    orderPanel,
+    contractPanel
   },
   data: () => ({
     title: '借款订单',
@@ -55,6 +65,13 @@ export default {
         .then(api.close_loading(this))
         .then(api.router_next(this))
         .catch(api.common_error_handler.bind(this))
+    },
+    show_contract: function () {
+      console.log('called')
+      this.$refs.contract.init([
+        ['贷款服务协议', 'http://www.wikipedia.com'],
+        ['个人征信报告查询授权书', 'http://www.google.com'],
+      ])
     },
   },
   mounted: function () {

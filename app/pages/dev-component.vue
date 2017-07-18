@@ -1,7 +1,6 @@
 <template>
   <div class="at-page_container">
     <h1 @click="open_sheet">点我</h1>
-    <iframe src="http://www.baidu.com"></iframe>
     <contract-panel ref="contract"></contract-panel>
   </div>
 </template>
@@ -19,9 +18,10 @@ export default {
   },
   methods: {
     open_sheet: function () {
+      console.log('called')
       this.$refs.contract.init([
-        ['贷款服务协议', 'http://wwww.baidu.com'],
-        ['个人征信报告查询授权书', 'http://wwww.baidu.com'],
+        ['贷款服务协议', 'http://www.wikipedia.com'],
+        ['个人征信报告查询授权书', 'http://www.google.com'],
       ])
     },
   },
