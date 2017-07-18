@@ -12,7 +12,7 @@
     <!-- 合同展示页面 -->
     <transition name="fade">
       <div v-show="show_frame">
-        <iframe src="http://www.wikipedia.com" :height="frame_height"></iframe>
+        <iframe src="" :height="frame_height"></iframe>
         <button class="weui-btn at-bottom-btn" @click="close">返回</button>
       </div>
     </transition>

@@ -17,7 +17,10 @@
   <contract-panel ref="contract"></contract-panel>
   <div class="at-panel">
     <p class="at-jumbotron_desc">
-      继续操作代表您同意金融魔方的相关<a @click="show_contract">服务协议</a>
+      请仔细阅读金融魔方&nbsp;<a @click="show_contract">《服务协议》</a>
+    </p>
+    <p class="at-jumbotron_desc">
+      继续操作代表您同意相关协议
     </p>
   </div>
 
@@ -45,6 +48,7 @@ import api from 'Api'
 import tip from 'Libs/at-tip.js'
 import orderPanel from 'Containers/order'
 import contractPanel from 'Containers/contract-panel'
+import { CONTRACTS } from 'Libs/constant'
 
 export default {
   components: {
@@ -68,10 +72,7 @@ export default {
     },
     show_contract: function () {
       console.log('called')
-      this.$refs.contract.init([
-        ['贷款服务协议', 'http://www.wikipedia.com'],
-        ['个人征信报告查询授权书', 'http://www.google.com'],
-      ])
+      this.$refs.contract.init(CONTRACTS.order)
     },
   },
   mounted: function () {
