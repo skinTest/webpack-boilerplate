@@ -181,7 +181,7 @@ const productionConfig = merge([
   }),
   parts.loadImages({
     options: {
-      limit: 15000,
+        limit: 20000,
       name: 'images/[name].[hash:8].[ext]',
     },
   }),

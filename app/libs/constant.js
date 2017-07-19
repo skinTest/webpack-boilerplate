@@ -1,8 +1,9 @@
 export const RESENDTIME = 60
 
+var contract_prefix = '/protocol/'
 export const CONTRACTS = {
   order: [
-    ['贷款服务协议', 'http://www.wikipedia.com'],
-    ['个人征信报告查询授权书', 'http://www.baidu.com'],
+    ['贷款服务协议', contract_prefix + 'standard'],
+    ['个人征信报告查询授权书', contract_prefix + 'register'],
   ],
 }

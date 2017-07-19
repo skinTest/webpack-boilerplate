@@ -1,5 +1,5 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "cash-loan",
   "version": "1.0.0",
   "description": "A front end boilerplate, following guidance of surviveJS, using webpack, vue, and less",
   "main": "index.js",

@@ -13,6 +13,9 @@ import help from './help'
 // 订单
 import order from './order/index'
 
+// 合同
+import protocol from './protocol/index'
+
 // 确认订单
 import confirm from './confirm/index'
 import confirmOrder from './confirm/order'
@@ -29,6 +32,15 @@ import contactList from './auth-form/contact-list'
 import publicFund from './auth-form/public-fund'
 
 export const routes = [
+  // 开发路由
+  {
+    path: '/mock-wechat',
+    component: mockWechat,
+  },
+  {
+    path: '/dev-component',
+    component: devComponent,
+  },
   //  默认路由
   {
     path: '*',
@@ -95,12 +107,8 @@ export const routes = [
     component: account,
   },
   {
-    path: '/mock-wechat',
-    component: mockWechat,
-  },
-  {
-    path: '/dev-component',
-    component: devComponent,
+    path: '/protocol/:protocol_id',
+    component: protocol,
   },
 ]
 

@@ -1,6 +1,9 @@
 <template>
 <div class="at-page_container">
 
+  <!-- 合同模块 -->
+  <contract-panel ref="contract"></contract-panel>
+
   <!-- head -->
   <div class="at-page_head">
     <div class="at-jumbotron">
@@ -13,8 +16,6 @@
   <!-- order info -->
   <order-panel ref="order_panel"></order-panel>
 
-  <!-- 合同模块 -->
-  <contract-panel ref="contract"></contract-panel>
   <div class="at-panel">
     <p class="at-jumbotron_desc">
       请仔细阅读金融魔方&nbsp;<a @click="show_contract">《服务协议》</a>

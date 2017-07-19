@@ -1,6 +1,6 @@
 <template>
 <transition name="fade">
-  <div v-show="show_all" style="{z-index: 5;}">
+  <div v-show="show_all" class="at-top-layer">
     <!-- 服务服务协议选择 -->
     <action-sheet
       :title="'服务协议'"
@@ -9,13 +9,6 @@
       ref="action"
     ></action-sheet>
 
-    <!-- 合同展示页面 -->
-    <transition name="fade">
-      <div v-show="show_frame">
-        <iframe src="" :height="frame_height"></iframe>
-        <button class="weui-btn at-bottom-btn" @click="close">返回</button>
-      </div>
-    </transition>
   </div>
 </transition>
 </template>
@@ -37,11 +30,6 @@ export default {
       ],
     }
   },
-  computed: {
-    frame_height: function () {
-      return window.innerHeight - 50
-    },
-  },
   components: {
     actionSheet,
   },
@@ -51,12 +39,10 @@ export default {
         return {
           label: item[0],
           callback: function () {
-            this.frame_src = item[1]
-
             setTimeout(function () {
-              this.show_frame = true
+              this.show_all = false
+              this.$router.push(item[1])
             }.bind(this), 300)
-
           }.bind(this)
         }
       }.bind(this))

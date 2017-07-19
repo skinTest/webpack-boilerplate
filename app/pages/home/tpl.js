@@ -1,6 +1,8 @@
+import rubik_png from 'Assets/image/rubik.png'
+
 export default {
   '0': {
-    head_img: 'http://img.maijia.com/news/main/201605/26132137mrxl.png',
+    head_img: rubik_png,
     head: [
       ['desc', '3秒到账，最高可借'],
       ['title', '￥ 200,000.00'],
@@ -10,7 +12,7 @@ export default {
     handler_name: 'get_user_info',
   },
   '1': {
-    head_img: 'http://img.maijia.com/news/main/201605/26132137mrxl.png',
+    head_img: rubik_png,
     head: [
       ['title', '即将完成申请'],
       ['desc', '￥10,000月费仅 50 元起'],
@@ -19,7 +21,7 @@ export default {
     handler_name: 'router_replace',
   },
   '2': {
-    head_img: 'https://cdn.bdstatic.com/portal/img/customer/case/baidu_waimai/waimai_728bb8a2.png',
+    head_img: rubik_png,
     head: [
       ['desc', '尊敬的客户'],
       ['desc', '您的借款申请正在'],
@@ -32,7 +34,7 @@ export default {
     handler_name: 'router_replace',
   },
   '3': {
-    head_img: 'https://cdn.bdstatic.com/portal/img/customer/case/baidu_waimai/waimai_728bb8a2.png',
+    head_img: rubik_png,
     head: [
       ['desc', '尊敬的客户'],
       ['desc', '您的借款申请已'],
@@ -54,7 +56,7 @@ export default {
     handler_name: 'href_repay'
   },
   '5': {
-    head_img: 'http://img.maijia.com/news/main/201605/26132137mrxl.png',
+    head_img: rubik_png,
     head: [
       ['title', '账单已还清'],
       ['desc', '尊敬的用户'],
@@ -64,7 +66,7 @@ export default {
     handler_name: 'router_replace',
   },
   '6': {
-    head_img: 'http://img.ymatou.com/product/brand/brand/okamoto.gif',
+    head_img: rubik_png,
     head: [
       ['desc', '最高借款额'],
       ['title', ''],
@@ -75,7 +77,7 @@ export default {
     handler_name: 'router_replace',
   },
   '7': {
-    head_img: 'http://img.ymatou.com/product/brand/brand/okamoto.gif',
+    head_img: rubik_png,
     head: [
       ['title', '补充信息'],
       ['desc', '由于您的借款申请信息问题'],
@@ -85,7 +87,7 @@ export default {
     handler_name: 'router_replace',
   },
   '8': {
-    head_img: 'http://img.ymatou.com/product/brand/brand/okamoto.gif',
+    head_img: rubik_png,
     head: [
       ['title', '未通过'],
       ['desc', '尊敬的用户，很抱歉通知您'],
