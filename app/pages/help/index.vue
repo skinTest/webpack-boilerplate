@@ -22,6 +22,11 @@
     </li>
   </ul>
 
+  <!-- bottom -->
+  <div class="at-panel at-footer">
+    本服务由金融魔方提供
+  </div>
+
 </div>
 </template>
 
