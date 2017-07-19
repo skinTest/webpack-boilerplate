@@ -8,7 +8,7 @@ import login from './login.vue'
 import home from './home'
 import toast from './toast'
 import account from './account'
-import help from './help'
+import help from './help/index'
 
 // 订单
 import order from './order/index'

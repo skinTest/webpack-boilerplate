@@ -1,0 +1,27 @@
+@import "../base/fn";
+
+@help_page_gap: 20px;
+
+.help-menu {
+  padding: 0 @weuiCellGapH;
+  .weui-flex {
+    padding: @help_page_gap;
+    margin-bottom: @weuiCellGapV;
+    background-color: #ffffff;
+    .text-main();
+    line-height: 30px;
+
+    &:active {
+      color: lighten(@at_text_main, 30%);
+      opacity: .9;
+      & img {
+        opacity: .5;
+      }
+    }
+
+    img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+  }
+}
