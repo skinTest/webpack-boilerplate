@@ -56,31 +56,37 @@ var help_imgs = {
   repay: img_repay,
   safety: img_safety,
 }
-console.log(help_imgs)
 
-const index_titles = []
-var now_title = ''
+const source = []
+const help_titles = []
+const help_contents = {}
+
 
 base.forEach(function (src_str, ind) {
   var src_arr = src_str.split('|')
 
   if (src_str.indexOf('h2') === 0) {
-    index_titles.push({
+    source.push({
       title: src_arr[1],
-      route: `/help/${src_arr[2]}`,
+      route: `/help/list/${src_arr[2]}`,
       img: help_imgs[src_arr[2]],
+      name: src_arr[2],
       content: [],
     })
   }
   else if (src_str.indexOf('h3') === 0) {
-    index_titles[index_titles.length - 1]['content'].push(src_arr[1] + '|')
+    source[source.length - 1]['content'].push(src_arr[1] + '|')
   }
   else if (src_str.indexOf('p') === 0) {
-    var string = index_titles[index_titles.length - 1].content.pop()
-    index_titles[index_titles.length - 1].content.push(string + src_arr[1])
+    var string = source[source.length - 1].content.pop()
+    source[source.length - 1].content.push(string + src_arr[1])
   }
 })
 
+source.forEach(function (item) {
+  let {title, route, content, name, img} = item
+  help_titles.push({ title, route, img})
+  help_contents[name] = content.map(content_item => content_item.split('|'))
+})
 
-
-export { index_titles }
+export { help_titles, help_contents }

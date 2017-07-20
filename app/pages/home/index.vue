@@ -1,6 +1,11 @@
 <template>
 <div class="page_container">
 
+  <!-- 帮助页面入口 -->
+  <div class="help-top_icon" @click="go_help">
+    <img src="~Assets/image/help/entry.png">
+  </div>
+
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
@@ -69,7 +74,10 @@ export default {
       }
       api.get_user_info()
         .catch(api.common_error_handler.bind(this))
-    }
+    },
+    go_help: function () {
+      this.$router.push('/help')
+    },
   },
   mounted: function () {
     api.get_order_info()

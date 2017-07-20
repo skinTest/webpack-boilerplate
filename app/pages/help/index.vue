@@ -1,6 +1,12 @@
 <template>
 <div class="at-page_container">
 
+  <!-- 回主页 -->
+  <div class="help-top_icon" @click="go_index">
+    <img src="~Assets/image/help/back.png">
+  </div>
+
+
   <!-- 解说 -->
   <div class="at-page_head">
     <div class="at-jumbotron">
@@ -13,7 +19,8 @@
   <!-- accordion -->
   <ul class="help-menu">
     <li
-      v-for="title in index_titles"
+      v-for="title in help_titles"
+      @click="go_to_route(title.route)"
       :key="title.title"
       class="weui-flex"
     >
@@ -31,14 +38,22 @@
 </template>
 
 <script type="text/javascript">
-import { index_titles } from './content'
+import { help_titles } from './content'
 
 export default {
   data: () => ({
-    index_titles: index_titles,
+    help_titles: help_titles,
   }),
+  methods: {
+    go_to_route: function (route) {
+      this.$router.replace(route)
+    },
+    go_index: function () {
+      this.$router.replace('/')
+    }
+  },
   mounted: function () {
-    console.log(index_titles)
+    console.log(help_titles)
   }
 }
 </script>

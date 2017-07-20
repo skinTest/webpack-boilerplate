@@ -9,6 +9,7 @@ import home from './home'
 import toast from './toast'
 import account from './account'
 import help from './help/index'
+import helpList from './help/list.vue'
 
 // 订单
 import order from './order/index'
@@ -101,6 +102,10 @@ export const routes = [
   {
     path: '/help',
     component: help,
+  },
+  {
+    path: '/help/list/:theme',
+    component: helpList
   },
   {
     path: '/account',
