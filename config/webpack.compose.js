@@ -112,7 +112,7 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     entry: {
-      vendor: ['vue', 'zepto-webpack', 'vue-router', 'vue-directive-touch', 'babel-polyfill'],
+      vendor: ['vue', 'zepto-webpack', 'vue-router', 'vue-directive-touch', 'babel-polyfill', 'core-js'],
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
@@ -181,7 +181,7 @@ const productionConfig = merge([
   }),
   parts.loadImages({
     options: {
-        limit: 20000,
+        limit: 8000,
       name: 'images/[name].[hash:8].[ext]',
     },
   }),

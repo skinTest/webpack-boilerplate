@@ -35,17 +35,17 @@ switch (argv.dest) {
   case 'production':
     deployTpl.branch = deployAssest.branch = 'master'
     _.set(deployAssest, 'dest', 'static')
-    _.set(webpackConfig, 'output.publicPath', 'https://static-jrmf360.oss-cn-beijing.aliyuncs.com/wallet')
+    _.set(webpackConfig, 'output.publicPath', 'https://static-jrmf360.oss-cn-beijing.aliyuncs.com/wallet/')
     break;
 
   case 'joint':
     deployTpl.branch = deployAssest.branch = 'master'
-    _.set(webpackConfig, 'output.publicPath', '/static')
+    _.set(webpackConfig, 'output.publicPath', '/static/')
     break;
 
   default:
     deployTpl.branch = deployAssest.branch = 'master'
-    _.set(webpackConfig, 'output.publicPath', '/static')
+    _.set(webpackConfig, 'output.publicPath', '/static/')
 }
 
 
