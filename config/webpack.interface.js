@@ -12,6 +12,7 @@ module.exports = (env) => {
   }
   else if (env === 'innet') {
     result = merge(webpackConfig.common, webpackConfig.production)
+    _.set(result, 'output.publicPath', '/')
   }
   else if (env === 'production') {
     result = merge(webpackConfig.common, webpackConfig.production)
