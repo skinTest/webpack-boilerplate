@@ -127,7 +127,7 @@ const productionConfig = merge([
       }),
       new HtmlWebpackPlugin({
         template: PATHS.pro_tpl,
-        filename: 'Index.phtml',
+        filename: 'index.html',
       }),
     ],
     // this file is used to record path input and output module ids and other composing information
