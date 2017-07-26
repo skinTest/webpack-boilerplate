@@ -40,12 +40,12 @@ switch (argv.dest) {
 
   case 'joint':
     deployTpl.branch = deployAssest.branch = 'master'
-    _.set(webpackConfig, 'output.publicPath', '/static/')
+    _.set(webpackConfig, 'output.publicPath', '/')
     break;
 
   default:
     deployTpl.branch = deployAssest.branch = 'master'
-    _.set(webpackConfig, 'output.publicPath', '/static/')
+    _.set(webpackConfig, 'output.publicPath', '/')
 }
 
 
@@ -58,49 +58,49 @@ process.env.BABEL_ENV = 'production'
  * 2. compile
  */
 
-new Promise (function (resolve, reject) {
-  webpack(webpackConfig, function (err, stats) {
-    if (err) {
-      reject(err)
-    }
+// new Promise (function (resolve, reject) {
+//   webpack(webpackConfig, function (err, stats) {
+//     if (err) {
+//       reject(err)
+//     }
 
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    }) + '\n\n')
-    resolve('success')
-  })
-})
-// 发布静态资源
-.then(function (res) {
-  console.log('first ---', res)
-  return new Promise (function (resolve, reject) {
-    ghpages.publish(path.join(__dirname, '..', 'dist'), deployAssest, function (err) {
-      if (err) {
-        reject(err)
-      }
-      else {
-        console.log(chalk.yellow('assets deployed to "/public/static"'))
-        resolve('success')
-      }
-    })
-  })
-})
-// 发布页面模板
-.then(function (res) {
-  console.log('second ---', res)
-  ghpages.publish(path.join(__dirname, '..', 'dist'), deployTpl, function(err) {
-    if (err) {
-      throw err
-    }
-    else {
-      console.log(chalk.yellow('template deployed to the server'))
-    }
-  });
-})
-.catch(function (err) {
-  console.log(err)
-})
+//     process.stdout.write(stats.toString({
+//       colors: true,
+//       modules: false,
+//       children: false,
+//       chunks: false,
+//       chunkModules: false
+//     }) + '\n\n')
+//     resolve('success')
+//   })
+// })
+// // 发布静态资源
+// .then(function (res) {
+//   console.log('first ---', res)
+//   return new Promise (function (resolve, reject) {
+//     ghpages.publish(path.join(__dirname, '..', 'dist'), deployAssest, function (err) {
+//       if (err) {
+//         reject(err)
+//       }
+//       else {
+//         console.log(chalk.yellow('assets deployed to "/public/static"'))
+//         resolve('success')
+//       }
+//     })
+//   })
+// })
+// // 发布页面模板
+// .then(function (res) {
+//   console.log('second ---', res)
+//   ghpages.publish(path.join(__dirname, '..', 'dist'), deployTpl, function(err) {
+//     if (err) {
+//       throw err
+//     }
+//     else {
+//       console.log(chalk.yellow('template deployed to the server'))
+//     }
+//   });
+// })
+// .catch(function (err) {
+//   console.log(err)
+// })
