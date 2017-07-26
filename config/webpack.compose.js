@@ -39,8 +39,13 @@ const DOMAIN = {
 // 定义开发过程中的 api 代理
 const PROXY = {
   // 内网 RAP
+  // '/wallet': {
+  //   target:'http://rap.yilumofang.com/mockjsdata/3',
+  //   changeOrigin: true,
+  // },
+  // 联调
   '/wallet': {
-    target:'http://rap.yilumofang.com/mockjsdata/3',
+    target:'http://wallet.dev.com',
     changeOrigin: true,
   },
   // 公网 RAP
@@ -127,7 +132,7 @@ const productionConfig = merge([
       }),
       new HtmlWebpackPlugin({
         template: PATHS.pro_tpl,
-        filename: 'Index.phtml',
+        filename: 'index.html',
       }),
     ],
     // this file is used to record path input and output module ids and other composing information
