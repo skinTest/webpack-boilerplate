@@ -1,15 +1,27 @@
 # 定义 stages
 stages:
   - push
+  - cleanup
 variables:
-  DEV_IMAGE_NAME: ${CI_PROJECT_PATH}/image
+  DEV_IMAGE_NAME: gitlab.yilumofang.com:4567/${CI_PROJECT_PATH}/image
 
 # 推送镜像到线下代码仓库
 push_image:
   stage: push
   script:
-    - docker build -t ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} .
+    - docker build -t –no-cache ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} .
     - sh /data/gitlab/bin/push.sh ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} dev
+  only:
+    - master
+  tags:
+    - CI
+
+# 清理ci过程中产生的环境和镜像
+cleanup_job:
+  stage: cleanup
+  script:
+    - docker rmi ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA}
+  when: always
   only:
     - master
   tags:
