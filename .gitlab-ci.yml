@@ -9,7 +9,7 @@ variables:
 push_image:
   stage: push
   script:
-    - docker build -t –no-cache ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} .
+    - docker build –-no-cache  -t ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} .
     - sh /data/gitlab/bin/push.sh ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA} dev
   only:
     - master
