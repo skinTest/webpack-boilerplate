@@ -6,7 +6,7 @@ stages:
 variables:
   # 项目唯一标识
   PROJECT_INDEX: ${CI_PROJECT_NAME}${CI_COMMIT_SHA}
-  DEV_IMAGE_NAME: gitlab.yilumofang.com:4567/${CI_PROJECT_PATH}/image
+  DEV_IMAGE_NAME: ${CI_PROJECT_PATH}/image
 
 # 推送镜像到线下代码仓库
 push_image:
