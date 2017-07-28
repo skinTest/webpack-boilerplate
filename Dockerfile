@@ -1,4 +1,4 @@
-FROM nginx
+FROM ifintech/nginx
 
 MAINTAINER lvyalin <lvyalin.yl@gmail.com>
 
