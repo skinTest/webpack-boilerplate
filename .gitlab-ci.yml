@@ -20,7 +20,7 @@ push_image:
 cleanup_job:
   stage: cleanup
   script:
-    # - docker rmi ${DEV_IMAGE_NAME}:${CI_COMMIT_SHA}
+    - echo "skip"
   when: always
   only:
     - master
