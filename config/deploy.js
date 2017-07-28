@@ -48,10 +48,23 @@ switch (argv.dest) {
     _.set(webpackConfig, 'output.publicPath', '/')
 }
 
+console.log(util.inspect(webpackConfig, {depth: null}))
 
 // 3. 配置 babel 运行环境
 process.env.BABEL_ENV = 'production'
+webpack(webpackConfig, function (err, stats) {
+  if (err) {
+    throw err
+  }
 
+  process.stdout.write(stats.toString({
+    colors: true,
+    modules: false,
+    children: false,
+    chunks: false,
+    chunkModules: false
+  }) + '\n\n')
+})
 /* --- --- --- webpack bundle --- --- --- */
 /*
  * 1. 配置 babel 环境变量
